@@ -24,7 +24,7 @@ extends FluidDissipation.Utilities.Icons.Package;
 annotation (
   preferredView="info",
   version="1.1.9",
-  uses(Modelica(version="3.2.2")),
+  uses(Modelica(version="3.2.3")),
   conversion(
  from(version="1.0 Beta 8a", script="./Extras/Scripts/ConvertFluidDissipation_from_Beta8_to_Beta9.mos"),
   from(version="1.0 Beta 8b", script="./Extras/Scripts/ConvertFluidDissipation_from_Beta8_to_Beta9.mos"),
