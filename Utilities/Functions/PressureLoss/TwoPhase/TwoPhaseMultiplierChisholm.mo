@@ -11,7 +11,7 @@ function TwoPhaseMultiplierChisholm
     annotation (Dialog(group="Constant inputs"));
   input FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var IN_var
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   output Real phi "Two phase multiplier w.r.t. Chisholm";
@@ -19,8 +19,9 @@ function TwoPhaseMultiplierChisholm
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, IN_con.A_cross) "Cross sectional area";
-  SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.A_cross)
+    "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
     "Hydraulic diameter";
 
   Real mdot_A=abs(m_flow)/A_cross "Mass flux";

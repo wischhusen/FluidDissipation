@@ -22,18 +22,19 @@ model PlateHeatTransferModel "Application model for a plate in Modelica_Fluid"
           "Heat transfer"), choicesAllMatching=true);
 
   //plate
-  parameter SI.Length length=1 "Length of plate"
+  parameter Modelica.Units.SI.Length length=1 "Length of plate"
     annotation (Dialog(group="Plate"));
-  parameter SI.Length width=1 "Width of plate"
+  parameter Modelica.Units.SI.Length width=1 "Width of plate"
     annotation (Dialog(group="Plate"));
 
   //input
-  input SI.Velocity velocity "fluid flow velocity around plate"
+  input Modelica.Units.SI.Velocity velocity "fluid flow velocity around plate"
     annotation (Dialog(group="Input"));
 
   //target
   Real kc "mean convective heat transfer coefficient for plate";
-  SI.HeatFlowRate Q_flow=thermalPort.Q_flow "heat flow rate over boundary";
+  Modelica.Units.SI.HeatFlowRate Q_flow=thermalPort.Q_flow
+    "heat flow rate over boundary";
 
   //thermodynamic state from (missing) volume
   //outer Medium.ThermodynamicState state;
@@ -53,19 +54,21 @@ model PlateHeatTransferModel "Application model for a plate in Modelica_Fluid"
     annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
 
   //For information
-  SI.Area A_kc=length*width "Convective heat transfer area";
+  Modelica.Units.SI.Area A_kc=length*width "Convective heat transfer area";
 
   //fluid properties
 protected
-  SI.SpecificHeatCapacityAtConstantPressure cp=Medium.heatCapacity_cp(
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=
+      Medium.heatCapacity_cp(stateForHeatTransfer.state);
+  Modelica.Units.SI.DynamicViscosity eta=Medium.dynamicViscosity(
       stateForHeatTransfer.state);
-  SI.DynamicViscosity eta=Medium.dynamicViscosity(stateForHeatTransfer.state);
-  SI.ThermalConductivity lambda=Medium.thermalConductivity(stateForHeatTransfer.state);
-  SI.Density rho=Medium.density(stateForHeatTransfer.state);
-  SI.Temp_K T=Medium.temperature(stateForHeatTransfer.state);
+  Modelica.Units.SI.ThermalConductivity lambda=Medium.thermalConductivity(
+      stateForHeatTransfer.state);
+  Modelica.Units.SI.Density rho=Medium.density(stateForHeatTransfer.state);
+  Modelica.Units.SI.Temperature T=Medium.temperature(stateForHeatTransfer.state);
 
-  SI.ReynoldsNumber Re=rho*velocity*length/eta;
-  SI.NusseltNumber Nu=kc*length/lambda;
+  Modelica.Units.SI.ReynoldsNumber Re=rho*velocity*length/eta;
+  Modelica.Units.SI.NusseltNumber Nu=kc*length/lambda;
 
 equation
   kc = HeatTransfer.coefficientOfHeatTransfer(IN_con, IN_var);

@@ -1,7 +1,7 @@
 within FluidDissipation.Examples.TestCases.HeatTransfer;
 model HeatExchanger_TwoPhase
   "Test case for heat transfer of heat exchanger with two phase media"
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
 
   Applications.HeatTransfer.HeatExchangerHeatTransferModel_TwoPhase
     heatExchanger(
@@ -15,12 +15,12 @@ model HeatExchanger_TwoPhase
         stateForHeatTransfer.Medium.saturationPressure(273.15 + 20))
     annotation (Placement(transformation(extent={{-100,60},{-80,80}})));
   Modelica.Blocks.Sources.Sine specificEnthalpy(
-    freqHz=1,
+    f=1,
     amplitude=1.2e6,
     offset=1.55e6) "[J/kg]"
     annotation (Placement(transformation(extent={{-100,20},{-80,40}})));
   Modelica.Blocks.Sources.Sine massFlowRate(
-    freqHz=1,
+    f=1,
     offset=0,
     amplitude=100) "[kg/s]"
     annotation (Placement(transformation(extent={{-100,-20},{-80,0}})));

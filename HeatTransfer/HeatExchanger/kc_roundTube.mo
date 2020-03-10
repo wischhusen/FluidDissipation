@@ -10,12 +10,13 @@ function kc_roundTube
     "Input record for function kc_roundTube_KC";
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Convective heat transfer coefficient"
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Convective heat transfer coefficient" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number"
     annotation (Dialog(group="Output"));
-  output SI.PrandtlNumber Pr "Prandtl number" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  output SI.NusseltNumber Nu "Nusselt number"
+  output Modelica.Units.SI.NusseltNumber Nu "Nusselt number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -24,15 +25,15 @@ function kc_roundTube
   import TYP = FluidDissipation.Utilities.Types.HTXGeometry_roundTubes;
 
 protected
-  SI.Area A_c=IN_con.A_fr*((IN_con.F_p*IN_con.P_t - IN_con.F_p*IN_con.D_c - (
-      IN_con.P_t - IN_con.D_c)*IN_con.delta_f)/(IN_con.F_p*IN_con.P_t))
+  Modelica.Units.SI.Area A_c=IN_con.A_fr*((IN_con.F_p*IN_con.P_t - IN_con.F_p*
+      IN_con.D_c - (IN_con.P_t - IN_con.D_c)*IN_con.delta_f)/(IN_con.F_p*IN_con.P_t))
     "Minimum flow cross-sectional area";
-  SI.Area A_tot=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr*((IN_con.N
-      *PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f) + 2*(IN_con.P_t*IN_con.L -
-      IN_con.N*PI*IN_con.D_c^2/4))/(IN_con.P_t*IN_con.F_p)) else 0
+  Modelica.Units.SI.Area A_tot=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr
+      *((IN_con.N*PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f) + 2*(IN_con.P_t*
+      IN_con.L - IN_con.N*PI*IN_con.D_c^2/4))/(IN_con.P_t*IN_con.F_p)) else 0
     "Total heat transfer area";
-  SI.Length D_h=if IN_con.geometry == TYP.LouverFin then 4*A_c*IN_con.L/A_tot else
-            0 "Hydraulic diameter";
+  Modelica.Units.SI.Length D_h=if IN_con.geometry == TYP.LouverFin then 4*A_c*
+      IN_con.L/A_tot else 0 "Hydraulic diameter";
 
 algorithm
   kc := FluidDissipation.HeatTransfer.HeatExchanger.kc_roundTube_KC(IN_con,

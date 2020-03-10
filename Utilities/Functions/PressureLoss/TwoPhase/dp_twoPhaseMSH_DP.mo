@@ -5,16 +5,16 @@ function dp_twoPhaseMSH_DP
     IN_con "Input record for constant values";
   input FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var
     IN_var "Input record for variable values";
-  input Modelica.SIunits.MassFlowRate m_flow "Mass flow rate";
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate";
 
-  output Modelica.SIunits.PressureDifference DP "Pressure difference";
+  output Modelica.Units.SI.PressureDifference DP "Pressure difference";
 
   import SMOOTH = FluidDissipation.Utilities.Functions.General.Stepsmoother;
 
 protected
   Real Re_lam "Reynolds number for determination of flow regime";
   Real Re_trans "Reynolds number for flow regime transition";
-  Modelica.SIunits.Length d_hyd = 4*IN_con.A_cross/IN_con.perimeter
+  Modelica.Units.SI.Length d_hyd=4*IN_con.A_cross/IN_con.perimeter
     "Hydraulic diameter";
 
 algorithm

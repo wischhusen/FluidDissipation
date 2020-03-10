@@ -9,7 +9,7 @@ function kc_flatTube_KC
     "Input record for function kc_flatTube_KC";
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Output for function kc_flatTubePlateFin_KC";
 
   import TYP = FluidDissipation.Utilities.Types.HTXGeometry_flatTubes;
@@ -17,28 +17,29 @@ function kc_flatTube_KC
 protected
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Conversions.NonSIunits.Angle_deg Phi=IN_con.Phi*180/PI "Louver angle";
+  Modelica.Units.NonSI.Angle_deg Phi=IN_con.Phi*180/PI "Louver angle";
 
-  SI.ReynoldsNumber Re_Dh=max(MIN, (abs(IN_var.m_flow)*IN_con.D_h/(IN_var.eta*
-      A_c))) "Reynolds number based on hydraulic diameter";
-  SI.ReynoldsNumber Re_Lp=max(MIN, (abs(IN_var.m_flow)*IN_con.L_p/(IN_var.eta*
-      A_c))) "Reynolds number based on louver pitch";
-  SI.PrandtlNumber Pr=IN_var.eta*IN_var.cp/IN_var.lambda "Prandtl number";
+  Modelica.Units.SI.ReynoldsNumber Re_Dh=max(MIN, (abs(IN_var.m_flow)*IN_con.D_h
+      /(IN_var.eta*A_c))) "Reynolds number based on hydraulic diameter";
+  Modelica.Units.SI.ReynoldsNumber Re_Lp=max(MIN, (abs(IN_var.m_flow)*IN_con.L_p
+      /(IN_var.eta*A_c))) "Reynolds number based on louver pitch";
+  Modelica.Units.SI.PrandtlNumber Pr=IN_var.eta*IN_var.cp/IN_var.lambda
+    "Prandtl number";
   Real j "Colburn j factor";
 
-  SI.Area A_c=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr*((IN_con.F_l
-       - IN_con.delta_f)*(IN_con.F_p - IN_con.delta_f)/((IN_con.F_l + IN_con.D_m)
-      *IN_con.F_p)) else if IN_con.geometry == TYP.RectangularFin then IN_con.A_fr
-      *(h*s/((h + t + IN_con.D_m)*(s + t))) else 0
+  Modelica.Units.SI.Area A_c=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr
+      *((IN_con.F_l - IN_con.delta_f)*(IN_con.F_p - IN_con.delta_f)/((IN_con.F_l
+       + IN_con.D_m)*IN_con.F_p)) else if IN_con.geometry == TYP.RectangularFin
+       then IN_con.A_fr*(h*s/((h + t + IN_con.D_m)*(s + t))) else 0
     "Minimum flow cross-sectional area";
-  SI.Length h=if IN_con.geometry == TYP.RectangularFin then IN_con.D_h*(1 +
-      IN_con.alpha)/(2*IN_con.alpha) else 0 "Free flow height";
-  SI.Length l=if IN_con.geometry == TYP.RectangularFin then t/IN_con.delta else
-            0 "Fin length";
-  SI.Length s=if IN_con.geometry == TYP.RectangularFin then h*IN_con.alpha else
-            0 "Lateral fin spacing (free flow width)";
-  SI.Length t=if IN_con.geometry == TYP.RectangularFin then s*IN_con.gamma else
-            0 "Fin thickness";
+  Modelica.Units.SI.Length h=if IN_con.geometry == TYP.RectangularFin then
+      IN_con.D_h*(1 + IN_con.alpha)/(2*IN_con.alpha) else 0 "Free flow height";
+  Modelica.Units.SI.Length l=if IN_con.geometry == TYP.RectangularFin then t/
+      IN_con.delta else 0 "Fin length";
+  Modelica.Units.SI.Length s=if IN_con.geometry == TYP.RectangularFin then h*
+      IN_con.alpha else 0 "Lateral fin spacing (free flow width)";
+  Modelica.Units.SI.Length t=if IN_con.geometry == TYP.RectangularFin then s*
+      IN_con.gamma else 0 "Fin thickness";
 
 algorithm
   if IN_con.geometry == TYP.LouverFin then

@@ -4,13 +4,13 @@ model kc_tubeBundle_1ph "Verification of function kc_tubeBundle_1ph"
   parameter Integer n=2 "number of variants";
 
   //Heat exchanger variables
-  parameter Modelica.SIunits.Area A_front(min=1e-6)=1
+  parameter Modelica.Units.SI.Area A_front(min=1e-6) = 1
     "Cross sectional area in front of the tube row or bundle";
-  parameter Modelica.SIunits.Length d(min=1e-6) = 0.0164
+  parameter Modelica.Units.SI.Length d(min=1e-6) = 0.0164
     "Outer diameter of tubes";
 
 protected
-  parameter SI.Length s[n]={d*2.0, d*2.0};
+  parameter Modelica.Units.SI.Length s[n]={d*2.0,d*2.0};
 
 public
   parameter Boolean staggeredAlignment[n] = {true, false}
@@ -19,19 +19,21 @@ public
   parameter Integer n_rows[n](min=1) = {10, 10}
     "Number of pipe rows in flow direction";
 
-  SI.PrandtlNumber Pr=eta*cp/lambda;
+  Modelica.Units.SI.PrandtlNumber Pr=eta*cp/lambda;
 
   //fluid property variables
 
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp=1007
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=1007
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta=18.04e-6 "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda=25.3e-3
+  parameter Modelica.Units.SI.DynamicViscosity eta=18.04e-6
+    "Dynamic viscosity of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda=25.3e-3
     "Thermal conductivity of fluid";
-  parameter SI.Density rho=1.217 "Density of fluid";
+  parameter Modelica.Units.SI.Density rho=1.217 "Density of fluid";
 
   //input variables
-  SI.ReynoldsNumber Re = input_Re.y "Reynolds number" annotation (Dialog(group="Input"));
+  Modelica.Units.SI.ReynoldsNumber Re=input_Re.y "Reynolds number"
+    annotation (Dialog(group="Input"));
 
   //input records
 
@@ -77,9 +79,11 @@ public
                   annotation (Placement(transformation(extent={{50,-8},{70,12}})));
 
   //output variables
-  SI.MassFlowRate m_flow[n] "Mass flow rate" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu[n] "Nusselt number" annotation (Dialog(group="Output"));
-  SI.CoefficientOfHeatTransfer[n] kc "Heat transfer coefficient";
+  Modelica.Units.SI.MassFlowRate m_flow[n] "Mass flow rate"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu[n] "Nusselt number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.CoefficientOfHeatTransfer[n] kc "Heat transfer coefficient";
 
 public
   Modelica.Blocks.Sources.Ramp input_Re(

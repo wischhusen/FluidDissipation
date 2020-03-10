@@ -10,16 +10,17 @@ model CurvedBendFlowModel
   parameter FluidDissipation.Utilities.Types.Roughness roughness=
       FluidDissipation.Utilities.Types.Roughness.Considered
     "Choice of considering surface roughness" annotation (Dialog(group="Bend"));
-  parameter Modelica.SIunits.Conversions.NonSIunits.Angle_deg delta=90
-    "Angle of turning"                                                                    annotation (Dialog(group="Bend"));
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter"
+  parameter Modelica.Units.NonSI.Angle_deg delta=90 "Angle of turning"
     annotation (Dialog(group="Bend"));
-  parameter SI.Length K=0 "Roughness (average height of surface asperities)"
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter"
     annotation (Dialog(group="Bend"));
-  parameter SI.Length L=10*d_hyd
+  parameter Modelica.Units.SI.Length K=0
+    "Roughness (average height of surface asperities)"
+    annotation (Dialog(group="Bend"));
+  parameter Modelica.Units.SI.Length L=10*d_hyd
     "Length of the straight starting section before the bend"
     annotation (Dialog(group="Bend"));
-  parameter SI.Radius R_0=0.5*d_hyd "Curvature radius"
+  parameter Modelica.Units.SI.Radius R_0=0.5*d_hyd "Curvature radius"
     annotation (Dialog(group="Bend"));
 
   FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Bend.CurvedBend.PressureLossInput_con

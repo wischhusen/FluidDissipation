@@ -9,9 +9,9 @@ record dp_severalGeometryOverall_IN_var
     annotation (Dialog(group="Valve"));
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid"
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid"
     annotation (Dialog(group="Fluid properties"));
-  SI.Density rho=1e3 "Density of fluid"
+  Modelica.Units.SI.Density rho=1e3 "Density of fluid"
     annotation (Dialog(group="Fluid properties"));
 
   annotation (Documentation(info="<html>

@@ -8,7 +8,7 @@ package BaseHeatExchangerHT "Base package for all heat transfer functions of a h
     extends Modelica.Icons.Function;
 
     //convective heat transfer coefficient as output
-    output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "convective heat transfer coefficient";
 
   end coefficientOfHeatTransfer;

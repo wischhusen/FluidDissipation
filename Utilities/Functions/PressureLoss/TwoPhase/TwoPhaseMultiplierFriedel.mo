@@ -12,7 +12,7 @@ function TwoPhaseMultiplierFriedel
     annotation (Dialog(group="Constant inputs"));
   input FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var IN_var(final
       sigma=0) annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   output Real phi "Two phase multiplier w.r.t. Friedel";
@@ -20,8 +20,9 @@ function TwoPhaseMultiplierFriedel
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, IN_con.A_cross) "Cross sectional area";
-  SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.A_cross)
+    "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
     "Hydraulic diameter";
 
   //SOURCE_2: p.Lba 4, sec. 3.3: Correlation based on constant mass flow rate quality (x_flow) for increment (dx)
@@ -30,19 +31,19 @@ protected
   Real x_flow=max(0, min(1, abs(IN_var.x_flow))) "Mass flow rate quality";
 
   //SOURCE_1: p.490 (Appendix): Characteristic numbers based on total mass flow rate flowing as liquid
-  SI.FroudeNumber Fr_l=max(MIN, mdot_A^2/max(MIN, 9.81*IN_var.rho_l^2*d_hyd))
-    "Froude number based on liquid flow";
-  SI.ReynoldsNumber Re_g=max(1, mdot_A*d_hyd/max(MIN, IN_var.eta_g))
+  Modelica.Units.SI.FroudeNumber Fr_l=max(MIN, mdot_A^2/max(MIN, 9.81*IN_var.rho_l
+      ^2*d_hyd)) "Froude number based on liquid flow";
+  Modelica.Units.SI.ReynoldsNumber Re_g=max(1, mdot_A*d_hyd/max(MIN, IN_var.eta_g))
     "Reynolds number based on gas flow";
-  SI.ReynoldsNumber Re_l=max(1, mdot_A*d_hyd/max(MIN, IN_var.eta_l))
+  Modelica.Units.SI.ReynoldsNumber Re_l=max(1, mdot_A*d_hyd/max(MIN, IN_var.eta_l))
     "Reynolds number based on liquid flow";
-  SI.WeberNumber We_l=max(MIN, mdot_A^2*d_hyd/max(MIN, IN_var.sigma*IN_var.rho_l))
-    "Weber number based on liquid flow";
+  Modelica.Units.SI.WeberNumber We_l=max(MIN, mdot_A^2*d_hyd/max(MIN, IN_var.sigma
+      *IN_var.rho_l)) "Weber number based on liquid flow";
 
   //SOURCE_1: p.490 (Appendix): Smoothing for sudden change from assumed laminar to assumed turbulent regime (numerical improvement at Re=1055)
-  SI.ReynoldsNumber Re_lam_max=1025
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=1025
     "Maximum Reynolds number assuming laminar regime";
-  SI.ReynoldsNumber Re_turb_min=1075
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=1075
     "Minimum Reynolds number assuming turbulent regime";
 
   //SOURCE_2: p.Lbb 2, eq. 9-10: Considering influence of Reynolds number on Darcy friction factor for smooth straight pipes

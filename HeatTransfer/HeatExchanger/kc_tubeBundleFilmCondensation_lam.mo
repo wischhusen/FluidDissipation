@@ -17,11 +17,14 @@ function kc_tubeBundleFilmCondensation_lam
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output Modelica.SIunits.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Heat transfer coefficient" annotation (Dialog(group="Output"));
-  output SI.PrandtlNumber Pr "Prandtl number of the film" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number of flowing steam" annotation (Dialog(group="Output"));
-  output SI.NusseltNumber Nu "Nusselt number" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number of the film"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number of flowing steam"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.NusseltNumber Nu "Nusselt number"
+    annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"   annotation (Dialog(group="Output"));
 

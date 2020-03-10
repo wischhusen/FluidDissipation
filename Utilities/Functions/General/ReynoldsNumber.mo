@@ -1,21 +1,21 @@
 within FluidDissipation.Utilities.Functions.General;
 function ReynoldsNumber "calculation of Reynolds number"
   extends Modelica.Icons.Function;
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import MIN = Modelica.Constants.eps;
 
   //geometry
-  input SI.Area A_cross "Cross sectional area";
-  input SI.Length perimeter "Wetted perimeter";
+  input Modelica.Units.SI.Area A_cross "Cross sectional area";
+  input Modelica.Units.SI.Length perimeter "Wetted perimeter";
 
   //fluid properties
-  input SI.Density rho "Density of fluid";
-  input SI.DynamicViscosity eta "Dynamic viscosity of fluid";
+  input Modelica.Units.SI.Density rho "Density of fluid";
+  input Modelica.Units.SI.DynamicViscosity eta "Dynamic viscosity of fluid";
 
-  input SI.MassFlowRate m_flow "Mass flow rate";
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate";
 
-  output SI.ReynoldsNumber Re "Reynolds number";
-  output SI.Velocity velocity "Mean velocity";
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number";
+  output Modelica.Units.SI.Velocity velocity "Mean velocity";
 
 // protected
 //   SI.Diameter d_hyd=4*A_cross/max(MIN, perimeter) "Hydraulic diameter";

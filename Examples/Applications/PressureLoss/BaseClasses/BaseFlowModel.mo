@@ -15,30 +15,33 @@ partial model BaseFlowModel
   parameter Boolean use_nominal=false
     "= true, if eta_nominal and rho_nominal are used, otherwise computed from medium"
     annotation (Evaluate=true, Dialog(group="Fluid properties"));
-  parameter SI.DynamicViscosity eta_nominal=Medium.dynamicViscosity(
-      Medium.setState_pTX(
+  parameter Modelica.Units.SI.DynamicViscosity eta_nominal=
+      Medium.dynamicViscosity(Medium.setState_pTX(
       Medium.p_default,
       Medium.T_default,
       Medium.X_default))
     "Nominal dynamic viscosity (e.g. eta_liquidWater = 1e-3, eta_air = 1.8e-5)"
     annotation (Dialog(enable=use_nominal, group="Fluid properties"));
-  parameter SI.Density rho_nominal=Medium.density_pTX(
+  parameter Modelica.Units.SI.Density rho_nominal=Medium.density_pTX(
       Medium.p_default,
       Medium.T_default,
       Medium.X_default)
     "Nominal density (e.g. d_liquidWater = 995, d_air = 1.2)"
     annotation (Dialog(enable=use_nominal, group="Fluid properties"));
 
-  SI.Density rho_a=if use_nominal then rho_nominal else Medium.density(state_a);
-  SI.Density rho_b=if use_nominal then rho_nominal else Medium.density(state_b);
-  SI.Density rho=if use_nominal then rho_nominal else Medium.density(state);
+  Modelica.Units.SI.Density rho_a=if use_nominal then rho_nominal else
+      Medium.density(state_a);
+  Modelica.Units.SI.Density rho_b=if use_nominal then rho_nominal else
+      Medium.density(state_b);
+  Modelica.Units.SI.Density rho=if use_nominal then rho_nominal else
+      Medium.density(state);
   //SI.Density rho = (rho_a+rho_b)/2;
 
-  SI.DynamicViscosity eta_a=if use_nominal then eta_nominal else
-      Medium.dynamicViscosity(state_a);
-  SI.DynamicViscosity eta_b=if use_nominal then eta_nominal else
-      Medium.dynamicViscosity(state_b);
-  SI.DynamicViscosity eta=if use_nominal then eta_nominal else
+  Modelica.Units.SI.DynamicViscosity eta_a=if use_nominal then eta_nominal
+       else Medium.dynamicViscosity(state_a);
+  Modelica.Units.SI.DynamicViscosity eta_b=if use_nominal then eta_nominal
+       else Medium.dynamicViscosity(state_b);
+  Modelica.Units.SI.DynamicViscosity eta=if use_nominal then eta_nominal else
       Medium.dynamicViscosity(state);
   //SI.DynamicViscosity eta=(eta_a + eta_b)/2;
 
@@ -50,7 +53,7 @@ partial model BaseFlowModel
     annotation (Dialog(tab="Advanced"));
 
   // Has to be defined in top-level:
-  SI.Pressure dp_tot "Total pressure difference";
+  Modelica.Units.SI.Pressure dp_tot "Total pressure difference";
 
 equation
   //isenthalpic state transformation (no storage and no loss of energy)

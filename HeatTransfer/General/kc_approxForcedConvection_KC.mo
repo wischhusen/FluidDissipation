@@ -14,7 +14,7 @@ function kc_approxForcedConvection_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Output for function kc_approxForcedConvection_KC";
 
 protected
@@ -22,13 +22,13 @@ protected
 
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Diameter d_hyd=max(MIN, 4*IN_con.A_cross/max(MIN, IN_con.perimeter))
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, 4*IN_con.A_cross/max(MIN, IN_con.perimeter))
     "Hydraulic diameter";
 
-  SI.PrandtlNumber Pr=max(MIN, abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda)))
-    "Prandtl number";
-  SI.ReynoldsNumber Re=(4*abs(IN_var.m_flow)/max(MIN, IN_con.perimeter*
-      IN_var.eta)) "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr=max(MIN, abs(IN_var.eta*IN_var.cp/max(MIN,
+      IN_var.lambda))) "Prandtl number";
+  Modelica.Units.SI.ReynoldsNumber Re=(4*abs(IN_var.m_flow)/max(MIN, IN_con.perimeter
+      *IN_var.eta)) "Reynolds number";
 
 algorithm
   kc := IN_var.lambda/d_hyd*(if IN_con.target == TYP.Rough then 0.023*Re^(4/5)*

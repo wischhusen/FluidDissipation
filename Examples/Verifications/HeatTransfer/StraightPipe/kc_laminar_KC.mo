@@ -4,29 +4,35 @@ model kc_laminar_KC "Verification of function kc_mean_laminar_KC"
   parameter Integer n=size(cp, 1);
 
   //straight pipe variables
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter";
-  parameter SI.Length L=1 "Length of straight pipe";
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter";
+  parameter Modelica.Units.SI.Length L=1 "Length of straight pipe";
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp[:]={1007,4189,3384.550}
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[:]={
+      1007,4189,3384.550}
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
+  parameter Modelica.Units.SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
     "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,0.387}
-    "Thermal conductivity of fluid";
-  parameter SI.Density rho[:]={1.188,998.21,1037.799} "Density of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,
+      0.387} "Thermal conductivity of fluid";
+  parameter Modelica.Units.SI.Density rho[:]={1.188,998.21,1037.799}
+    "Density of fluid";
 
   //here: Nusselt number as input for inverse calculation
-  SI.NusseltNumber Nu[n]=ones(n)*input_Nu.y;
-  SI.MassFlowRate m_flow_1[3](start=ones(n)*1e-6);
-  SI.MassFlowRate m_flow_2[3](start=ones(n)*1e-6);
-  SI.MassFlowRate m_flow_3[3](start=ones(n)*1e-6);
-  SI.MassFlowRate m_flow_4[3](start=ones(n)*1e-6);
+  Modelica.Units.SI.NusseltNumber Nu[n]=ones(n)*input_Nu.y;
+  Modelica.Units.SI.MassFlowRate m_flow_1[3](start=ones(n)*1e-6);
+  Modelica.Units.SI.MassFlowRate m_flow_2[3](start=ones(n)*1e-6);
+  Modelica.Units.SI.MassFlowRate m_flow_3[3](start=ones(n)*1e-6);
+  Modelica.Units.SI.MassFlowRate m_flow_4[3](start=ones(n)*1e-6);
 
-  SI.CoefficientOfHeatTransfer kc_1[n]={Nu[i]*lambda[i]/d_hyd for i in 1:n};
-  SI.CoefficientOfHeatTransfer kc_2[n]={Nu[i]*lambda[i]/d_hyd for i in 1:n};
-  SI.CoefficientOfHeatTransfer kc_3[n]={Nu[i]*lambda[i]/d_hyd for i in 1:n};
-  SI.CoefficientOfHeatTransfer kc_4[n]={Nu[i]*lambda[i]/d_hyd for i in 1:n};
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_1[n]={Nu[i]*lambda[i]/d_hyd
+      for i in 1:n};
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_2[n]={Nu[i]*lambda[i]/d_hyd
+      for i in 1:n};
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_3[n]={Nu[i]*lambda[i]/d_hyd
+      for i in 1:n};
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_4[n]={Nu[i]*lambda[i]/d_hyd
+      for i in 1:n};
 
   //input record
   FluidDissipation.HeatTransfer.StraightPipe.kc_laminar_IN_con m_flow_IN_con_1[3](
@@ -85,14 +91,14 @@ model kc_laminar_KC "Verification of function kc_mean_laminar_KC"
     m_flow=m_flow_4)
     annotation (Placement(transformation(extent={{80,20},{100,40}})));
 
-  SI.ReynoldsNumber Re_1[n]={abs(m_flow_1[i])*d_hyd/(eta[i]*PI*d_hyd^2/4) for i in
-          1:n};
-  SI.ReynoldsNumber Re_2[n]={abs(m_flow_2[i])*d_hyd/(eta[i]*PI*d_hyd^2/4) for i in
-          1:n};
-  SI.ReynoldsNumber Re_3[n]={abs(m_flow_3[i])*d_hyd/(eta[i]*PI*d_hyd^2/4) for i in
-          1:n};
-  SI.ReynoldsNumber Re_4[n]={abs(m_flow_4[i])*d_hyd/(eta[i]*PI*d_hyd^2/4) for i in
-          1:n};
+  Modelica.Units.SI.ReynoldsNumber Re_1[n]={abs(m_flow_1[i])*d_hyd/(eta[i]*PI*
+      d_hyd^2/4) for i in 1:n};
+  Modelica.Units.SI.ReynoldsNumber Re_2[n]={abs(m_flow_2[i])*d_hyd/(eta[i]*PI*
+      d_hyd^2/4) for i in 1:n};
+  Modelica.Units.SI.ReynoldsNumber Re_3[n]={abs(m_flow_3[i])*d_hyd/(eta[i]*PI*
+      d_hyd^2/4) for i in 1:n};
+  Modelica.Units.SI.ReynoldsNumber Re_4[n]={abs(m_flow_4[i])*d_hyd/(eta[i]*PI*
+      d_hyd^2/4) for i in 1:n};
 
 public
   Modelica.Blocks.Sources.Ramp input_Nu(

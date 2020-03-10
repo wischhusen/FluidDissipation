@@ -20,7 +20,7 @@ record dp_twoPhaseOverall_IN_con
     annotation (Dialog(group="Choices"));
 
   extends FluidDissipation.Utilities.Records.General.TwoPhaseFlow_con;
-  SI.Angle phi=0 "Tilt angle to horizontal"
+  Modelica.Units.SI.Angle phi=0 "Tilt angle to horizontal"
     annotation (Dialog(group="Geometry"));
 
   annotation (Documentation(info="<html>

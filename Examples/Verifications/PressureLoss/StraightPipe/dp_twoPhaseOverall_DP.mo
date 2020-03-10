@@ -5,35 +5,35 @@ model dp_twoPhaseOverall_DP "Verification of function dp_twoPhaseOverall_DP"
 
   //straight pipe variables
   parameter Integer n=size(eta_l, 1);
-  parameter SI.Diameter d_hyd=0.000787;
-  parameter SI.Area A_cross=PI*d_hyd^2/4;
-  parameter SI.Length perimeter=PI*d_hyd;
-  parameter SI.Length length=0.503;
+  parameter Modelica.Units.SI.Diameter d_hyd=0.000787;
+  parameter Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4;
+  parameter Modelica.Units.SI.Length perimeter=PI*d_hyd;
+  parameter Modelica.Units.SI.Length length=0.503;
 
     //straight pipe variables for Mueller-Steinhagen test case
-  parameter SI.Diameter d_hyd_MSH=0.014;
-  parameter SI.Area A_cross_MSH=PI*d_hyd_MSH^2/4;
-  parameter SI.Length perimeter_MSH=PI*d_hyd_MSH;
-  parameter SI.Length length_MSH=1;
+  parameter Modelica.Units.SI.Diameter d_hyd_MSH=0.014;
+  parameter Modelica.Units.SI.Area A_cross_MSH=PI*d_hyd_MSH^2/4;
+  parameter Modelica.Units.SI.Length perimeter_MSH=PI*d_hyd_MSH;
+  parameter Modelica.Units.SI.Length length_MSH=1;
 
   //fluid property variables for CO2 at saturation temperatures of 0degC, 10degC, 20degC
-  SI.DynamicViscosity eta_l[5]={9.835980551e-5,8.77888107e-5,7.368173278e-5,
-      8.77888107e-5,8.77888107e-5};
-  SI.DynamicViscosity eta_g[n]={1.547810104e-5,1.732575635e-5,2.007174653e-5,
-      1.732575635e-5,1.732575635e-5};
-  SI.Density rho_l[n]={928.81004020247,863.41525244853,776.03258981765,
-      863.41525244853,863.41525244853};
-  SI.Density rho_g[n]={97.475877361949,134.57734207752,192.69422231737,
-      134.57734207752,134.57734207752};
-  SI.SurfaceTension sigma[n]={4.4317e-3,2.6724e-03,1.1607e-03,2.6724e-03,
-      2.6724e-03};
+  Modelica.Units.SI.DynamicViscosity eta_l[5]={9.835980551e-5,8.77888107e-5,
+      7.368173278e-5,8.77888107e-5,8.77888107e-5};
+  Modelica.Units.SI.DynamicViscosity eta_g[n]={1.547810104e-5,1.732575635e-5,
+      2.007174653e-5,1.732575635e-5,1.732575635e-5};
+  Modelica.Units.SI.Density rho_l[n]={928.81004020247,863.41525244853,
+      776.03258981765,863.41525244853,863.41525244853};
+  Modelica.Units.SI.Density rho_g[n]={97.475877361949,134.57734207752,
+      192.69422231737,134.57734207752,134.57734207752};
+  Modelica.Units.SI.SurfaceTension sigma[n]={4.4317e-3,2.6724e-03,1.1607e-03,
+      2.6724e-03,2.6724e-03};
 
   //fluid property variables for N2 at reduced pressures of 0.6 and 0.19
-  SI.DynamicViscosity eta_l_MSH[2]={4.57069e-05,8.19869e-05};
-  SI.DynamicViscosity eta_g_MSH[2]={9.61855e-06,7.16107e-06};
-  SI.Density rho_l_MSH[2]={569.784,704.994};
-  SI.Density rho_g_MSH[2]={92.966,26.4691};
-  SI.SurfaceTension sigma_MSH[2]={0.00127317,0.00460728};
+  Modelica.Units.SI.DynamicViscosity eta_l_MSH[2]={4.57069e-05,8.19869e-05};
+  Modelica.Units.SI.DynamicViscosity eta_g_MSH[2]={9.61855e-06,7.16107e-06};
+  Modelica.Units.SI.Density rho_l_MSH[2]={569.784,704.994};
+  Modelica.Units.SI.Density rho_g_MSH[2]={92.966,26.4691};
+  Modelica.Units.SI.SurfaceTension sigma_MSH[2]={0.00127317,0.00460728};
 
 
   //Two phase pressure loss w.r.t. equation of Friedel
@@ -99,19 +99,22 @@ model dp_twoPhaseOverall_DP "Verification of function dp_twoPhaseOverall_DP"
     sigma=sigma_MSH)
     annotation (Placement(transformation(extent={{60,20},{80,40}})));
 
-  SI.MassFlowRate input_mdot[n]={0.0001459354,0.0001459354,0.0001459354,
-      0.00019458051,0.000097290255}
+  Modelica.Units.SI.MassFlowRate input_mdot[n]={0.0001459354,0.0001459354,
+      0.0001459354,0.00019458051,0.000097290255}
     "(Input) mass flow rate (for incompressible case)";
-  SI.MassFlowRate m_flow[n]=input_mdot;
+  Modelica.Units.SI.MassFlowRate m_flow[n]=input_mdot;
 
-    SI.MassFlowRate input_mdot_MSH[2]={230*A_cross_MSH,125*A_cross_MSH}
-    "(Input) mass flow rate (for Mueller-Steinhagen test case)";
-  SI.MassFlowRate m_flow_MSH[2]=input_mdot_MSH;
+  Modelica.Units.SI.MassFlowRate input_mdot_MSH[2]={230*A_cross_MSH,125*
+      A_cross_MSH} "(Input) mass flow rate (for Mueller-Steinhagen test case)";
+  Modelica.Units.SI.MassFlowRate m_flow_MSH[2]=input_mdot_MSH;
 
   //output variables
-  SI.Pressure DP_1[n] "(Output) pressure loss (for incompressible case)";
-  SI.Pressure DP_2[n] "(Output) pressure loss (for incompressible case)";
-  SI.Pressure DP_3[2] "(Output) pressure loss (for incompressible case)";
+  Modelica.Units.SI.Pressure DP_1[n]
+    "(Output) pressure loss (for incompressible case)";
+  Modelica.Units.SI.Pressure DP_2[n]
+    "(Output) pressure loss (for incompressible case)";
+  Modelica.Units.SI.Pressure DP_3[2]
+    "(Output) pressure loss (for incompressible case)";
   Real DP_plot_1[n]={DP_1[i]/100000 for i in 1:n} "Pressure loss [Pa]";
   Real DP_plot_2[n]={DP_2[i]/100000 for i in 1:n} "Pressure loss [Pa]";
   Real DP_plot_3[2]={DP_3[i]/100000 for i in 1:2} "Pressure loss [Pa]";
@@ -127,7 +130,7 @@ public
     each offset=0,
     each phase=0,
     each startTime=0,
-    each freqHz=1,
+    each f=1,
     each amplitude=100)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2[n](
@@ -146,7 +149,7 @@ public
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=1)
     annotation (Placement(transformation(extent={{-40,-40},{-20,-20}})));
   Modelica.Blocks.Sources.Exponentials input_x_2(
@@ -157,7 +160,8 @@ public
     outMax=1) annotation (Placement(transformation(extent={{0,-40},{20,-20}})));
 
 protected
-  SI.MassFraction x_flow=input_x_0.y "Mean mass flow rate quality";
+  Modelica.Units.SI.MassFraction x_flow=input_x_0.y
+    "Mean mass flow rate quality";
 
 equation
   DP_1 = {FluidDissipation.PressureLoss.StraightPipe.dp_twoPhaseOverall_DP(

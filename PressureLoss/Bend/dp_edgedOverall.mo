@@ -18,14 +18,15 @@ function dp_edgedOverall
     "Target variable of calculation" annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW "mass flow rate"
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
     annotation (Dialog(group="Output"));
   output Utilities.Types.PressureLossCoefficient zeta_TOT
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -34,11 +35,11 @@ function dp_edgedOverall
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
-  SI.Area A_cross=PI*d_hyd^2/4 "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4 "Cross sectional area";
   Real delta=IN_con.delta*180/PI "Angle of turning";
 
-  SI.Velocity velocity "Mean velocity";
+  Modelica.Units.SI.Velocity velocity "Mean velocity";
 
   Real fstatus[2] "Check of expected boundary conditions";
 

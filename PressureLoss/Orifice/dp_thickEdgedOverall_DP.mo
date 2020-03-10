@@ -16,27 +16,31 @@ function dp_thickEdgedOverall_DP
     "Input record for function dp_thickEdgedOverall_DP"
     annotation (Dialog(group="Variable inputs"));
 
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_thickEdgedOverall_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_thickEdgedOverall_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
   TYP.DarcyFrictionFactor lambda_FRI=0.02
     "Assumption for Darcy friction factor in vena contraction according to SOURCE_1";
-  SI.ReynoldsNumber Re_min=1;
-  SI.ReynoldsNumber Re_lim=1e3 "Limitation for laminar regime if dp is target";
+  Modelica.Units.SI.ReynoldsNumber Re_min=1;
+  Modelica.Units.SI.ReynoldsNumber Re_lim=1e3
+    "Limitation for laminar regime if dp is target";
 
-  SI.Area A_0=IN_con.A_0 "Cross sectional area of vena contraction";
-  SI.Area A_1=IN_con.A_1 "Cross sectional area of large cross sectional area";
-  SI.Diameter d_hyd_0=max(MIN, 4*A_0/IN_con.C_0)
+  Modelica.Units.SI.Area A_0=IN_con.A_0
+    "Cross sectional area of vena contraction";
+  Modelica.Units.SI.Area A_1=IN_con.A_1
+    "Cross sectional area of large cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd_0=max(MIN, 4*A_0/IN_con.C_0)
     "Hydraulic diameter of vena contraction";
-  SI.Diameter d_hyd_1=max(MIN, 4*A_1/IN_con.C_1)
+  Modelica.Units.SI.Diameter d_hyd_1=max(MIN, 4*A_1/IN_con.C_1)
     "Hydraulic diameter of large cross sectional area";
-  SI.Length l=IN_con.L "Length of vena contraction";
+  Modelica.Units.SI.Length l=IN_con.L "Length of vena contraction";
   Real l_bar=IN_con.L/d_hyd_0;
 
   //SOURCE_1, section 4, diagram 4-15, page 222:
@@ -47,8 +51,9 @@ protected
       *(1 - A_0/A_1)^1.375 + (1 - A_0/A_1)^2 + lambda_FRI*l/d_hyd_0)*(A_1/A_0)^
       2)
     "Pressure loss coefficient w.r.t. to flow velocity in large cross sectional area";
-  SI.Velocity v_0=m_flow/(IN_var.rho*A_0) "Mean velocity in vena contraction";
-  SI.ReynoldsNumber Re=IN_var.rho*v_0*d_hyd_0/max(MIN, IN_var.eta)
+  Modelica.Units.SI.Velocity v_0=m_flow/(IN_var.rho*A_0)
+    "Mean velocity in vena contraction";
+  Modelica.Units.SI.ReynoldsNumber Re=IN_var.rho*v_0*d_hyd_0/max(MIN, IN_var.eta)
     "Reynolds number in vena contraction";
 
   //Documentation

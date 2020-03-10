@@ -7,7 +7,7 @@ package BaseNozzlePL "Base package for all pressure loss functions of a nozzle"
     extends Modelica.Icons.Function;
 
     //mass flow rate as output
-    output SI.Pressure DP_tot "Total pressure loss";
+  output Modelica.Units.SI.Pressure DP_tot "Total pressure loss";
 
   end pressureLoss_mflow;
 end BaseNozzlePL;

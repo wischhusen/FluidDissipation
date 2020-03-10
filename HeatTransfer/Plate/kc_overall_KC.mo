@@ -14,13 +14,14 @@ function kc_overall_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Output for function kc_overall_KC";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Output for function kc_overall_KC";
 
 protected
-  SI.CoefficientOfHeatTransfer kc_lam=
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_lam=
       FluidDissipation.HeatTransfer.Plate.kc_laminar_KC(IN_con, IN_var)
     "Heat transfer coefficient for laminar flow conditions";
-  SI.CoefficientOfHeatTransfer kc_turb=
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_turb=
       FluidDissipation.HeatTransfer.Plate.kc_turbulent_KC(IN_con, IN_var)
     "Heat transfer coefficient for turbulent flow conditions";
 

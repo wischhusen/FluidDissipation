@@ -17,26 +17,27 @@ model dp_idealGas "Verification of function dp_idealGas"
     "Coefficient for pressure loss law [(Pa)^2/{(kg/s)^exp*K}]";
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacity R_s=287
+  parameter Modelica.Units.SI.SpecificHeatCapacity R_s=287
     "Specific gas constant of ideal gas"
     annotation (Dialog(group="Fluid properties"));
-  parameter SI.Density rho_m=p_m/(R_s*T_m) "Mean density of ideal gas"
+  parameter Modelica.Units.SI.Density rho_m=p_m/(R_s*T_m)
+    "Mean density of ideal gas" annotation (Dialog(group="Fluid properties"));
+  parameter Modelica.Units.SI.Temperature T_m=(293 + 293)/2
+    "Mean temperature of ideal gas"
     annotation (Dialog(group="Fluid properties"));
-  parameter SI.Temp_K T_m=(293 + 293)/2 "Mean temperature of ideal gas"
-    annotation (Dialog(group="Fluid properties"));
-  parameter SI.Pressure p_m=(1e5 + 1e5)/2 "Mean pressure of ideal gas"
-    annotation (Dialog(group="Fluid properties"));
+  parameter Modelica.Units.SI.Pressure p_m=(1e5 + 1e5)/2
+    "Mean pressure of ideal gas" annotation (Dialog(group="Fluid properties"));
 
   //linearisation
-  parameter SI.Pressure dp_smooth=1e-6
+  parameter Modelica.Units.SI.Pressure dp_smooth=1e-6
     "Start linearisation for smaller pressure loss"
     annotation (Dialog(group="Linearisation"));
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n]={DP[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp[n]={DP[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -66,10 +67,12 @@ model dp_idealGas "Verification of function dp_idealGas"
 
   //output variables
   //compressible fluid flow
-  SI.MassFlowRate M_FLOW[n] "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
 
   //incompressible fluid flow
-  SI.Pressure DP[n] "pressure loss" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "pressure loss"
+    annotation (Dialog(group="Output"));
 
   FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget_DP[n](m_flow=
        input_mdot, each target=FluidDissipation.Utilities.Types.PressureLossTarget.PressureLoss)
@@ -88,7 +91,7 @@ model dp_idealGas "Verification of function dp_idealGas"
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=1)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

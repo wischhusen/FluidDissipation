@@ -9,21 +9,22 @@ model dp_suddenChange
   Real frac_A1toA2(start=0) "Ratio of small to large cross sectional area";
 
   //orifice variables
-  SI.Area A_1=A_2*min(frac_A1toA2,1) "Small cross sectional area of orifice";
-  SI.Area A_2=1e-2 "Large cross sectional area of orifice";
-  SI.Length C_1=sqrt(4*A_1/PI)*PI
+  Modelica.Units.SI.Area A_1=A_2*min(frac_A1toA2, 1)
+    "Small cross sectional area of orifice";
+  Modelica.Units.SI.Area A_2=1e-2 "Large cross sectional area of orifice";
+  Modelica.Units.SI.Length C_1=sqrt(4*A_1/PI)*PI
     "Perimeter of small cross sectional area of orifice";
-  SI.Length C_2=sqrt(4*A_2/PI)*PI
+  Modelica.Units.SI.Length C_2=sqrt(4*A_2/PI)*PI
     "Perimeter of large cross sectional area of orifice";
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
-  SI.Density rho=1000 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1000 "Density of fluid";
 
   //intended input variables for records
-  SI.MassFlowRate input_mdot(start=0) = m_flowoo*input_mflow_0.y
+  Modelica.Units.SI.MassFlowRate input_mdot(start=0) = m_flowoo*input_mflow_0.y
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp=DP
+  Modelica.Units.SI.Pressure input_dp=DP
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -50,19 +51,21 @@ model dp_suddenChange
 
   //output variables
   //target == DP (incompressible)
-  SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
   Utilities.Types.PressureLossCoefficient zeta_TOT "Pressure loss coefficient"
     annotation (Dialog(group="Output"));
 
   //target == M_FLOW (compressible)
-  SI.MassFlowRate M_FLOW "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
+    annotation (Dialog(group="Output"));
 
   //plotting
-  SI.Diameter d_hyd=4*A_1/max(MIN, C_1)
+  Modelica.Units.SI.Diameter d_hyd=4*A_1/max(MIN, C_1)
     "Hydraulic diameter of small cross sectional area of orifice";
-  SI.Velocity velocity=abs(M_FLOW)/(rho*max(MIN, A_1))
+  Modelica.Units.SI.Velocity velocity=abs(M_FLOW)/(rho*max(MIN, A_1))
     "Mean velocity in small cross sectional area";
-  SI.ReynoldsNumber Re=rho*velocity*d_hyd/eta;
+  Modelica.Units.SI.ReynoldsNumber Re=rho*velocity*d_hyd/eta;
 
   FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget_DP(m_flow=
         input_mdot, target=FluidDissipation.Utilities.Types.PressureLossTarget.PressureLoss)
@@ -80,7 +83,7 @@ model dp_suddenChange
   Modelica.Blocks.Sources.Sine input_mflow_1(
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=200,
     offset=200)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));

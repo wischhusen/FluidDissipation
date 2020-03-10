@@ -14,24 +14,26 @@ function kc_laminar_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Output for function kc_laminar_KC";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Output for function kc_laminar_KC";
 
 protected
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
-  SI.Diameter d_s=IN_con.L/(IN_con.n_nt*PI) "Mean coil diameter";
-  SI.Diameter d_w=sqrt(max(MIN, (d_s^2 - (IN_con.h/PI)^2)))
+  Modelica.Units.SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_s=IN_con.L/(IN_con.n_nt*PI) "Mean coil diameter";
+  Modelica.Units.SI.Diameter d_w=sqrt(max(MIN, (d_s^2 - (IN_con.h/PI)^2)))
     "Mean helical pipe diameter";
-  SI.Diameter d_coil=max(d_w, d_w*(1 + (IN_con.h/(PI*d_w))^2))
+  Modelica.Units.SI.Diameter d_coil=max(d_w, d_w*(1 + (IN_con.h/(PI*d_w))^2))
     "Mean curvature diameter of helical pipe";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity";
-  SI.ReynoldsNumber Re=(IN_var.rho*velocity*IN_con.d_hyd/max(MIN, IN_var.eta))
-    "Reynolds number";
-  SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=(IN_var.rho*velocity*IN_con.d_hyd/max(MIN,
+      IN_var.eta)) "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
     "Prandtl number";
 
   Real m=0.5 + 0.2903*(IN_con.d_hyd/d_coil)^0.194

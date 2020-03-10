@@ -9,16 +9,18 @@ model SuddenChangeFlowModel
   import SMOOTH = FluidDissipation.Utilities.Functions.General.Stepsmoother;
 
   //pressure loss parameter
-  parameter SI.Area A_1=PI*0.01^2/4 "Small cross sectional area of orifice";
-  parameter SI.Area A_2=A_1 "Large cross sectional area of orifice";
-  parameter SI.Length C_1=PI*0.01 "Small perimeter of orifice";
-  parameter SI.Length C_2=C_1 "Large perimeter of orifice";
+  parameter Modelica.Units.SI.Area A_1=PI*0.01^2/4
+    "Small cross sectional area of orifice";
+  parameter Modelica.Units.SI.Area A_2=A_1
+    "Large cross sectional area of orifice";
+  parameter Modelica.Units.SI.Length C_1=PI*0.01 "Small perimeter of orifice";
+  parameter Modelica.Units.SI.Length C_2=C_1 "Large perimeter of orifice";
 
-  SI.Velocity velocity_a=abs(m_flow)/(rho_a*A_1)
+  Modelica.Units.SI.Velocity velocity_a=abs(m_flow)/(rho_a*A_1)
     "Velocity at inlet of diffuser section w.r.t. design flow direction";
-  SI.Velocity velocity_b=abs(m_flow)/(rho_b*A_2)
+  Modelica.Units.SI.Velocity velocity_b=abs(m_flow)/(rho_b*A_2)
     "Velocity at outlet of diffuser section w.r.t. design flow direction";
-  SI.Pressure dp_dyn=(rho_a/2)*SMOOTH(
+  Modelica.Units.SI.Pressure dp_dyn=(rho_a/2)*SMOOTH(
       m_flow_small,
       0,
       abs(m_flow))*velocity_a^2 - (rho_b/2)*SMOOTH(

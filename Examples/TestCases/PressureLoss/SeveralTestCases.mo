@@ -2,8 +2,8 @@ within FluidDissipation.Examples.TestCases.PressureLoss;
 model SeveralTestCases
   "Test cases of pressure loss functions for several devices"
 
-  SI.Diameter d_hyd=0.1 "Hydraulic diameter";
-  SI.Area A_cross=PI*d_hyd^2/4 "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4 "Cross sectional area";
   Real eta=1e-3 "Dynamic viscosity of Water";
   Real rho=1e3 "Density of Water";
   Real Re_cir=input_mflow.y*d_hyd/(eta*A_cross) "Circular geometry";
@@ -18,7 +18,7 @@ model SeveralTestCases
 public
   Modelica.Blocks.Sources.Sine input_mflow(
     offset=0,
-    freqHz=1,
+    f=1,
     amplitude=10)
     annotation (Placement(transformation(extent={{-200,-12},{-180,8}})));
 
@@ -74,8 +74,8 @@ public
     "Calculate mass flow rate from pressure loss"
     annotation (Placement(transformation(extent={{76,150},{124,198}})));
 
-  Applications.PressureLoss.BendFlowModel from_mflow(redeclare package Medium =
-        Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
+  Applications.PressureLoss.BendFlowModel from_mflow(redeclare package Medium
+      = Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
       FlowModel =
         FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Bend.CurvedBend.CurvedBendFlowModel)
     "Calculate pressure loss from mass flow rate"
@@ -129,8 +129,8 @@ public
     "Calculate mass flow rate from pressure loss"
     annotation (Placement(transformation(extent={{-124,70},{-76,118}})));
 
-  Applications.PressureLoss.BendFlowModel from_mflow1(redeclare package Medium =
-        Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
+  Applications.PressureLoss.BendFlowModel from_mflow1(redeclare package Medium
+      = Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
       FlowModel =
         FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Bend.EdgedBend.EdgedBendFlowModel)
     "Calculate pressure loss from mass flow rate"
@@ -177,8 +177,8 @@ public
         extent={{-10,-10},{10,10}},
         rotation=0,
         origin={50,-14})));
-  Applications.PressureLoss.ChannelFlowModel from_dp2(redeclare package Medium =
-        Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
+  Applications.PressureLoss.ChannelFlowModel from_dp2(redeclare package Medium
+      = Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
       FlowModel =
         FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Channel.Overall.OverallFlowModel)
     "Calculate mass flow rate from pressure loss"
@@ -294,8 +294,8 @@ public
     "Calculate mass flow rate from pressure loss"
     annotation (Placement(transformation(extent={{76,-150},{124,-102}})));
 
-  Applications.PressureLoss.ValveFlowModel from_mflow4(redeclare package Medium =
-        Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
+  Applications.PressureLoss.ValveFlowModel from_mflow4(redeclare package Medium
+      = Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
       FlowModel =
         FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Valve.Overall.OverallFlowModel)
     "Calculate pressure loss from mass flow rate"

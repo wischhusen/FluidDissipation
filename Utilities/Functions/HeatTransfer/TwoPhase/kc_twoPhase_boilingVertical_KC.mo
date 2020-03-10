@@ -11,7 +11,7 @@ function kc_twoPhase_boilingVertical_KC
   input FluidDissipation.Utilities.Records.HeatTransfer.TwoPhaseFlowHT_IN_var IN_var
     annotation (Dialog(group="Variable inputs"));
 
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Local two phase heat transfer coefficient";
 
 

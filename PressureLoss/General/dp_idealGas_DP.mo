@@ -11,19 +11,21 @@ function dp_idealGas_DP
   input FluidDissipation.PressureLoss.General.dp_idealGas_IN_var IN_var
     "Input record for function dp_idealGas_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_idealGas_DP";
+  output Modelica.Units.SI.Pressure DP "Output for function dp_idealGas_DP";
 
 protected
   Real Km_internal=IN_con.Km "Coefficient for pressure loss";
 
-  SI.Density rho_internal=IN_var.p_m/(IN_con.R_s*IN_var.T_m) "Mean density";
-  SI.VolumeFlowRate V_flow=m_flow/rho_internal "Volume flow rate [m3/s]";
-  SI.VolumeFlowRate V_flow_min=(IN_con.R_s/Km_internal)^(1/IN_con.exp)*
-      rho_internal^(1/IN_con.exp - 1)*IN_con.dp_smooth^(1/IN_con.exp)
+  Modelica.Units.SI.Density rho_internal=IN_var.p_m/(IN_con.R_s*IN_var.T_m)
+    "Mean density";
+  Modelica.Units.SI.VolumeFlowRate V_flow=m_flow/rho_internal
+    "Volume flow rate [m3/s]";
+  Modelica.Units.SI.VolumeFlowRate V_flow_min=(IN_con.R_s/Km_internal)^(1/
+      IN_con.exp)*rho_internal^(1/IN_con.exp - 1)*IN_con.dp_smooth^(1/IN_con.exp)
     "Start of approximation for decreasing volume flow rate";
 
   //Documentation

@@ -6,7 +6,7 @@ model Channel "Test cases of pressure loss functions for channels"
 
 public
   Modelica.Blocks.Sources.Sine input_mflow(
-    freqHz=1,
+    f=1,
     offset=0,
     amplitude=10)
     annotation (Placement(transformation(extent={{-100,-50},{-80,-30}})));
@@ -57,8 +57,8 @@ public
         rotation=0,
         origin={-50,-40})));
 
-  Applications.PressureLoss.ChannelFlowModel from_dp(redeclare package Medium =
-        Modelica.Media.Water.ConstantPropertyLiquidWater)
+  Applications.PressureLoss.ChannelFlowModel from_dp(redeclare package Medium
+      = Modelica.Media.Water.ConstantPropertyLiquidWater)
     "Calculate mass flow rate from pressure loss"
     annotation (Placement(transformation(extent={{-24,-4},{24,44}})));
 

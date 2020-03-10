@@ -5,81 +5,81 @@ model dp_roundTube_DP "Verification of function dp_roundTube_DP"
   parameter Integer n=4 "Number of various fin geometries";
 
   //heat exchanger variables
-  parameter Modelica.SIunits.Area A_fr=0.1 "Frontal area";
+  parameter Modelica.Units.SI.Area A_fr=0.1 "Frontal area";
 
   //heat exchanger variables geometry no.1
 
-  parameter Modelica.SIunits.Length D_c_1=0.01023 "Fin collar diameter";
-  parameter Modelica.SIunits.Length F_p_1=0.00177
+  parameter Modelica.Units.SI.Length D_c_1=0.01023 "Fin collar diameter";
+  parameter Modelica.Units.SI.Length F_p_1=0.00177
     "Fin pitch, fin spacing + fin thickness";
-  parameter Modelica.SIunits.Length L_1=N_1*P_l_1 "Heat exchanger length";
+  parameter Modelica.Units.SI.Length L_1=N_1*P_l_1 "Heat exchanger length";
   parameter Integer N_1=2 "Number of tube rows";
-  parameter Modelica.SIunits.Length P_l_1=0.022 "Longitudinal tube pitch";
-  parameter Modelica.SIunits.Length P_t_1=0.0254 "Transverse tube pitch";
+  parameter Modelica.Units.SI.Length P_l_1=0.022 "Longitudinal tube pitch";
+  parameter Modelica.Units.SI.Length P_t_1=0.0254 "Transverse tube pitch";
 
-  parameter Modelica.SIunits.Length delta_f_1=0.0002 "Fin thickness";
+  parameter Modelica.Units.SI.Length delta_f_1=0.0002 "Fin thickness";
 
   //heat exchanger variables geometry no.2
 
-  parameter Modelica.SIunits.Length D_c_2=0.01042 "Fin collar diameter";
-  parameter Modelica.SIunits.Length F_p_2=0.00205
+  parameter Modelica.Units.SI.Length D_c_2=0.01042 "Fin collar diameter";
+  parameter Modelica.Units.SI.Length F_p_2=0.00205
     "Fin pitch, fin spacing + fin thickness";
-  parameter Modelica.SIunits.Length L_2=N_2*P_l_2 "Heat exchanger length";
-  parameter Modelica.SIunits.Length L_h_2=0.0014 "Louver height";
-  parameter Modelica.SIunits.Length L_p_2=0.0024 "Louver pitch";
+  parameter Modelica.Units.SI.Length L_2=N_2*P_l_2 "Heat exchanger length";
+  parameter Modelica.Units.SI.Length L_h_2=0.0014 "Louver height";
+  parameter Modelica.Units.SI.Length L_p_2=0.0024 "Louver pitch";
   parameter Integer N_2=2 "Number of tube rows";
-  parameter Modelica.SIunits.Length P_l_2=0.01905 "Longitudinal tube pitch";
-  parameter Modelica.SIunits.Length P_t_2=0.0254 "Transverse tube pitch";
+  parameter Modelica.Units.SI.Length P_l_2=0.01905 "Longitudinal tube pitch";
+  parameter Modelica.Units.SI.Length P_t_2=0.0254 "Transverse tube pitch";
 
-  parameter Modelica.SIunits.Length delta_f_2=0.0001 "Fin thickness";
+  parameter Modelica.Units.SI.Length delta_f_2=0.0001 "Fin thickness";
 
   //heat exchanger variables geometry no.3
 
-  parameter Modelica.SIunits.Length D_c_3=0.01034 "Fin collar diameter";
-  parameter Modelica.SIunits.Length F_p_3=0.00246
+  parameter Modelica.Units.SI.Length D_c_3=0.01034 "Fin collar diameter";
+  parameter Modelica.Units.SI.Length F_p_3=0.00246
     "Fin pitch, fin spacing + fin thickness";
-  parameter Modelica.SIunits.Length L_3=N_3*P_l_3 "Heat exchanger length";
+  parameter Modelica.Units.SI.Length L_3=N_3*P_l_3 "Heat exchanger length";
   parameter Integer N_3=2 "Number of tube rows";
-  parameter Modelica.SIunits.Length P_l_3=0.022 "Longitudinal tube pitch";
-  parameter Modelica.SIunits.Length P_t_3=0.0254 "Transverse tube pitch";
+  parameter Modelica.Units.SI.Length P_l_3=0.022 "Longitudinal tube pitch";
+  parameter Modelica.Units.SI.Length P_t_3=0.0254 "Transverse tube pitch";
 
-  parameter Modelica.SIunits.Length delta_f_3=0.00012 "Fin thickness";
+  parameter Modelica.Units.SI.Length delta_f_3=0.00012 "Fin thickness";
 
   //heat exchanger variables geometry no.4
 
-  parameter Modelica.SIunits.Length D_c_4=0.0103 "Fin collar diameter";
-  parameter Modelica.SIunits.Length F_p_4=0.00169
+  parameter Modelica.Units.SI.Length D_c_4=0.0103 "Fin collar diameter";
+  parameter Modelica.Units.SI.Length F_p_4=0.00169
     "Fin pitch, fin spacing + fin thickness";
-  parameter Modelica.SIunits.Length L_4=N_4*P_l_4 "Heat exchanger length";
+  parameter Modelica.Units.SI.Length L_4=N_4*P_l_4 "Heat exchanger length";
   parameter Integer N_4=2 "Number of tube rows";
-  parameter Modelica.SIunits.Length P_d_4=0.0015
+  parameter Modelica.Units.SI.Length P_d_4=0.0015
     "Pattern depth of wavy fin, wave height";
-  parameter Modelica.SIunits.Length P_l_4=0.01905 "Longitudinal tube pitch";
-  parameter Modelica.SIunits.Length P_t_4=0.0254 "Transverse tube pitch";
-  parameter Modelica.SIunits.Length X_f_4=0.0047625
+  parameter Modelica.Units.SI.Length P_l_4=0.01905 "Longitudinal tube pitch";
+  parameter Modelica.Units.SI.Length P_t_4=0.0254 "Transverse tube pitch";
+  parameter Modelica.Units.SI.Length X_f_4=0.0047625
     "Half wave length of wavy fin";
 
-  parameter Modelica.SIunits.Length delta_f_4=0.0001 "Fin thickness";
+  parameter Modelica.Units.SI.Length delta_f_4=0.0001 "Fin thickness";
 
   //fluid property variables
-  Modelica.SIunits.DynamicViscosity eta=18.2e-6 "Dynamic viscosity of fluid";
-  Modelica.SIunits.Density rho=1.19 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=18.2e-6 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1.19 "Density of fluid";
 
   //input VARIABLES
-  Modelica.SIunits.ReynoldsNumber Re=input_Re.y "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re=input_Re.y "Reynolds number"
     annotation (Dialog(group="Input"));
-  Modelica.SIunits.ReynoldsNumber m_flow_1=abs(Re)*eta*A_c[1]/D_c_1 "mass flow"
-    annotation (Dialog(group="Input"));
-  Modelica.SIunits.ReynoldsNumber m_flow_2=abs(Re)*eta*A_c[2]/D_c_2 "mass flow"
-    annotation (Dialog(group="Input"));
-  Modelica.SIunits.ReynoldsNumber m_flow_3=abs(Re)*eta*A_c[3]/D_c_3 "mass flow"
-    annotation (Dialog(group="Input"));
-  Modelica.SIunits.ReynoldsNumber m_flow_4=abs(Re)*eta*A_c[4]/D_c_4 "mass flow"
-    annotation (Dialog(group="Input"));
+  Modelica.Units.SI.ReynoldsNumber m_flow_1=abs(Re)*eta*A_c[1]/D_c_1
+    "mass flow" annotation (Dialog(group="Input"));
+  Modelica.Units.SI.ReynoldsNumber m_flow_2=abs(Re)*eta*A_c[2]/D_c_2
+    "mass flow" annotation (Dialog(group="Input"));
+  Modelica.Units.SI.ReynoldsNumber m_flow_3=abs(Re)*eta*A_c[3]/D_c_3
+    "mass flow" annotation (Dialog(group="Input"));
+  Modelica.Units.SI.ReynoldsNumber m_flow_4=abs(Re)*eta*A_c[4]/D_c_4
+    "mass flow" annotation (Dialog(group="Input"));
 
   //output variables
-  Modelica.SIunits.Pressure DP[n] "Pressure loss in [bar]"
-                                    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "Pressure loss in [bar]"
+    annotation (Dialog(group="Output"));
   Real zeta_TOT[n]={2*abs(DP[i])/(max(rho*(v_c[i])^2, MIN)) for i in 1:n}
     "Pressure loss coefficients" annotation (Dialog(group="Output"));
   Real lambda_FRI[n]={zeta_TOT[i]*D_h[i]/L[i] for i in 1:n}
@@ -90,20 +90,20 @@ model dp_roundTube_DP "Verification of function dp_roundTube_DP"
 protected
   constant Real MIN=Modelica.Constants.eps;
 
-  Modelica.SIunits.Velocity v_c[n]={abs(Re)*eta/(rho*D_c_1),abs(Re)*eta/(rho*
+  Modelica.Units.SI.Velocity v_c[n]={abs(Re)*eta/(rho*D_c_1),abs(Re)*eta/(rho*
       D_c_2),abs(Re)*eta/(rho*D_c_3),abs(Re)*eta/(rho*D_c_4)}
     "Velocity at minimum flow cross-sectional area";
 
-  Modelica.SIunits.Area A_c[n]={A_fr*((F_p_1*P_t_1 - F_p_1*D_c_1 - (P_t_1 -
+  Modelica.Units.SI.Area A_c[n]={A_fr*((F_p_1*P_t_1 - F_p_1*D_c_1 - (P_t_1 -
       D_c_1)*delta_f_1)/(F_p_1*P_t_1)),A_fr*((F_p_2*P_t_2 - F_p_2*D_c_2 - (
       P_t_2 - D_c_2)*delta_f_2)/(F_p_2*P_t_2)),A_fr*((F_p_3*P_t_3 - F_p_3*D_c_3
        - (P_t_3 - D_c_3)*delta_f_3)/(F_p_3*P_t_3)),A_fr*((F_p_4*P_t_4 - F_p_4*
       D_c_4 - (P_t_4 - D_c_4)*delta_f_4)/(F_p_4*P_t_4))}
     "Minimum flow cross-sectional area";
 
-  Modelica.SIunits.Area A_tot[n]={A_fr*((N_1*Modelica.Constants.pi*D_c_1*(F_p_1
-       - delta_f_1) + 2*(P_t_1*L_1 - N_1*Modelica.Constants.pi*D_c_1^2/4))/(
-      P_t_1*F_p_1)),A_fr*((N_2*Modelica.Constants.pi*D_c_2*(F_p_2 - delta_f_2)
+  Modelica.Units.SI.Area A_tot[n]={A_fr*((N_1*Modelica.Constants.pi*D_c_1*(
+      F_p_1 - delta_f_1) + 2*(P_t_1*L_1 - N_1*Modelica.Constants.pi*D_c_1^2/4))
+      /(P_t_1*F_p_1)),A_fr*((N_2*Modelica.Constants.pi*D_c_2*(F_p_2 - delta_f_2)
        + 2*(P_t_2*L_2 - N_2*Modelica.Constants.pi*D_c_2^2/4))/(P_t_2*F_p_2)),
       A_fr*((N_3*Modelica.Constants.pi*D_c_3*(F_p_3 - delta_f_3) + 2*(P_t_3*L_3
        - N_3*Modelica.Constants.pi*D_c_3^2/4))/(P_t_3*F_p_3)),A_fr*((N_4*
@@ -111,10 +111,10 @@ protected
       Modelica.Constants.pi*D_c_4^2/4)*(sqrt(X_f_4^2 + P_d_4^2)/X_f_4))/(P_t_4*
       F_p_4))} "Total heat transfer area";
 
-  Modelica.SIunits.Length D_h[n]={4*A_c[i]*L[i]/A_tot[i] for i in 1:n}
+  Modelica.Units.SI.Length D_h[n]={4*A_c[i]*L[i]/A_tot[i] for i in 1:n}
     "Hydraulic diameter";
 
-  Modelica.SIunits.Length L[n]={L_1,L_2,L_3,L_4} "Heat exchanger length";
+  Modelica.Units.SI.Length L[n]={L_1,L_2,L_3,L_4} "Heat exchanger length";
 
   FluidDissipation.PressureLoss.HeatExchanger.dp_roundTube_IN_con
     m_flow_IN_con_1(

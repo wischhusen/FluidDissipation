@@ -1,6 +1,6 @@
 within FluidDissipation.Examples.TestCases;
 model EngineFeedingSystem "Test cases of an aircraft engine feeding system"
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   inner Modelica.Fluid.System system(
     p_ambient(displayUnit="Pa") = 100000,
     m_flow_small=0.01)       annotation (Placement(transformation(extent={{80, -100}, {100, -80}})));

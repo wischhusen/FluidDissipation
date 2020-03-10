@@ -7,15 +7,15 @@ model ThickEdgedOverallFlowModel
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Orifice.BaseOrificePL.BaseOrificeModel;
 
   //pressure loss parameter
-  SI.Area A_0=0.1*A_1 "Cross sectional area of vena contraction"
+  Modelica.Units.SI.Area A_0=0.1*A_1 "Cross sectional area of vena contraction"
     annotation (Dialog(group="Orifice"));
-  parameter SI.Area A_1=PI*0.01^2/4 "Small cross sectional area of orifice"
+  parameter Modelica.Units.SI.Area A_1=PI*0.01^2/4
+    "Small cross sectional area of orifice" annotation (Dialog(group="Orifice"));
+  parameter Modelica.Units.SI.Length C_0=0.1*C_1
+    "Perimeter of vena contraction" annotation (Dialog(group="Orifice"));
+  parameter Modelica.Units.SI.Length C_1=PI*0.01 "Small perimeter of orifice"
     annotation (Dialog(group="Orifice"));
-  parameter SI.Length C_0=0.1*C_1 "Perimeter of vena contraction"
-    annotation (Dialog(group="Orifice"));
-  parameter SI.Length C_1=PI*0.01 "Small perimeter of orifice"
-    annotation (Dialog(group="Orifice"));
-  parameter SI.Length L=1e-3 "Length of vena contraction"
+  parameter Modelica.Units.SI.Length L=1e-3 "Length of vena contraction"
     annotation (Dialog(group="Orifice"));
 
   FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Orifice.ThickEdgedOverall.PressureLossInput_con
@@ -31,7 +31,7 @@ model ThickEdgedOverallFlowModel
     IN_var(eta=eta, rho=rho)
     annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
 
-  parameter SI.Pressure dp_smooth=1
+  parameter Modelica.Units.SI.Pressure dp_smooth=1
     "Start linearisation for decreasing pressure loss"
     annotation (Dialog(group="Numerical aspects"));
 equation

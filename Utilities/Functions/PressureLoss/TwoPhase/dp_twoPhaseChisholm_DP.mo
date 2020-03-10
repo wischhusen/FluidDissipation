@@ -9,10 +9,11 @@ function dp_twoPhaseChisholm_DP
     annotation (Dialog(group="Constant inputs"));
   input FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var IN_var
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
-  output SI.Pressure DP "Output for function dp_twoPhaseChisholm_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_twoPhaseChisholm_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;

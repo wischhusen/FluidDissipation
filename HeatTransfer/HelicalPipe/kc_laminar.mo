@@ -14,12 +14,13 @@ function kc_laminar
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Convective heat transfer coefficient"
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Convective heat transfer coefficient" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number"
     annotation (Dialog(group="Output"));
-  output SI.PrandtlNumber Pr "Prandtl number" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  output SI.NusseltNumber Nu "Nusselt number"
+  output Modelica.Units.SI.NusseltNumber Nu "Nusselt number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -28,18 +29,19 @@ function kc_laminar
 protected
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
-  SI.Diameter d_s=IN_con.L/(IN_con.n_nt*PI) "Mean coil diameter";
-  SI.Diameter d_w=sqrt(max(MIN, (d_s^2 - (IN_con.h/PI)^2)))
+  Modelica.Units.SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_s=IN_con.L/(IN_con.n_nt*PI) "Mean coil diameter";
+  Modelica.Units.SI.Diameter d_w=sqrt(max(MIN, (d_s^2 - (IN_con.h/PI)^2)))
     "Mean helical pipe diameter";
-  SI.Diameter d_coil=max(d_w, d_w*(1 + (IN_con.h/(PI*d_w))^2))
+  Modelica.Units.SI.Diameter d_coil=max(d_w, d_w*(1 + (IN_con.h/(PI*d_w))^2))
     "Mean curvature diameter of helical pipe";
-  SI.ReynoldsNumber Re_crit=2300*(1 + 8.6*(IN_con.d_hyd/d_coil)^0.45)
-    "Critical Reynolds number";
+  Modelica.Units.SI.ReynoldsNumber Re_crit=2300*(1 + 8.6*(IN_con.d_hyd/d_coil)^
+      0.45) "Critical Reynolds number";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity";
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity";
 
   //failure status
   Real fstatus[1] "Check of expected boundary conditions";

@@ -3,7 +3,7 @@ function dp_Tjunction "pressure loss of general T-junction"
   extends Modelica.Icons.Function;
 
   import FD = FluidDissipation.PressureLoss.Junction;
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import PI = Modelica.Constants.pi;
   import SMOOTH = FluidDissipation.Utilities.Functions.General.Stepsmoother;
 
@@ -16,7 +16,7 @@ function dp_Tjunction "pressure loss of general T-junction"
     "input record for function dp_Tjunction"
     annotation (Placement(transformation(extent={{-80,12},{-60,32}})));
 
-  input SI.MassFlowRate m_flow[3]
+  input Modelica.Units.SI.MassFlowRate m_flow[3]
     "mass flow rate in passages [left,right,bottom] | (pos == flow into component)"
     annotation (Dialog(group="Input"));
   /*input SI.Pressure p_junction[4] 
@@ -24,12 +24,12 @@ function dp_Tjunction "pressure loss of general T-junction"
     annotation (Dialog(group="Input"));*/
 
   //output variables
-  output SI.Pressure DP[3]
+  output Modelica.Units.SI.Pressure DP[3]
     "(thermodynamic) pressure loss [left-internal,internal-right,internal-bottom]"
     annotation (Dialog(group="Output"));
 
-  output SI.MassFlowRate M_FLOW[ 3] "mass flow rate [side,straight,total]"
-    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW[3]
+    "mass flow rate [side,straight,total]" annotation (Dialog(group="Output"));
 
   output TYP.LocalResistanceCoefficient zeta_LOC[2]
     "local resistance coefficient [side,straight]"
@@ -54,7 +54,7 @@ protected
   /*parameter Boolean caseRequest=IN_con.caseRequest 
     "true == case request depending on mass flow rates at ports (exact) | false == driving pressure difference (fast)";*/
 
-  parameter SI.Pressure dp_min=IN_con.dp_min
+  parameter Modelica.Units.SI.Pressure dp_min=IN_con.dp_min
     "restriction for smoothing while changing of fluid flow situation";
 
   //estimate fluid flow situation
@@ -118,17 +118,17 @@ protected
             {I[2, :],I[1, :],I[3, :]} else I "mass flow rate order operation";
 
   //convert mass flow rates from fixed geometry [left,right,bottom] to general fluid flow situation [total,straight,side]
-  SI.MassFlowRate mdot[3]=order*{m_flow[1],m_flow[2],m_flow[3]}
+  Modelica.Units.SI.MassFlowRate mdot[3]=order*{m_flow[1],m_flow[2],m_flow[3]}
     "mass flow rates at T-junction [total,straight,side]";
   //mass flow rates order for functional input
-  SI.MassFlowRate mdot_function[3]={mdot[3],mdot[2],mdot[1]}
+  Modelica.Units.SI.MassFlowRate mdot_function[3]={mdot[3],mdot[2],mdot[1]}
     "mass flow rates at T-junction [side,straight,total]";
 
   // SW 09.05.10: convert diameter vector:
   //hydraulic diameter order in function:
-  SI.Length d_hyd[3]=order*IN_con.d_hyd
+  Modelica.Units.SI.Length d_hyd[3]=order*IN_con.d_hyd
     "hydraulic diameters at T-junction [total,straight,side]";
-  SI.Length d_hyd_function[3]={d_hyd[3], d_hyd[2], d_hyd[1]}
+  Modelica.Units.SI.Length d_hyd_function[3]={d_hyd[3],d_hyd[2],d_hyd[1]}
     "hydraulic diameters at T-junction [side,straight,total]";
 
   //internal input record for functions
@@ -147,20 +147,20 @@ protected
   /*SI.Pressure intern_DP[3] 
     "(thermodynamic) pressure loss [left-internal,internal-right,internal-bottom]"
     annotation (Dialog(group="Output"));*/
-  SI.Pressure intern_DP[2]
+  Modelica.Units.SI.Pressure intern_DP[2]
     "(thermodynamic) pressure loss [left-internal,internal-right,internal-bottom]"
     annotation (Dialog(group="Output"));
 
-  SI.MassFlowRate intern_M_FLOW[3] "mass flow rate [side,straight,total]"
-    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate intern_M_FLOW[3]
+    "mass flow rate [side,straight,total]" annotation (Dialog(group="Output"));
 
   TYP.LocalResistanceCoefficient intern_zeta_LOC[2]
     "local resistance coefficient [side,straight]"
     annotation (Dialog(group="Output"));
 
-  SI.ReynoldsNumber intern_Re[3] "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber intern_Re[3] "Reynolds number"
     annotation (Dialog(group="Output"));
-  SI.PrandtlNumber intern_Pr "Prandtl number"
+  Modelica.Units.SI.PrandtlNumber intern_Pr "Prandtl number"
     annotation (Dialog(group="Output"));
 
   Real intern_cases[6]

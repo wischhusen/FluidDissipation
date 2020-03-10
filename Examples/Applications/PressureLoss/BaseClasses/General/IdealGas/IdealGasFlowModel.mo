@@ -12,18 +12,19 @@ model IdealGasFlowModel
   parameter Real Km=R_s*(2e3)/((10)^exp/rho_m)
     "Coefficient for pressure loss law [(Pa)^2/{(kg/s)^exp*K}]"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.SpecificHeatCapacity R_s=287
+  parameter Modelica.Units.SI.SpecificHeatCapacity R_s=287
     "Specific gas constant of ideal gas"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.Density rho_m=p_m/(R_s*T_m) "Mean density of ideal gas"
+  parameter Modelica.Units.SI.Density rho_m=p_m/(R_s*T_m)
+    "Mean density of ideal gas" annotation (Dialog(group="Generic variables"));
+  parameter Modelica.Units.SI.Temperature T_m=(293 + 293)/2
+    "Mean temperature of ideal gas"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.Temp_K T_m=(293 + 293)/2 "Mean temperature of ideal gas"
-    annotation (Dialog(group="Generic variables"));
-  parameter SI.Pressure p_m=(1e5 + 1e5)/2 "Mean pressure of ideal gas"
-    annotation (Dialog(group="Generic variables"));
+  parameter Modelica.Units.SI.Pressure p_m=(1e5 + 1e5)/2
+    "Mean pressure of ideal gas" annotation (Dialog(group="Generic variables"));
 
   //linearisation
-  parameter SI.Pressure dp_smooth=1e-3
+  parameter Modelica.Units.SI.Pressure dp_smooth=1e-3
     "Start linearisation for decreasing pressure loss"
     annotation (Dialog(group="Linearisation"));
 

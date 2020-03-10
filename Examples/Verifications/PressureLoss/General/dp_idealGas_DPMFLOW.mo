@@ -20,23 +20,26 @@ model dp_idealGas_DPMFLOW
     "Coefficient for pressure loss law [(Pa)^2/{(kg/s)^exp*K}]";
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacity R_s=287
+  parameter Modelica.Units.SI.SpecificHeatCapacity R_s=287
     "Specific gas constant of ideal gas";
-  parameter SI.Density rho_m=p_m/(R_s*T_m) "Mean density of ideal gas";
-  parameter SI.Temp_K T_m=(293 + 293)/2 "Mean temperature of ideal gas";
-  parameter SI.Pressure p_m=(1e5 + 1e5)/2 "Mean pressure of ideal gas";
+  parameter Modelica.Units.SI.Density rho_m=p_m/(R_s*T_m)
+    "Mean density of ideal gas";
+  parameter Modelica.Units.SI.Temperature T_m=(293 + 293)/2
+    "Mean temperature of ideal gas";
+  parameter Modelica.Units.SI.Pressure p_m=(1e5 + 1e5)/2
+    "Mean pressure of ideal gas";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
 
   //intended output variables for records
-  SI.MassFlowRate M_FLOW[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
+  Modelica.Units.SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
     "(Output) pressure loss (for intended incompressible case)";
 
   //input record

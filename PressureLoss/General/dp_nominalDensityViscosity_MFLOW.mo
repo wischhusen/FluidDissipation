@@ -14,10 +14,11 @@ function dp_nominalDensityViscosity_MFLOW
     IN_var "Input record for function dp_nominalDensityViscosity_MFLOW"
     annotation (Dialog(group="Variable inputs"));
 
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW
+  output Modelica.Units.SI.MassFlowRate M_FLOW
     "Output for function dp_nominalDensityViscosity_MFLOW";
 
   //Documentation

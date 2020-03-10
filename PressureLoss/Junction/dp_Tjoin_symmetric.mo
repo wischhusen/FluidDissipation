@@ -6,7 +6,7 @@ function dp_Tjoin_symmetric
   //page 471, diagram 7-29
   //Notation of equations according to SOURCE
 
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import PI = Modelica.Constants.pi;
   import SMOOTH = FluidDissipation.Utilities.Functions.General.SmoothPower;
   import SMOOTH_2 = FluidDissipation.Utilities.Functions.General.Stepsmoother;
@@ -18,24 +18,24 @@ function dp_Tjoin_symmetric
   input FluidDissipation.PressureLoss.Junction.dp_Tjoin_symmetric_IN_var IN_var
     "input record for function dp_Tjoin_symmetric"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow[3]
+  input Modelica.Units.SI.MassFlowRate m_flow[3]
     "mass flow rate in passages [left-bottom,right-bottom,total]"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP[2]
+  output Modelica.Units.SI.Pressure DP[2]
     "(thermodynamic) pressure loss [left-bottom,right-bottom]"
     annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW[3]
+  output Modelica.Units.SI.MassFlowRate M_FLOW[3]
     "mass flow rate [left-bottom,right-bottom,total]"
     annotation (Dialog(group="Output"));
   output TYP.LocalResistanceCoefficient zeta_LOC[2]
     "local resistance coefficient [left-bottom,right-bottom]"
     annotation (Dialog(group="Output"));
   // Re has no meaning for this function
-  final output SI.ReynoldsNumber Re[3] = zeros(3) "Reynolds number"
-    annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.ReynoldsNumber Re[3]=zeros(3)
+    "Reynolds number" annotation (Dialog(group="Output"));
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -51,17 +51,17 @@ protected
     max=90) = max(min(IN_con.alpha, 90), 0) "angle of branching";*/
    Real alpha = max(min(IN_con.alpha, 90), 0) "angle of branching";
 
-  parameter SI.Diameter d_hyd[3]={IN_con.d_hyd[1],IN_con.d_hyd[2],IN_con.d_hyd[3]}
-    "hydraulic diameter [left,right,bottom]";
-  parameter SI.Area A_cross[3]=PI/4*{d_hyd[i]^2 for i in 1:3}
+  parameter Modelica.Units.SI.Diameter d_hyd[3]={IN_con.d_hyd[1],IN_con.d_hyd[2],
+      IN_con.d_hyd[3]} "hydraulic diameter [left,right,bottom]";
+  parameter Modelica.Units.SI.Area A_cross[3]=PI/4*{d_hyd[i]^2 for i in 1:3}
     "crossectional area of branches [left,right,bottom]";
-  parameter SI.Area frac_Across[2]={A_cross[i]/A_cross[3] for i in 1:2}
-    "[left/bottom,right/bottom]";
+  parameter Modelica.Units.SI.Area frac_Across[2]={A_cross[i]/A_cross[3] for i
+       in 1:2} "[left/bottom,right/bottom]";
 
   //limitations
-  parameter SI.MassFlowRate m_flow_min=abs(IN_con.m_flow_min)
+  parameter Modelica.Units.SI.MassFlowRate m_flow_min=abs(IN_con.m_flow_min)
     "minimal mass flow rate for linear interpolation";
-  parameter SI.Velocity v_max=abs(IN_con.v_max)
+  parameter Modelica.Units.SI.Velocity v_max=abs(IN_con.v_max)
     "maximal velocity of fluid flow";
   parameter Real zeta_LOC_max=abs(IN_con.zeta_TOT_max)
     "maximum local resistance coefficient";
@@ -71,14 +71,15 @@ protected
   //parameter of T-join
   Real A[2] "parameter of T-join";
 
-  SI.Velocity velocity[3]={min(abs(m_flow[i])/(IN_var.rho*A_cross[i]),
-      v_max) for i in 1:3} "average fluid flow velocity [left,right,bottom]";
+  Modelica.Units.SI.Velocity velocity[3]={min(abs(m_flow[i])/(IN_var.rho*
+      A_cross[i]), v_max) for i in 1:3}
+    "average fluid flow velocity [left,right,bottom]";
   Real frac_v[2]={min(velocity[1]/max(velocity[3], minimum), 100),min(
       velocity[2]/max(velocity[3], minimum), 100)} "[left/bottom,right/bottom]";
-  SI.Velocity frac_v_inv[2]={abs(velocity[3])/max(abs(velocity[i]),
+  Modelica.Units.SI.Velocity frac_v_inv[2]={abs(velocity[3])/max(abs(velocity[i]),
       minimum) for i in 1:2} "[bottom/left,bottom/right]";
-  SI.VolumeFlowRate V_flow[3]={abs(m_flow[1]),abs(m_flow[2]),abs(m_flow[
-      3])}/IN_var.rho "volume flow rate [left,right,bottom]";
+  Modelica.Units.SI.VolumeFlowRate V_flow[3]={abs(m_flow[1]),abs(m_flow[2]),abs(
+      m_flow[3])}/IN_var.rho "volume flow rate [left,right,bottom]";
   Real frac_Vflow[2]={min(V_flow[i]/max(V_flow[3], minimum), 1) for i in
       1:2} "[left/bottom,right/bottom]";
 
@@ -93,11 +94,11 @@ protected
           1:2} "dynamic pressure difference [left-bottom,right-bottom]";
 
   //(total) pressure loss
-  SI.Pressure dp_LOC_left "[left-bottom]";
-  SI.Pressure dp_LOC_right "[right-bottom]";
+  Modelica.Units.SI.Pressure dp_LOC_left "[left-bottom]";
+  Modelica.Units.SI.Pressure dp_LOC_right "[right-bottom]";
 
   //(thermodynamic) pressure loss
-  SI.Pressure dp[2] "[left-bottom,right-bottom]";
+  Modelica.Units.SI.Pressure dp[2] "[left-bottom,right-bottom]";
 
   //failure status
   Real fstatus[4] "check of expected boundary conditions";

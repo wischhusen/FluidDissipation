@@ -15,21 +15,23 @@ function dp_suddenChange_MFLOW
   input FluidDissipation.PressureLoss.Orifice.dp_suddenChange_IN_var IN_var
     "Input record for function dp_suddenChange_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Output for function dp_suddenChange_MFLOW";
+  output Modelica.Units.SI.MassFlowRate M_FLOW
+    "Output for function dp_suddenChange_MFLOW";
 
 protected
   Real MIN=Modelica.Constants.eps;
-  SI.Pressure dp_min=100 "Pressure loss for linear smoothing";
+  Modelica.Units.SI.Pressure dp_min=100 "Pressure loss for linear smoothing";
   //restriction of local resistance coefficient zeta_LOC >> numerical improvement
   TYP.LocalResistanceCoefficient zeta_LOC_min=1e-3
     "Minimal local resistance coefficient";
 
-  SI.Area A_1=max(MIN, min(IN_con.A_1, IN_con.A_2))
+  Modelica.Units.SI.Area A_1=max(MIN, min(IN_con.A_1, IN_con.A_2))
     "Small cross sectional area of orifice";
-  SI.Area A_2=max(MIN, max(IN_con.A_1, IN_con.A_2))
+  Modelica.Units.SI.Area A_2=max(MIN, max(IN_con.A_1, IN_con.A_2))
     "Large cross sectional area of orifice";
 
   //sudden expansion  :  SOURCE_1, section 4, diagram 4-1, page 208

@@ -13,11 +13,11 @@ function dp_severalGeometryOverall_DP
   input FluidDissipation.PressureLoss.Valve.dp_severalGeometryOverall_IN_var IN_var
     "Input record for function dp_severalGeometryOverall_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Pressure loss";
+  output Modelica.Units.SI.Pressure DP "Pressure loss";
 
   import TYP1 = FluidDissipation.Utilities.Types.ValveCoefficient;
   import TYP2 = FluidDissipation.Utilities.Types.ValveGeometry;
@@ -25,10 +25,10 @@ function dp_severalGeometryOverall_DP
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area Av=if IN_con.valveCoefficient == TYP1.AV then IN_con.Av else if
-      IN_con.valveCoefficient == TYP1.KV then IN_con.Kv*27.7e-6 else if IN_con.valveCoefficient
-       == TYP1.CV then IN_con.Cv*24e-6 else if IN_con.valveCoefficient == TYP1.OP then
-            IN_con.m_flow_nominal*(IN_var.opening/max(MIN, IN_con.opening_nominal)
+  Modelica.Units.SI.Area Av=if IN_con.valveCoefficient == TYP1.AV then IN_con.Av
+       else if IN_con.valveCoefficient == TYP1.KV then IN_con.Kv*27.7e-6 else
+      if IN_con.valveCoefficient == TYP1.CV then IN_con.Cv*24e-6 else if IN_con.valveCoefficient
+       == TYP1.OP then IN_con.m_flow_nominal*(IN_var.opening/max(MIN, IN_con.opening_nominal)
       *(IN_con.rho_nominal*IN_con.dp_nominal)^0.5) else MIN
     "Av (metric) flow coefficient [Av]=m^2";
 
@@ -79,8 +79,8 @@ protected
       abs(zeta_tot)))))^0.5
     "Valve characteristic considering opening of chosen valve";
 
-  SI.MassFlowRate m_flow_small=valveCharacteristic*Av*(IN_var.rho)^0.5*(IN_con.dp_small)
-      ^0.5 "Mass flow rate at linearisation";
+  Modelica.Units.SI.MassFlowRate m_flow_small=valveCharacteristic*Av*(IN_var.rho)
+      ^0.5*(IN_con.dp_small)^0.5 "Mass flow rate at linearisation";
 
   //Documentation
 

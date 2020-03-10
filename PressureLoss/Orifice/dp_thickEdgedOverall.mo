@@ -16,14 +16,15 @@ function dp_thickEdgedOverall
     "Target variable of calculation" annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW "mass flow rate"
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
     annotation (Dialog(group="Output"));
   output Utilities.Types.PressureLossCoefficient zeta_TOT
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -32,15 +33,15 @@ function dp_thickEdgedOverall
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, IN_con.A_1)
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.A_1)
     "Cross sectional area of large cross sectional area";
-  SI.Diameter d_hyd_0=4*IN_con.A_0/max(MIN, IN_con.C_0)
+  Modelica.Units.SI.Diameter d_hyd_0=4*IN_con.A_0/max(MIN, IN_con.C_0)
     "Hydraulic diameter of vena contraction";
-  SI.Diameter d_hyd_1=4*A_cross/max(MIN, IN_con.C_1)
+  Modelica.Units.SI.Diameter d_hyd_1=4*A_cross/max(MIN, IN_con.C_1)
     "Hydraulic diameter of large cross sectional area";
 
-  SI.ReynoldsNumber Re_0 "Reynolds number in vena contraction";
-  SI.Velocity velocity "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re_0 "Reynolds number in vena contraction";
+  Modelica.Units.SI.Velocity velocity "Mean velocity";
 
   //failure status
   Real fstatus[2] "Check of expected boundary conditions";

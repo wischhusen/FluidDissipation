@@ -49,21 +49,22 @@ model ChannelHeatTransferModel
   parameter FluidDissipation.Utilities.Types.FluidFlowRegime fluidFlowRegime=
       FluidDissipation.Utilities.Types.FluidFlowRegime.Overall
     "Choice of fluid flow regime" annotation (Dialog(group="Heat transfer"));
-  parameter SI.Length h=0.1 "Height of cross sectional area"
+  parameter Modelica.Units.SI.Length h=0.1 "Height of cross sectional area"
     annotation (Dialog(group="Even gap"));
-  parameter SI.Length s=0.01
+  parameter Modelica.Units.SI.Length s=0.01
     "Distance between parallel plates in cross sectional area"
     annotation (Dialog(group="Even gap"));
-  parameter SI.Length L=1 "Overflowed length of gap"
+  parameter Modelica.Units.SI.Length L=1 "Overflowed length of gap"
     annotation (Dialog(group="Even gap"));
 
   //input
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //target
   Real kc "Mean convective heat transfer coefficient for channel";
-  SI.HeatFlowRate Q_flow=thermalPort.Q_flow "Heat flow rate over boundary";
+  Modelica.Units.SI.HeatFlowRate Q_flow=thermalPort.Q_flow
+    "Heat flow rate over boundary";
 
   //thermodynamic state from (missing) volume
   //outer Medium.ThermodynamicState state;
@@ -87,24 +88,26 @@ model ChannelHeatTransferModel
     annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
 
   //For information
-  SI.Diameter d_hyd=2*s "Hydraulic diameter of (finite) gap";
-  SI.Area A_kc=2*(s+h)*L
+  Modelica.Units.SI.Diameter d_hyd=2*s "Hydraulic diameter of (finite) gap";
+  Modelica.Units.SI.Area A_kc=2*(s + h)*L
     "Heat transfer area for convective heat transfer coefficient (kc)";
-  SI.Area A_cross=s*h "cross sectional area";
+  Modelica.Units.SI.Area A_cross=s*h "cross sectional area";
 
   //fluid properties
 protected
-  SI.SpecificHeatCapacityAtConstantPressure cp=Medium.heatCapacity_cp(
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=
+      Medium.heatCapacity_cp(stateForHeatTransfer.state);
+  Modelica.Units.SI.DynamicViscosity eta=Medium.dynamicViscosity(
       stateForHeatTransfer.state);
-  SI.DynamicViscosity eta=Medium.dynamicViscosity(stateForHeatTransfer.state);
-  SI.ThermalConductivity lambda=Medium.thermalConductivity(stateForHeatTransfer.state);
-  SI.Density rho=Medium.density(stateForHeatTransfer.state);
-  SI.Temp_K T=Medium.temperature(stateForHeatTransfer.state);
+  Modelica.Units.SI.ThermalConductivity lambda=Medium.thermalConductivity(
+      stateForHeatTransfer.state);
+  Modelica.Units.SI.Density rho=Medium.density(stateForHeatTransfer.state);
+  Modelica.Units.SI.Temperature T=Medium.temperature(stateForHeatTransfer.state);
 
-  SI.Velocity velocity=abs(m_flow)/max(Modelica.Constants.eps, (rho*A_cross))
-    "Mean velocity";
-  SI.ReynoldsNumber Re=rho*velocity*d_hyd/eta;
-  SI.NusseltNumber Nu=kc*d_hyd/lambda;
+  Modelica.Units.SI.Velocity velocity=abs(m_flow)/max(Modelica.Constants.eps, (
+      rho*A_cross)) "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=rho*velocity*d_hyd/eta;
+  Modelica.Units.SI.NusseltNumber Nu=kc*d_hyd/lambda;
 
 equation
   if fluidFlowRegime == FluidDissipation.Utilities.Types.FluidFlowRegime.Laminar then

@@ -1,16 +1,17 @@
 within FluidDissipation.Utilities.Functions.General;
 function PrandtlNumber "calculation of Prandtl number"
   extends Modelica.Icons.Function;
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import MIN = Modelica.Constants.eps;
 
   //fluid properties
-  input SI.SpecificHeatCapacityAtConstantPressure cp
+  input Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp
     "specific heat capacity of fluid at constant pressure";
-  input SI.DynamicViscosity eta "dynamic viscosity of fluid";
-  input SI.ThermalConductivity lambda "thermal conductivity of fluid";
+  input Modelica.Units.SI.DynamicViscosity eta "dynamic viscosity of fluid";
+  input Modelica.Units.SI.ThermalConductivity lambda
+    "thermal conductivity of fluid";
 
-  output SI.PrandtlNumber Pr "Prandtl number";
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number";
 
 algorithm
   Pr := eta*cp/max(MIN, lambda);

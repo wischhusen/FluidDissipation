@@ -2,27 +2,29 @@ within FluidDissipation.Examples.Verifications.HeatTransfer.Channel;
 model kc_evenGapTurbulent_KC "Verification of function kc_evenGapTurbulent_KC"
 
   parameter Integer n=size(cp, 1);
-  parameter SI.Diameter d_hyd=2*s;
+  parameter Modelica.Units.SI.Diameter d_hyd=2*s;
 
-  SI.Velocity velocity[n]={m_flow[i]/(rho[i]*h*s) for i in 1:n};
+  Modelica.Units.SI.Velocity velocity[n]={m_flow[i]/(rho[i]*h*s) for i in 1:n};
 
   //even gap variables
-  parameter SI.Length h=0.1 "Height of cross sectional area"
+  parameter Modelica.Units.SI.Length h=0.1 "Height of cross sectional area"
     annotation (Dialog(group="Geometry"));
-  parameter SI.Length s=0.05
+  parameter Modelica.Units.SI.Length s=0.05
     "Distance between parallel plates in cross sectional area"
     annotation (Dialog(group="Geometry"));
-  parameter SI.Length L=1 "Overflowed length of gap"
+  parameter Modelica.Units.SI.Length L=1 "Overflowed length of gap"
     annotation (Dialog(group="Geometry"));
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp[:]={1007,4189,3384.550}
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[:]={
+      1007,4189,3384.550}
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
+  parameter Modelica.Units.SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
     "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,0.387}
-    "Thermal conductivity of fluid";
-  parameter SI.Density rho[:]={1.188,998.21,1037.799} "Density of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,
+      0.387} "Thermal conductivity of fluid";
+  parameter Modelica.Units.SI.Density rho[:]={1.188,998.21,1037.799}
+    "Density of fluid";
 
   //target variables
   //here: mass flow rate as input for normal calculation
@@ -32,9 +34,10 @@ model kc_evenGapTurbulent_KC "Verification of function kc_evenGapTurbulent_KC"
    SI.NusseltNumber Nu[n]={kc[i]*d_hyd/lambda[i] for i in 1:n};*/
 
   //here: Nusselt number as input for reverse calculation
-  SI.NusseltNumber Nu[n]=ones(n)*input_Nu.y;
-  SI.MassFlowRate m_flow[3](start=ones(n)*1e-2);
-  SI.CoefficientOfHeatTransfer kc_OUT_1[n]={Nu[i]*lambda[i]/d_hyd for i in 1:n};
+  Modelica.Units.SI.NusseltNumber Nu[n]=ones(n)*input_Nu.y;
+  Modelica.Units.SI.MassFlowRate m_flow[3](start=ones(n)*1e-2);
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_OUT_1[n]={Nu[i]*lambda[i]/
+      d_hyd for i in 1:n};
 
   //input record
   FluidDissipation.HeatTransfer.Channel.kc_evenGapTurbulent_IN_con m_flow_IN_con_1[n](
@@ -49,8 +52,8 @@ model kc_evenGapTurbulent_KC "Verification of function kc_evenGapTurbulent_KC"
     lambda=lambda,
     rho=rho) annotation (Placement(transformation(extent={{0,20},{20,40}})));
 
-  SI.ReynoldsNumber Re[n]={abs(m_flow[i])*d_hyd/(eta[i]*Modelica.Constants.pi*
-      d_hyd*d_hyd/4) for i in 1:n};
+  Modelica.Units.SI.ReynoldsNumber Re[n]={abs(m_flow[i])*d_hyd/(eta[i]*Modelica.Constants.pi
+      *d_hyd*d_hyd/4) for i in 1:n};
 
 public
   Modelica.Blocks.Sources.Ramp input_Nu(

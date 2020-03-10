@@ -15,22 +15,22 @@ function dp_twoPhaseGeodetic_DP
     annotation (Dialog);
 
   //geometry
-  input SI.Length length=1 "Length in fluid flow direction"
+  input Modelica.Units.SI.Length length=1 "Length in fluid flow direction"
     annotation (Dialog(group="Geometry"));
-  input SI.Angle phi=0 "Tilt angle to horizontal"
+  input Modelica.Units.SI.Angle phi=0 "Tilt angle to horizontal"
     annotation (Dialog(group="Geometry"));
 
   //fluid properties
-  input SI.Density rho_g(min=Modelica.Constants.eps) = 1.1220
+  input Modelica.Units.SI.Density rho_g(min=Modelica.Constants.eps) = 1.1220
     "Density of gaseous phase" annotation (Dialog(group="Fluid properties"));
-  input SI.Density rho_l(min=Modelica.Constants.eps) = 943.11
+  input Modelica.Units.SI.Density rho_l(min=Modelica.Constants.eps) = 943.11
     "Density of liquid phase" annotation (Dialog(group="Fluid properties"));
   input Real x_flow(
     min=0,
     max=1) = 0 "Mass flow rate quality"
     annotation (Dialog(group="Fluid properties"));
 
-  output SI.Pressure DP_geo "Geodetic pressure loss";
+  output Modelica.Units.SI.Pressure DP_geo "Geodetic pressure loss";
 
 protected
   Real xflow=min(1, max(0, abs(x_flow))) "Mass flow rate quality";

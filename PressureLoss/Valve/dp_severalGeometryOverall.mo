@@ -18,14 +18,15 @@ function dp_severalGeometryOverall
     "Target variable of calculation" annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Pressure loss" annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW "Mass flow rate"
+  output Modelica.Units.SI.Pressure DP "Pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "Mass flow rate"
     annotation (Dialog(group="Output"));
   output Utilities.Types.PressureLossCoefficient zeta_TOT
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -36,15 +37,16 @@ function dp_severalGeometryOverall
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=if IN_con.valveCoefficient == TYP.AV then IN_con.Av else if
-      IN_con.valveCoefficient == TYP.KV then IN_con.Kv*27.7e-6 else if IN_con.valveCoefficient
-       == TYP.CV then IN_con.Cv*24e-6 else if IN_con.valveCoefficient == TYP.OP then
-            IN_con.m_flow_nominal/max(MIN, IN_con.opening_nominal*(IN_con.rho_nominal
-      *IN_con.dp_nominal)^0.5) else MIN "Av (metric) flow coefficient [Av]=m^2";
-  SI.Length perimeter=PI*(4*A_cross/PI)^0.5
+  Modelica.Units.SI.Area A_cross=if IN_con.valveCoefficient == TYP.AV then
+      IN_con.Av else if IN_con.valveCoefficient == TYP.KV then IN_con.Kv*
+      27.7e-6 else if IN_con.valveCoefficient == TYP.CV then IN_con.Cv*24e-6
+       else if IN_con.valveCoefficient == TYP.OP then IN_con.m_flow_nominal/max(
+      MIN, IN_con.opening_nominal*(IN_con.rho_nominal*IN_con.dp_nominal)^0.5)
+       else MIN "Av (metric) flow coefficient [Av]=m^2";
+  Modelica.Units.SI.Length perimeter=PI*(4*A_cross/PI)^0.5
     "Assuming circular cross sectional area at entrance";
 
-  SI.Velocity velocity "Mean velocity";
+  Modelica.Units.SI.Velocity velocity "Mean velocity";
 
   //failure status
   Real fstatus[1] "Check of expected boundary conditions";

@@ -9,25 +9,25 @@ function dp_pressureLossCoefficient "Generic pressure loss | pressure loss coeff
   input FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget "Target variable of calculation" annotation (
     Dialog(group = "Input"));
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (
-    Dialog(group = "Output"));
-  output SI.MassFlowRate M_FLOW "mass flow rate" annotation (
-    Dialog(group = "Output"));
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
+    annotation (Dialog(group="Output"));
   // zeta_TOT has no meaning for this function
   output Utilities.Types.PressureLossCoefficient zeta_TOT "Pressure loss coefficient" annotation (
     Dialog(group = "Output"));
   // Re has no meaning for this function
-  final output SI.ReynoldsNumber Re = 0 "Reynolds number" annotation (
-    Dialog(group = "Output"));
-  final output SI.PrandtlNumber Pr = 0 "Prandtl number" annotation (
-    Dialog(group = "Output"));
+  final output Modelica.Units.SI.ReynoldsNumber Re=0 "Reynolds number"
+    annotation (Dialog(group="Output"));
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
+    annotation (Dialog(group="Output"));
   // function has no restrictions
   final output Real failureStatus = 0 "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results" annotation (
     Dialog(group = "Output"));
 
 protected
   Real MIN=Modelica.Constants.eps;
-  Modelica.SIunits.Velocity velocity "Mean velocity of flow";
+  Modelica.Units.SI.Velocity velocity "Mean velocity of flow";
 
 algorithm
 

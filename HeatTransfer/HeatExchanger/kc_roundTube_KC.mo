@@ -12,7 +12,8 @@ function kc_roundTube_KC
     "Input record for function kc_roundTube_KC";
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Output for function kc_roundTube_KC";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Output for function kc_roundTube_KC";
 
 protected
   type TYP =
@@ -20,24 +21,25 @@ protected
 
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.ReynoldsNumber Re_Dc=max(MIN, (abs(IN_var.m_flow)*IN_con.D_c/(IN_var.eta*
-      A_c))) "Reynolds number based on fin collar diameter";
+  Modelica.Units.SI.ReynoldsNumber Re_Dc=max(MIN, (abs(IN_var.m_flow)*IN_con.D_c
+      /(IN_var.eta*A_c))) "Reynolds number based on fin collar diameter";
 
-  SI.ReynoldsNumber Re_i
+  Modelica.Units.SI.ReynoldsNumber Re_i
     "Reynolds number at transition to linerized calculation for wavy fins";
 
-  SI.PrandtlNumber Pr=IN_var.eta*IN_var.cp/IN_var.lambda "Prandtl number";
+  Modelica.Units.SI.PrandtlNumber Pr=IN_var.eta*IN_var.cp/IN_var.lambda
+    "Prandtl number";
   Real j "Colburn j factor";
 
-  SI.Area A_c=IN_con.A_fr*((IN_con.F_p*IN_con.P_t - IN_con.F_p*IN_con.D_c - (
-      IN_con.P_t - IN_con.D_c)*IN_con.delta_f)/(IN_con.F_p*IN_con.P_t))
+  Modelica.Units.SI.Area A_c=IN_con.A_fr*((IN_con.F_p*IN_con.P_t - IN_con.F_p*
+      IN_con.D_c - (IN_con.P_t - IN_con.D_c)*IN_con.delta_f)/(IN_con.F_p*IN_con.P_t))
     "Minimum flow cross-sectional area";
-  SI.Area A_tot=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr*((IN_con.N
-      *PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f) + 2*(IN_con.P_t*IN_con.L -
-      IN_con.N*PI*IN_con.D_c^2/4))/(IN_con.P_t*IN_con.F_p)) else 0
+  Modelica.Units.SI.Area A_tot=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr
+      *((IN_con.N*PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f) + 2*(IN_con.P_t*
+      IN_con.L - IN_con.N*PI*IN_con.D_c^2/4))/(IN_con.P_t*IN_con.F_p)) else 0
     "Total heat transfer area";
-  SI.Length D_h=if IN_con.geometry == TYP.LouverFin then 4*A_c*IN_con.L/A_tot else
-            0 "Hydraulic diameter";
+  Modelica.Units.SI.Length D_h=if IN_con.geometry == TYP.LouverFin then 4*A_c*
+      IN_con.L/A_tot else 0 "Hydraulic diameter";
 
   Real J1=0 "Exponent for computation of Colburn j factor";
   Real J2=0 "Exponent for computation of Colburn j factor";

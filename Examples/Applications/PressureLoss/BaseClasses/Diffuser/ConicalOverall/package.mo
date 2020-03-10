@@ -13,7 +13,8 @@ redeclare function extends pressureLoss_mflow
   input
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Diffuser.ConicalOverall.PressureLossInput_var
     IN_var annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-  input SI.MassFlowRate m_flow "Mass flow rate" annotation (Dialog(tab="Input"));
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
+    annotation (Dialog(tab="Input"));
 
 algorithm
   DP_tot := FluidDissipation.PressureLoss.Diffuser.dp_conicalOverall_DP(

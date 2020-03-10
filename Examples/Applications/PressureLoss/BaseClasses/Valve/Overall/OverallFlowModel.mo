@@ -21,10 +21,10 @@ model OverallFlowModel
     annotation (Dialog(group="Valve"));
   parameter Real Cv=Av/24.6e-6 "Cv (US) flow coefficient [Cv]=USG/min"
     annotation (Dialog(group="Valve"));
-  parameter SI.Pressure dp_nominal=1e3 "Nominal pressure loss"
+  parameter Modelica.Units.SI.Pressure dp_nominal=1e3 "Nominal pressure loss"
     annotation (Dialog(group="Valve"));
-  parameter SI.MassFlowRate m_flow_nominal=opening_nominal*Av*(rho_nominal*
-      dp_nominal)^0.5 "Nominal mass flow rate"
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nominal=opening_nominal*Av*(
+      rho_nominal*dp_nominal)^0.5 "Nominal mass flow rate"
     annotation (Dialog(group="Valve"));
   parameter Real opening_nominal=0.5 "Nominal opening"
     annotation (Dialog(group="Valve"));

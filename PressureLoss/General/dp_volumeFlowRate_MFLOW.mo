@@ -13,17 +13,19 @@ function dp_volumeFlowRate_MFLOW
   input FluidDissipation.PressureLoss.General.dp_volumeFlowRate_IN_var IN_var
     "Input record for function dp_volumeFlowRate_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Output for function dp_volumeFlowRate_MFLOW";
+  output Modelica.Units.SI.MassFlowRate M_FLOW
+    "Output for function dp_volumeFlowRate_MFLOW";
 
 protected
   Real a=abs(IN_con.a);
   Real b=abs(IN_con.b);
 
-  SI.Pressure dp_min=max(Modelica.Constants.eps, abs(IN_con.dp_min))
-        "Start of approximation for decreasing pressure loss";
+  Modelica.Units.SI.Pressure dp_min=max(Modelica.Constants.eps, abs(IN_con.dp_min))
+    "Start of approximation for decreasing pressure loss";
 
   //Documentation
 

@@ -9,28 +9,30 @@ record NominalPressureLossLawDensity
     "1 == use nominal mass flow rate | 2 == use nominal volume flow rate"
     annotation (Dialog(group="Generic variables"));
 
-  parameter SI.Area A_cross=A_cross_nom "Cross sectional area"
+  parameter Modelica.Units.SI.Area A_cross=A_cross_nom "Cross sectional area"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.Area A_cross_nom=Modelica.Constants.pi*0.1^2/4
+  parameter Modelica.Units.SI.Area A_cross_nom=Modelica.Constants.pi*0.1^2/4
     "Nominal cross sectional area"
     annotation (Dialog(group="Generic variables"));
 
-  parameter SI.Pressure dp_nom(min=Modelica.Constants.eps) = 2
+  parameter Modelica.Units.SI.Pressure dp_nom(min=Modelica.Constants.eps) = 2
     "Nominal pressure loss (at nominal values of mass flow rate and density)"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.MassFlowRate m_flow_nom(min=Modelica.Constants.eps) = 1
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nom(min=Modelica.Constants.eps)
+     = 1
     "Nominal mass flow rate (at nominal values of pressure loss and density)"
-    annotation (Dialog(group="Generic variables",enable=target ==
+    annotation (Dialog(group="Generic variables", enable=target ==
           FluidDissipation.Utilities.Types.MassOrVolumeFlowRate.MassFlowRate));
   parameter Real exp(min=Modelica.Constants.eps) = 2
     "Exponent of pressure loss law"
     annotation (Dialog(group="Generic variables"));
 
-  SI.VolumeFlowRate V_flow_nom(min=Modelica.Constants.eps) = m_flow_nom/rho_nom
+  Modelica.Units.SI.VolumeFlowRate V_flow_nom(min=Modelica.Constants.eps) =
+    m_flow_nom/rho_nom
     "Nominal volume flow rate (at nominal values of pressure loss and density)"
-    annotation (Dialog(group="Generic variables",enable=not (target ==
+    annotation (Dialog(group="Generic variables", enable=not (target ==
           FluidDissipation.Utilities.Types.MassOrVolumeFlowRate.MassFlowRate)));
-  SI.Density rho_nom(min=Modelica.Constants.eps) = 1e3
+  Modelica.Units.SI.Density rho_nom(min=Modelica.Constants.eps) = 1e3
     "Nominal density (at nominal values of mass flow rate and pressure loss)"
     annotation (Dialog(group="Generic variables"));
 

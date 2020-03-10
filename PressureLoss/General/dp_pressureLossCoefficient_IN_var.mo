@@ -8,7 +8,7 @@ record dp_pressureLossCoefficient_IN_var
     annotation (Dialog(group="Generic variables"));
 
   //fluid property variables
-  SI.Density rho=1e3 "Density of fluid"
+  Modelica.Units.SI.Density rho=1e3 "Density of fluid"
     annotation (Dialog(group="FluidProperties"));
 
   annotation (Documentation(info="<html>

@@ -4,22 +4,24 @@ model kc_turbulent "Verification of function kc_turbulent"
   parameter Integer n=size(cp, 1);
 
   //straight pipe variables
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter";
-  parameter SI.Length L=1 "Length of straight pipe";
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter";
+  parameter Modelica.Units.SI.Length L=1 "Length of straight pipe";
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp[:]={1007,4189,3384.550}
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[:]={
+      1007,4189,3384.550}
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
+  parameter Modelica.Units.SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
     "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,0.387}
-    "Thermal conductivity of fluid";
-  parameter SI.Density rho[:]={1.188,998.21,1037.799} "Density of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,
+      0.387} "Thermal conductivity of fluid";
+  parameter Modelica.Units.SI.Density rho[:]={1.188,998.21,1037.799}
+    "Density of fluid";
 
   //input VARIABLES
   //create identical Reynolds number for different fluid properties >> adjustment of  mass flow rate
-  SI.MassFlowRate m_flow[:]={input_mflow_0.y*eta[1]/eta[3],input_mflow_0.y*eta[
-      2]/eta[3],input_mflow_0.y} "Mass flow rate"
+  Modelica.Units.SI.MassFlowRate m_flow[:]={input_mflow_0.y*eta[1]/eta[3],
+      input_mflow_0.y*eta[2]/eta[3],input_mflow_0.y} "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //input record
@@ -52,16 +54,19 @@ model kc_turbulent "Verification of function kc_turbulent"
     annotation (Placement(transformation(extent={{40,20},{60,40}})));
 
   //output variables
-  SI.ReynoldsNumber Re_1[n] "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re_1[n] "Reynolds number"
     annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_1[n] "Nussel number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_2[n] "Nussel number" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_1[n] "Nussel number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_2[n] "Nussel number"
+    annotation (Dialog(group="Output"));
 
 protected
   parameter Real frac_dtoL=d_hyd/L;
 
-  SI.ReynoldsNumber Re=Re_1[1] "Reynolds number";
-  SI.PrandtlNumber Pr[n]={eta[i]*cp[i]/lambda[i] for i in 1:n} "Prandtl number";
+  Modelica.Units.SI.ReynoldsNumber Re=Re_1[1] "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr[n]={eta[i]*cp[i]/lambda[i] for i in 1:n}
+    "Prandtl number";
 public
   Modelica.Blocks.Sources.Ramp input_mflow_0(
     offset=0,
@@ -74,7 +79,7 @@ public
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1) annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
+    f=1) annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(
     offset=0,
     outMax=100,

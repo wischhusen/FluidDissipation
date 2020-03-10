@@ -6,7 +6,7 @@ model Bend "Test cases of generic pressure loss functions"
 
 public
   Modelica.Blocks.Sources.Sine input_mflow(
-    freqHz=1,
+    f=1,
     offset=0,
     amplitude=1)
     annotation (Placement(transformation(extent={{-100,-50},{-80,-30}})));

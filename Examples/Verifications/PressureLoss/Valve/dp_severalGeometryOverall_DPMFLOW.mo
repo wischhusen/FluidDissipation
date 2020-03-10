@@ -11,52 +11,52 @@ model dp_severalGeometryOverall_DPMFLOW
   FluidDissipation.Utilities.Types.ValveGeometry.Gate,
   FluidDissipation.Utilities.Types.ValveGeometry.Sluice}
     "Choice of geometry for valve";
-  SI.Diameter d_hyd=0.1 "Hydraulic diamter";
+  Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diamter";
   Real Av=PI*d_hyd^2/4 "Av (metric) flow coefficient [Av]=m^2";
   Real opening=input_opening.y
     "Opening of valve | 0==closed and 1== fully opened";
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
-  SI.Density rho=1000 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1000 "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //compressible case
   //intended input variables for records
-  SI.MassFlowRate input_mdot_1[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot_1[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp_1[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp_1[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
   //variable opening
-  SI.MassFlowRate input_mdot_2[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot_2[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp_2[n](start=zeros(n)) = ones(n)*1e3
+  Modelica.Units.SI.Pressure input_dp_2[n](start=zeros(n)) = ones(n)*1e3
     "(Input) pressure loss (for intended compressible case)";
 
   //incompressible case
   //constant opening
-  SI.MassFlowRate input_mdot_3[n](start=zeros(n)) = ones(n)*input_mdot.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp_3[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot_3[n](start=zeros(n)) = ones(n)*
+    input_mdot.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp_3[n](start=zeros(n))
     "(Input) pressure loss (for intended incompressible case)";
 
   //intended output variables for records
   //compressible case
   //constant opening
-  SI.MassFlowRate M_FLOW_1[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW_1[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP_1[n](start=zeros(n)) = {input_dp_1[i] for i in 1:n}
-    "(Output) pressure loss (for intended incompressible case)";
+  Modelica.Units.SI.Pressure DP_1[n](start=zeros(n)) = {input_dp_1[i] for i in
+    1:n} "(Output) pressure loss (for intended incompressible case)";
   //variable opening
-  SI.MassFlowRate M_FLOW_2[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW_2[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP_2[n](start=zeros(n)) = {input_dp_2[i] for i in 1:n}
-    "(Output) pressure loss (for intended incompressible case)";
+  Modelica.Units.SI.Pressure DP_2[n](start=zeros(n)) = {input_dp_2[i] for i in
+    1:n} "(Output) pressure loss (for intended incompressible case)";
   //incompressible case
   //constant opening
-  SI.MassFlowRate M_FLOW_3[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW_3[n](start=zeros(n))
     "(Output) mass flow rate (for intended incompressible case)";
-  SI.Pressure DP_3[n](start=zeros(n)) = input_dp_3
+  Modelica.Units.SI.Pressure DP_3[n](start=zeros(n)) = input_dp_3
     "(Output) pressure loss (for intended incompressible case)";
 
   //compressible case

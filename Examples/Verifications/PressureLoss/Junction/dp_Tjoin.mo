@@ -4,30 +4,31 @@ model dp_Tjoin "verification of function dp_Tjoin"
   parameter Integer alpha[1]={90} "angle of branching"
     annotation (Dialog(group="T-junction"));
 
-  parameter SI.Diameter d_hyd_conv[3]={((4/PI*1e-3)/2)^0.5,((4/PI*
-      1e-3)/2)^0.5,(4/PI*1e-3)^0.5}
+  parameter Modelica.Units.SI.Diameter d_hyd_conv[3]={((4/PI*1e-3)/2)^0.5,((4/
+      PI*1e-3)/2)^0.5,(4/PI*1e-3)^0.5}
     "hydraulic diameter united_converging_cross_section=true"
     annotation (Dialog(group="T-junction"));
   parameter Real d_hyd_noconv[3]={((4/PI*1e-3))^0.5,((4/PI*1e-3))^0.5,
       (4/PI*1e-3)^0.5} "hydraulic diameter united_converging_cross_section=false";
-  parameter SI.MassFlowRate m_flow_min=1e-6
+  parameter Modelica.Units.SI.MassFlowRate m_flow_min=1e-6
     "restriction for smoothing at reverse fluid flow"
     annotation (Dialog(group="restriction"));
-  parameter SI.Velocity v_max=343 "restriction for maximum fluid flow velocity"
+  parameter Modelica.Units.SI.Velocity v_max=343
+    "restriction for maximum fluid flow velocity"
     annotation (Dialog(group="restriction"));
   parameter TYP.PressureLossCoefficient zeta_TOT_max=10
     "restriction for maximum value of pressure loss coefficient"
     annotation (Dialog(group="restriction"));
 
   //fluid property variables
-  SI.Density rho=1000 "density of fluid"
+  Modelica.Units.SI.Density rho=1000 "density of fluid"
     annotation (Dialog(group="Fluid properties"));
   Real eta=1e-3 "dynamic viscosity of fluid"
     annotation (Dialog(group="Fluid properties"));
 
   //input variable (mass flow rate) for joint
-  SI.MassFlowRate m_flow[3]={sign(input_m_flow)*input_m_flow,1 - sign(
-      input_m_flow)*input_m_flow,-1} "mass flow rate"
+  Modelica.Units.SI.MassFlowRate m_flow[3]={sign(input_m_flow)*input_m_flow,1
+       - sign(input_m_flow)*input_m_flow,-1} "mass flow rate"
     annotation (Dialog(group="Input"));
 
   //input record
@@ -75,7 +76,7 @@ public
         transformation(extent={{-80,-80},{-60,-60}})));
   Modelica.Blocks.Sources.Sine input_mflow_1(
     amplitude=100,
-    freqHz=1/100,
+    f=1/100,
     phase=0,
     offset=0,
     startTime=0)

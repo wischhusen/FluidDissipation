@@ -4,7 +4,7 @@ function kc_evenGapTurbulent
   extends Modelica.Icons.Function;
   //SOURCE: VDI-Waermeatlas, 9th edition, Springer-Verlag, 2002, Section Gb 7
 
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import MIN = Modelica.Constants.eps;
 
   //input records
@@ -16,12 +16,13 @@ function kc_evenGapTurbulent
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Convective heat transfer coefficient"
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Convective heat transfer coefficient" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number"
     annotation (Dialog(group="Output"));
-  output SI.PrandtlNumber Pr "Prandtl number" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  output SI.NusseltNumber Nu "Nusselt number"
+  output Modelica.Units.SI.NusseltNumber Nu "Nusselt number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -35,11 +36,12 @@ protected
   Real turbulentMax=1e6 "Maximum Reynolds number for turbulent flow regime";
   Real turbulentMin=3e4 "Minimum Reynolds number for turbulent flow regime";
 
-  SI.Area A_cross=max(MIN, IN_con.s*IN_con.h) "Cross sectional area of gap";
-  SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.s*IN_con.h)
+    "Cross sectional area of gap";
+  Modelica.Units.SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity in gap";
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity in gap";
 
   //failure status
   Real fstatus[3] "check of expected boundary conditions";

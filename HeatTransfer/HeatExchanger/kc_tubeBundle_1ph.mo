@@ -11,18 +11,18 @@ function kc_tubeBundle_1ph
     "Input record for function kc_FilmCondensationTubeBundle"
     annotation (Dialog(group="Variable inputs"));
 
-  output Modelica.SIunits.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Heat transfer coefficient";
-  output Modelica.SIunits.PrandtlNumber Pr "Prandtl number of fluid";
-  output Modelica.SIunits.ReynoldsNumber Re_L "Reynolds number";
-  output Modelica.SIunits.NusseltNumber Nu_L_B
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number of fluid";
+  output Modelica.Units.SI.ReynoldsNumber Re_L "Reynolds number";
+  output Modelica.Units.SI.NusseltNumber Nu_L_B
     "Nusselt number of row or bundle";
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results";
 
 protected
   Real MIN=1e-5 "Limiter";
-  SI.Length L "Characteristic length";
+  Modelica.Units.SI.Length L "Characteristic length";
   Real a "Alignment ratio orthogonal to flow direction";
   Real b "Alignment ratio parallel to flow direction";
   Real psi "Void ratio";

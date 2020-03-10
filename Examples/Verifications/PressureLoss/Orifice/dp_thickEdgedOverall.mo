@@ -7,29 +7,31 @@ model dp_thickEdgedOverall "Verification of function dp_thickEdgedOverall"
     "Number of different ratios of cross sectional areas";
 
   //orifice variables
-  parameter SI.Area A_0=1e-3 "Cross sectional area of vena contraction";
-  parameter SI.Area A_1[n]={A_0/A0_2_A1[i] for i in 1:n}
+  parameter Modelica.Units.SI.Area A_0=1e-3
+    "Cross sectional area of vena contraction";
+  parameter Modelica.Units.SI.Area A_1[n]={A_0/A0_2_A1[i] for i in 1:n}
     "Large cross sectional area of orifice";
-  parameter SI.Length C_0=sqrt(4*A_0/PI)*PI "Perimeter of vena contraction";
-  parameter SI.Length C_1[n]=sqrt(4*A_1/PI)*PI
+  parameter Modelica.Units.SI.Length C_0=sqrt(4*A_0/PI)*PI
+    "Perimeter of vena contraction";
+  parameter Modelica.Units.SI.Length C_1[n]=sqrt(4*A_1/PI)*PI
     "Perimeter of large cross sectional area of orifice";
   parameter Real A0_2_A1[6]={0.02,0.08,0.20,0.40,0.70,0.90}
     "Ratio of cross sectional areas";
 
-  SI.Length L(start=0) "Length of thick edged orifice";
+  Modelica.Units.SI.Length L(start=0) "Length of thick edged orifice";
   Real l_bar=L/sqrt(4*A_0/PI) "Relative length of orifice";
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid"
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid"
     annotation (Dialog(group="Fluid properties"));
-  SI.Density rho=1000 "Density of fluid"
+  Modelica.Units.SI.Density rho=1000 "Density of fluid"
     annotation (Dialog(group="Fluid properties"));
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n]={DP[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp[n]={DP[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -59,12 +61,14 @@ model dp_thickEdgedOverall "Verification of function dp_thickEdgedOverall"
 
   //output variables
   //target == DP (incompressible)
-  SI.Pressure DP[n] "Pressure loss [bar]" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "Pressure loss [bar]"
+    annotation (Dialog(group="Output"));
   Utilities.Types.PressureLossCoefficient zeta_TOT[n]
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
 
   //target == M_FLOW (compressible)
-  SI.MassFlowRate M_FLOW[n] "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
 
   FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget_DP[n](m_flow=
        input_mdot, each target=FluidDissipation.Utilities.Types.PressureLossTarget.PressureLoss)
@@ -83,7 +87,7 @@ model dp_thickEdgedOverall "Verification of function dp_thickEdgedOverall"
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=1)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

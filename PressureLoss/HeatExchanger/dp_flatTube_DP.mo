@@ -15,54 +15,48 @@ function dp_flatTube_DP
   input FluidDissipation.PressureLoss.HeatExchanger.dp_flatTube_IN_var IN_var
     "Input record for function dp_flatTube_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Conversions.NonSIunits.Angle_deg Phi=IN_con.Phi*180/PI;
+  Modelica.Units.NonSI.Angle_deg Phi=IN_con.Phi*180/PI;
 
-  SI.ReynoldsNumber Re_Dh=max(1e-3, abs(m_flow)*IN_con.D_h/(IN_var.eta*A_c))
-    "Reynolds number based on hydraulic diameter";
-  SI.ReynoldsNumber Re_Lp=max(1e-3, abs(m_flow)*IN_con.L_p/(IN_var.eta*A_c))
-    "Reynolds number based on louver pitch";
+  Modelica.Units.SI.ReynoldsNumber Re_Dh=max(1e-3, abs(m_flow)*IN_con.D_h/(
+      IN_var.eta*A_c)) "Reynolds number based on hydraulic diameter";
+  Modelica.Units.SI.ReynoldsNumber Re_Lp=max(1e-3, abs(m_flow)*IN_con.L_p/(
+      IN_var.eta*A_c)) "Reynolds number based on louver pitch";
   Real f "Fanning friction factor";
   /*SI.Velocity v_fr=m_flow/(IN_var.rho*IN_con.A_fr) "Frontal velocity";*/
-  SI.Velocity v_c=m_flow/(IN_var.rho*A_c)
+  Modelica.Units.SI.Velocity v_c=m_flow/(IN_var.rho*A_c)
     "Velocity at minimum flow cross-sectional area";
 
-  SI.Area A_c=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.LouverFin
-                                                                                               then
-            IN_con.A_fr*((IN_con.F_l - IN_con.delta_f)*(IN_con.F_p - IN_con.delta_f)
+  Modelica.Units.SI.Area A_c=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.LouverFin
+       then IN_con.A_fr*((IN_con.F_l - IN_con.delta_f)*(IN_con.F_p - IN_con.delta_f)
       /((IN_con.F_l + IN_con.D_m)*IN_con.F_p)) else if IN_con.geometry ==
-      FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin then
-            IN_con.A_fr*(h*s/((h + t + IN_con.D_m)*(s + t))) else 0
+      FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
+       then IN_con.A_fr*(h*s/((h + t + IN_con.D_m)*(s + t))) else 0
     "Minimum flow cross-sectional area";
-  SI.Length D_h=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.LouverFin
-                                                                                               then
-            4*A_c/(IN_con.A_fr*(2*(IN_con.F_p - IN_con.delta_f + IN_con.F_l -
+  Modelica.Units.SI.Length D_h=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.LouverFin
+       then 4*A_c/(IN_con.A_fr*(2*(IN_con.F_p - IN_con.delta_f + IN_con.F_l -
       IN_con.delta_f)/(IN_con.F_p*(IN_con.F_l + IN_con.D_m)))) else 0
     "Hydraulic diameter";
-  SI.Length h=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
-                                                                                               then
-            IN_con.D_h*(1 + IN_con.alpha)/(2*IN_con.alpha) else 0
+  Modelica.Units.SI.Length h=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
+       then IN_con.D_h*(1 + IN_con.alpha)/(2*IN_con.alpha) else 0
     "Free flow height";
-  SI.Length l=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
-                                                                                               then
-            t/IN_con.delta else 0 "Fin length";
-  SI.Length s=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
-                                                                                               then
-            h*IN_con.alpha else 0 "Lateral fin spacing (free flow width)";
-  SI.Length t=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
-                                                                                               then
-            s*IN_con.gamma else 0 "Fin thickness";
-  SI.Length T_h=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.LouverFin
-                                                                                               then
-            IN_con.T_p - IN_con.D_m else 0;
+  Modelica.Units.SI.Length l=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
+       then t/IN_con.delta else 0 "Fin length";
+  Modelica.Units.SI.Length s=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
+       then h*IN_con.alpha else 0 "Lateral fin spacing (free flow width)";
+  Modelica.Units.SI.Length t=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.RectangularFin
+       then s*IN_con.gamma else 0 "Fin thickness";
+  Modelica.Units.SI.Length T_h=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_flatTubes.LouverFin
+       then IN_con.T_p - IN_con.D_m else 0;
 
   Real f1a=0;
   Real f1b=0;

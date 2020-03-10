@@ -6,7 +6,7 @@ record dp_idealGas_IN_con
   extends FluidDissipation.Utilities.Records.General.IdealGas_con;
 
   //linearisation
-  SI.Pressure dp_smooth(min=Modelica.Constants.eps) = 1
+  Modelica.Units.SI.Pressure dp_smooth(min=Modelica.Constants.eps) = 1
     "Start linearisation for smaller pressure loss"
     annotation (Dialog(group="Linearisation"));
 

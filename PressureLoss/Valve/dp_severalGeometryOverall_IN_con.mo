@@ -22,16 +22,16 @@ record dp_severalGeometryOverall_IN_con
   Real Cv=Av/24.6e-6 "Cv (US) flow coefficient [Cv]=USG/min" annotation (Dialog(
         group="Valve", enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.CV then
                 true else false));
-  SI.Pressure dp_nominal=1e3 "Nominal pressure loss" annotation (Dialog(group=
-          "Valve", enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP then
-                true else false));
-  SI.MassFlowRate m_flow_nominal=opening_nominal*Av*(rho_nominal*dp_nominal)^
-      0.5 "Nominal mass flow rate" annotation (Dialog(group="Valve", enable=if
-          valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP then
-                true else false));
-  SI.Density rho_nominal=1e3 "Nominal inlet density" annotation (Dialog(group=
-          "Valve", enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP then
-                true else false));
+  Modelica.Units.SI.Pressure dp_nominal=1e3 "Nominal pressure loss" annotation
+    (Dialog(group="Valve", enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP
+           then true else false));
+  Modelica.Units.SI.MassFlowRate m_flow_nominal=opening_nominal*Av*(rho_nominal
+      *dp_nominal)^0.5 "Nominal mass flow rate" annotation (Dialog(group=
+          "Valve", enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP
+           then true else false));
+  Modelica.Units.SI.Density rho_nominal=1e3 "Nominal inlet density" annotation
+    (Dialog(group="Valve", enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP
+           then true else false));
   Real opening_nominal=0.5 "Nominal opening" annotation (Dialog(group="Valve",
         enable=if valveCoefficient == FluidDissipation.Utilities.Types.ValveCoefficient.OP then
                 true else false));
@@ -41,7 +41,7 @@ record dp_severalGeometryOverall_IN_con
     annotation (Dialog(group="Valve"));
 
   //numerical aspects
-  SI.Pressure dp_small=0.01*dp_nominal
+  Modelica.Units.SI.Pressure dp_small=0.01*dp_nominal
     "Linearisation for a pressure loss smaller then dp_small"
     annotation (Dialog(group="Linearisation"));
 

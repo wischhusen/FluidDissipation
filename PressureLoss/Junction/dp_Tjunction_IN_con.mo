@@ -7,7 +7,7 @@ record dp_Tjunction_IN_con
       velocity_reference_branches=false);
 
   //restrictions
-  parameter SI.Pressure dp_min = 1
+  parameter Modelica.Units.SI.Pressure dp_min=1
     "restriction for smoothing while changing of fluid flow situation"
     annotation (Dialog(group="Restrictions"));
   /*parameter Boolean caseRequest=true 

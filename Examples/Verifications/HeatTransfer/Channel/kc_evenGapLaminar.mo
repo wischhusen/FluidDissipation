@@ -2,32 +2,35 @@ within FluidDissipation.Examples.Verifications.HeatTransfer.Channel;
 model kc_evenGapLaminar "Verification of function kc_evenGapLaminar"
 
   parameter Integer n=size(cp, 1);
-  parameter SI.Diameter d_hyd=2*s;
+  parameter Modelica.Units.SI.Diameter d_hyd=2*s;
 
   Real abscissa[n]={(length/d_hyd/(max(Re[i], 1e-3)*Pr[i]))^0.5 for i in 1:n};
-  SI.Length length=L;
-  SI.Length dimlesslength(start=1e-2);
-  SI.PrandtlNumber Pr[n]={eta[i]*cp[i]/(lambda[i]) for i in 1:n};
-  SI.ReynoldsNumber Re[n]={rho[i]*velocity[i]*d_hyd/eta[i] for i in 1:n};
-  SI.Velocity velocity[n]={m_flow[i]/(rho[i]*h*s) for i in 1:n};
+  Modelica.Units.SI.Length length=L;
+  Modelica.Units.SI.Length dimlesslength(start=1e-2);
+  Modelica.Units.SI.PrandtlNumber Pr[n]={eta[i]*cp[i]/(lambda[i]) for i in 1:n};
+  Modelica.Units.SI.ReynoldsNumber Re[n]={rho[i]*velocity[i]*d_hyd/eta[i] for i
+       in 1:n};
+  Modelica.Units.SI.Velocity velocity[n]={m_flow[i]/(rho[i]*h*s) for i in 1:n};
 
   //even gap variables
-  parameter SI.Length h=0.1 "Height of cross sectional area"
+  parameter Modelica.Units.SI.Length h=0.1 "Height of cross sectional area"
     annotation (Dialog(group="Geometry"));
-  parameter SI.Length s=0.05
+  parameter Modelica.Units.SI.Length s=0.05
     "Distance between parallel plates in cross sectional area"
     annotation (Dialog(group="Geometry"));
-  parameter SI.Length L=1 "Overflowed length of gap"
+  parameter Modelica.Units.SI.Length L=1 "Overflowed length of gap"
     annotation (Dialog(group="Geometry"));
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp[:]={1007,4189,3384.550}
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[:]={
+      1007,4189,3384.550}
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
+  parameter Modelica.Units.SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
     "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,0.387}
-    "Thermal conductivity of fluid";
-  parameter SI.Density rho[:]={1.188,998.21,1037.799} "Density of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,
+      0.387} "Thermal conductivity of fluid";
+  parameter Modelica.Units.SI.Density rho[:]={1.188,998.21,1037.799}
+    "Density of fluid";
 
   //input record
   FluidDissipation.HeatTransfer.Channel.kc_evenGapLaminar_IN_con m_flow_IN_con_1[n](
@@ -83,14 +86,18 @@ model kc_evenGapLaminar "Verification of function kc_evenGapLaminar"
     rho=rho) annotation (Placement(transformation(extent={{80,20},{100,40}})));
 
   //output variables
-  SI.NusseltNumber Nu_1[n] "Nusselt number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_2[n] "Nusselt number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_3[n] "Nusselt number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_4[n] "Nusselt number" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_1[n] "Nusselt number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_2[n] "Nusselt number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_3[n] "Nusselt number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_4[n] "Nusselt number"
+    annotation (Dialog(group="Output"));
 
 protected
-  SI.MassFlowRate m_flow[n]={0.5*h*lambda[i]*length/(cp[i]*d_hyd*dimlesslength^
-      2) for i in 1:n};
+  Modelica.Units.SI.MassFlowRate m_flow[n]={0.5*h*lambda[i]*length/(cp[i]*d_hyd
+      *dimlesslength^2) for i in 1:n};
 equation
   der(dimlesslength) = 1 - 0.01;
 

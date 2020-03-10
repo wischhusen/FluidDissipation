@@ -15,30 +15,33 @@ function dp_turbulent_MFLOW
   input FluidDissipation.PressureLoss.StraightPipe.dp_turbulent_IN_var IN_var
     "Input record for function dp_turbulent_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Mass flow rate";
+  output Modelica.Units.SI.MassFlowRate M_FLOW "Mass flow rate";
 
   import TYP1 = FluidDissipation.Utilities.Types.Roughness;
 
 protected
   Real MIN=Modelica.Constants.eps;
-  SI.ReynoldsNumber Re_min=1;
+  Modelica.Units.SI.ReynoldsNumber Re_min=1;
 
-  SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
   Real k=max(MIN, abs(IN_con.K)/IN_con.d_hyd) "Relative roughness";
 
   //SOURCE_1: p.81, fig. 2-3, sec 21-22: definition of flow regime boundaries
-  SI.ReynoldsNumber Re_lam_min=1e3 "Minimum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
+  Modelica.Units.SI.ReynoldsNumber Re_lam_min=1e3
+    "Minimum Reynolds number for laminar regime";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
     "Maximum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_turb_min=4e3
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=4e3
     "Minimum Reynolds number for turbulent regime";
 
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min, 754*
-      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min,
+      754*Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "Start of transition regime for increasing Reynolds number (leaving laminar regime)";
 
   //determining Darcy friction factor out of pressure loss calculation for straight pipe:
@@ -47,19 +50,20 @@ protected
       *IN_var.eta^2) "Adapted Darcy friction factor";
 
   //SOURCE_3: p.Lab 1, eq. 5: determine Re assuming laminar regime (Hagen-Poiseuille)
-  SI.ReynoldsNumber Re_lam=lambda_FRI_calc/64
+  Modelica.Units.SI.ReynoldsNumber Re_lam=lambda_FRI_calc/64
     "Reynolds number assuming laminar regime";
 
   //SOURCE_3: p.Lab 2, eq. 10: determine Re assuming turbulent regime (Colebrook-White)
-  SI.ReynoldsNumber Re_turb=if IN_con.roughness == TYP1.Neglected then (max(MIN,
-      lambda_FRI_calc)/0.3164)^(1/1.75) else -2*sqrt(max(lambda_FRI_calc, MIN))
-      *Modelica.Math.log10(2.51/sqrt(max(lambda_FRI_calc, MIN)) + k/3.7)
-    "Reynolds number assuming turbulent regime";
+  Modelica.Units.SI.ReynoldsNumber Re_turb=if IN_con.roughness == TYP1.Neglected
+       then (max(MIN, lambda_FRI_calc)/0.3164)^(1/1.75) else -2*sqrt(max(
+      lambda_FRI_calc, MIN))*Modelica.Math.log10(2.51/sqrt(max(lambda_FRI_calc,
+      MIN)) + k/3.7) "Reynolds number assuming turbulent regime";
 
   //determine actual flow regime
-  SI.ReynoldsNumber Re_check=if Re_lam < Re_lam_leave then Re_lam else Re_turb;
+  Modelica.Units.SI.ReynoldsNumber Re_check=if Re_lam < Re_lam_leave then
+      Re_lam else Re_turb;
   //determine Re for transition regime
-  SI.ReynoldsNumber Re_trans=if Re_lam >= Re_lam_leave then
+  Modelica.Units.SI.ReynoldsNumber Re_trans=if Re_lam >= Re_lam_leave then
       FluidDissipation.Utilities.Functions.General.CubicInterpolation_RE(
       Re_check,
       Re_lam_leave,
@@ -67,12 +71,12 @@ protected
       k,
       lambda_FRI_calc) else 0;
   //determine actual Re
-  SI.ReynoldsNumber Re=if Re_lam < Re_lam_leave then Re_lam else if Re_turb >
-      Re_turb_min then Re_turb else Re_trans;
+  Modelica.Units.SI.ReynoldsNumber Re=if Re_lam < Re_lam_leave then Re_lam
+       else if Re_turb > Re_turb_min then Re_turb else Re_trans;
 
   //determine velocity
-  SI.Velocity velocity=(if dp >= 0 then Re else -Re)*IN_var.eta/(IN_var.rho*
-      d_hyd) "Mean velocity";
+  Modelica.Units.SI.Velocity velocity=(if dp >= 0 then Re else -Re)*IN_var.eta/
+      (IN_var.rho*d_hyd) "Mean velocity";
 
   //Documentation
 

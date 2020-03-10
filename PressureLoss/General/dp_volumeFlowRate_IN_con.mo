@@ -5,7 +5,8 @@ record dp_volumeFlowRate_IN_con
   //generic variables
   extends FluidDissipation.Utilities.Records.General.QuadraticVFLOW;
 
-  SI.Pressure dp_min=0.1 "Start of approximation for decreasing pressure loss";
+  Modelica.Units.SI.Pressure dp_min=0.1
+    "Start of approximation for decreasing pressure loss";
 
   annotation (Documentation(info="<html>
 This record is used as <b> input record </b> for the pressure loss function <a href=\"Modelica://FluidDissipation.PressureLoss.General.dp_volumeFlowRate\"> dp_volumeFlowRate </a>,

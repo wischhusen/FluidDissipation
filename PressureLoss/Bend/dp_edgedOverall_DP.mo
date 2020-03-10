@@ -17,36 +17,36 @@ function dp_edgedOverall_DP
   input FluidDissipation.PressureLoss.Bend.dp_edgedOverall_IN_var IN_var
     "Input record for function dp_edgedOverall_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_edgedOverall_DP";
+  output Modelica.Units.SI.Pressure DP "Output for function dp_edgedOverall_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
-  SI.Area A_cross=PI*d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4 "Circular cross sectional area";
   Real k=max(MIN, abs(IN_con.K)/IN_con.d_hyd) "Relative roughness";
   Real delta=IN_con.delta*180/PI "Angle of turning";
 
   //definition of flow regime boundaries
-  SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
-  SI.ReynoldsNumber Re_lam_min=5e2
+  Modelica.Units.SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_min=5e2
     "Start of transition regime for roughness contribution";
-  SI.ReynoldsNumber Re_lam_max=1e4
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=1e4
     "End of transition regime for roughness contribution";
-  SI.ReynoldsNumber Re_turb_min=1e5
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=1e5
     "Minimum Reynolds number for Reynolds-dependent transition regime";
-  SI.ReynoldsNumber Re_turb_max=2e5
+  Modelica.Units.SI.ReynoldsNumber Re_turb_max=2e5
     "Maximum Reynolds number for Reynolds-dependent transition regime (k_Re=1)";
-  SI.ReynoldsNumber Re_turb_const=1e6
+  Modelica.Units.SI.ReynoldsNumber Re_turb_const=1e6
     "Reynolds number for independence on pressure loss coefficient (1e6)";
 
   //SOURCE_1: p. 81, sec. 2-2-21: end of transition regime
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min, 754*
-      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min,
+      754*Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "End of transition regime for roughness contribution";
 
   //SOURCE_1: p.366, diag. 6-7
@@ -66,9 +66,10 @@ protected
   Real v_min=Re_min*IN_var.eta/(IN_var.rho*d_hyd)
     "Minimum mean velocity for linear interpolation";
 
-  SI.Velocity velocity=m_flow/(IN_var.rho*A_cross) "Mean velocity";
-  SI.ReynoldsNumber Re=max(Re_min, IN_var.rho*abs(velocity)*d_hyd/IN_var.eta)
-    "Reynolds number";
+  Modelica.Units.SI.Velocity velocity=m_flow/(IN_var.rho*A_cross)
+    "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=max(Re_min, IN_var.rho*abs(velocity)*
+      d_hyd/IN_var.eta) "Reynolds number";
 
   //SOURCE_2: p.191, eq. 8.4: considering surface roughness
   TYP.DarcyFrictionFactor lambda_FRI_rough=0.25/(Modelica.Math.log10(k/(3.7*

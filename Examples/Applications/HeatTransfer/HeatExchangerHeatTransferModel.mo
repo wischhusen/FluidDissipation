@@ -24,7 +24,7 @@ model HeatExchangerHeatTransferModel
     annotation (Dialog(group="Heat transfer"), choicesAllMatching=true);
 
   //input
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //instance of chosen heat transfer model
@@ -42,12 +42,14 @@ model HeatExchangerHeatTransferModel
 
   //fluid properties
 protected
-  SI.SpecificHeatCapacityAtConstantPressure cp=Medium.heatCapacity_cp(
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=
+      Medium.heatCapacity_cp(stateForHeatTransfer.state);
+  Modelica.Units.SI.DynamicViscosity eta=Medium.dynamicViscosity(
       stateForHeatTransfer.state);
-  SI.DynamicViscosity eta=Medium.dynamicViscosity(stateForHeatTransfer.state);
-  SI.ThermalConductivity lambda=Medium.thermalConductivity(stateForHeatTransfer.state);
-  SI.Density rho=Medium.density(stateForHeatTransfer.state);
-  SI.Temp_K T=Medium.temperature(stateForHeatTransfer.state);
+  Modelica.Units.SI.ThermalConductivity lambda=Medium.thermalConductivity(
+      stateForHeatTransfer.state);
+  Modelica.Units.SI.Density rho=Medium.density(stateForHeatTransfer.state);
+  Modelica.Units.SI.Temperature T=Medium.temperature(stateForHeatTransfer.state);
 
 equation
   connect(heatTransferModel.thermalPort, thermalPort) annotation (Line(

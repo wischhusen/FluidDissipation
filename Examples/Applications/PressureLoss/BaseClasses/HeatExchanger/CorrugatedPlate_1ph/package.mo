@@ -13,8 +13,8 @@ package CorrugatedPlate_1ph "FluidDissipation: Corrugated plate heat exchanger"
     input
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.HeatExchanger.CorrugatedPlate_1ph.PressureLossInput_var
     IN_var annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-    input SI.MassFlowRate m_flow "Mass flow rate"
-      annotation (Dialog(tab="Input"));
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
+    annotation (Dialog(tab="Input"));
 
   algorithm
   DP := FluidDissipation.PressureLoss.HeatExchanger.dp_corrugatedPlate_1ph_DP(

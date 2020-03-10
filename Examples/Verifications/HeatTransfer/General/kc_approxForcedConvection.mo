@@ -4,19 +4,22 @@ model kc_approxForcedConvection
   parameter Integer n=size(cp, 1);
 
   //generic variables
-  parameter SI.Area A_cross=Modelica.Constants.pi*0.1^2/4
+  parameter Modelica.Units.SI.Area A_cross=Modelica.Constants.pi*0.1^2/4
     "Cross sectional area";
-  parameter SI.Length perimeter=Modelica.Constants.pi*0.1 "Wetted perimeter";
+  parameter Modelica.Units.SI.Length perimeter=Modelica.Constants.pi*0.1
+    "Wetted perimeter";
   //parameter SI.Diameter d_hyd=4*A_cross/perimeter "Hydraulic diameter";
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp[:]={1007,4189,3384.550}
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[:]={
+      1007,4189,3384.550}
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
+  parameter Modelica.Units.SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
     "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,0.387}
-    "Thermal conductivity of fluid";
-  parameter SI.Density rho[:]={1.188,998.21,1037.799} "Density of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,
+      0.387} "Thermal conductivity of fluid";
+  parameter Modelica.Units.SI.Density rho[:]={1.188,998.21,1037.799}
+    "Density of fluid";
 
   //input record
   FluidDissipation.HeatTransfer.General.kc_approxForcedConvection_IN_con m_flow_IN_con_1[n](
@@ -61,18 +64,21 @@ model kc_approxForcedConvection
     rho=rho) annotation (Placement(transformation(extent={{60,20},{80,40}})));
 
   //output variables
-  SI.ReynoldsNumber Re_1[n] "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re_1[n] "Reynolds number"
     annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_1[n] "Nussel number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_2[n] "Nussel number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_3[n] "Nussel number" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_1[n] "Nussel number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_2[n] "Nussel number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_3[n] "Nussel number"
+    annotation (Dialog(group="Output"));
 public
   Modelica.Blocks.Sources.Ramp input_mflow_0(
     duration=1,
     offset=0,
     height=1e4) annotation (Placement(
         transformation(extent={{-80,-80},{-60,-60}})));
-  Modelica.Blocks.Sources.Sine input_mflow_1(amplitude=1, freqHz=1)
+  Modelica.Blocks.Sources.Sine input_mflow_1(amplitude=1, f=1)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(
     riseTime=1e-1,
@@ -81,8 +87,8 @@ public
           extent={{0,-80},{20,-60}})));
 
 protected
-  SI.MassFlowRate m_flow[n]={input_mflow_0.y*eta[1]/eta[3],input_mflow_0.y*eta[
-      2]/eta[3],input_mflow_0.y} "Mass flow rate";
+  Modelica.Units.SI.MassFlowRate m_flow[n]={input_mflow_0.y*eta[1]/eta[3],
+      input_mflow_0.y*eta[2]/eta[3],input_mflow_0.y} "Mass flow rate";
 equation
   //heat transfer calculation
   for i in 1:n loop

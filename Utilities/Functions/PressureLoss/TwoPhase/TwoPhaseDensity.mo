@@ -12,15 +12,15 @@ function TwoPhaseDensity "Calculation of mean density for two phase flow"
     "Consider heterogeneous mass flow rate correction"
     annotation (Dialog(group="Choices"));
 
-  input SI.Density rho_g(min=Modelica.Constants.eps) "Density of gaseous phase"
-    annotation (Dialog);
-  input SI.Density rho_l(min=Modelica.Constants.eps) "Density of liquid phase"
-    annotation (Dialog);
+  input Modelica.Units.SI.Density rho_g(min=Modelica.Constants.eps)
+    "Density of gaseous phase" annotation (Dialog);
+  input Modelica.Units.SI.Density rho_l(min=Modelica.Constants.eps)
+    "Density of liquid phase" annotation (Dialog);
   input Real epsilon_A(min=0,max=1) "Void fraction (cross sectional averaged)"
     annotation (Dialog(enable=not (twoPhaseDensityApproach == FluidDissipation.Utilities.Types.TwoPhaseDensityApproach.Homogeneous)));
   input Real x_flow(min=0,max=1) "Mass flow rate quality" annotation (Dialog);
 
-  output SI.Density rho_2ph "Mean density of two phase flow";
+  output Modelica.Units.SI.Density rho_2ph "Mean density of two phase flow";
 protected
   Real MIN=Modelica.Constants.eps;
 
@@ -29,14 +29,14 @@ protected
   Real xflow=min(1, max(0, abs(x_flow))) "Mass flow rate quality";
 
   //SOURCE_1: p.Lba 3, eq. 17: Mean two phase density assuming homogeneous approach
-  SI.Density rho_hom=1/max(MIN, x_flow/max(MIN, rho_g) + (1 - x_flow)/max(MIN,
-      rho_l));
+  Modelica.Units.SI.Density rho_hom=1/max(MIN, x_flow/max(MIN, rho_g) + (1 -
+      x_flow)/max(MIN, rho_l));
   //SOURCE_1: p.Lbb 7, tab. 2: Mean two phase density assuming momentum flux approach
-  SI.Density rho_mom=1/max(MIN, (x_flow)^2/max(MIN, rho_g*epsilonA) + (1 -
-      x_flow)^2/max(MIN, rho_l*(1 - epsilonA)));
+  Modelica.Units.SI.Density rho_mom=1/max(MIN, (x_flow)^2/max(MIN, rho_g*
+      epsilonA) + (1 - x_flow)^2/max(MIN, rho_l*(1 - epsilonA)));
   //SOURCE_1: p.Lbb 7, tab. 2: Mean two phase density assuming kinetic energy flow approach from Zivi (corrected formula!)
-  SI.Density rho_kin=1/max(MIN, rho_hom*(x_flow^3/max(MIN, rho_g^2*epsilonA^2)
-       + (1 - x_flow)^3/max(MIN, rho_l^2*(1 - epsilonA)^2)));
+  Modelica.Units.SI.Density rho_kin=1/max(MIN, rho_hom*(x_flow^3/max(MIN, rho_g
+      ^2*epsilonA^2) + (1 - x_flow)^3/max(MIN, rho_l^2*(1 - epsilonA)^2)));
 
 algorithm
   rho_2ph := if not massFlowRateCorrection then rho_hom else if

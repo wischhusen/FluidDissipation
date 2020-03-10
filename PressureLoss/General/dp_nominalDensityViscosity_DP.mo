@@ -12,16 +12,18 @@ function dp_nominalDensityViscosity_DP
   input FluidDissipation.PressureLoss.General.dp_nominalDensityViscosity_IN_var
     IN_var "Input record for function dp_nominalDensityViscosity_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_nominalDensityViscosity_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_nominalDensityViscosity_DP";
 
 protected
-  SI.MassFlowRate m_flow_smooth=(max(1, 0.01*IN_con.dp_nom)*IN_var.rho/IN_con.rho_nom
-      *(1/IN_var.eta*IN_con.eta_nom)^(IN_con.exp_eta)*(1/IN_con.m_flow_nom))^(1
-      /IN_con.exp) "Start of approximation for decreasing mass flow rate";
+  Modelica.Units.SI.MassFlowRate m_flow_smooth=(max(1, 0.01*IN_con.dp_nom)*
+      IN_var.rho/IN_con.rho_nom*(1/IN_var.eta*IN_con.eta_nom)^(IN_con.exp_eta)*
+      (1/IN_con.m_flow_nom))^(1/IN_con.exp)
+    "Start of approximation for decreasing mass flow rate";
 
   //Documentation
 

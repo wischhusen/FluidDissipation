@@ -1,14 +1,14 @@
 within FluidDissipation.Examples.Verifications.PressureLoss.Junction;
 model dp_Tsplit_symmetric "verification of function dp_Tsplit_symmetric"
 
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
 
   //T-junction variables
-  parameter SI.Diameter d_hyd[3]={((4/PI*1e-3))^0.5,((4/PI*1e-3))^0.5,
-      (4/PI*1e-3)^0.5} "hydraulic diameter";
+  parameter Modelica.Units.SI.Diameter d_hyd[3]={((4/PI*1e-3))^0.5,((4/PI*1e-3))
+      ^0.5,(4/PI*1e-3)^0.5} "hydraulic diameter";
 
   //fluid property variables
-  parameter SI.Density rho=1e3 "density of fluid"
+  parameter Modelica.Units.SI.Density rho=1e3 "density of fluid"
     annotation (Dialog(group="FluidProperties"));
 
   //input variable (mass flow rate) for split
@@ -44,7 +44,7 @@ public
         transformation(extent={{-80,-80},{-60,-60}})));
   Modelica.Blocks.Sources.Sine input_mflow_1(
     amplitude=100,
-    freqHz=1/100,
+    f=1/100,
     phase=0,
     offset=0,
     startTime=0)

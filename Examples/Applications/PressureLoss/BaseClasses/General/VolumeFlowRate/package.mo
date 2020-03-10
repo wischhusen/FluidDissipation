@@ -13,7 +13,8 @@ redeclare function extends massFlowRate_dp
   input
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.General.VolumeFlowRate.PressureLossInput_var
     IN_var annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(tab="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(tab="Input"));
 
 algorithm
   M_FLOW := FluidDissipation.PressureLoss.General.dp_volumeFlowRate_MFLOW(

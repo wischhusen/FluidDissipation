@@ -14,38 +14,39 @@ function dp_roundTube_DP
   input FluidDissipation.PressureLoss.HeatExchanger.dp_roundTube_IN_var IN_var
     "Input record for function dp_roundTube_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.ReynoldsNumber Re_Dc=max(1e-3, abs(m_flow)*IN_con.D_c/(IN_var.eta*A_c))
-    "Reynolds number based on fin collar diameter";
+  Modelica.Units.SI.ReynoldsNumber Re_Dc=max(1e-3, abs(m_flow)*IN_con.D_c/(
+      IN_var.eta*A_c)) "Reynolds number based on fin collar diameter";
   Real f "Fanning friction faktor";
   /*SI.Velocity v_fr=m_flow/(IN_var.rho*IN_con.A_fr) "Frontal velocity";*/
-  SI.Velocity v_c=m_flow/(IN_var.rho*A_c)
+  Modelica.Units.SI.Velocity v_c=m_flow/(IN_var.rho*A_c)
     "Velocity at minimum flow cross-sectional area";
 
-  SI.Area A_c=IN_con.A_fr*((IN_con.F_p*IN_con.P_t - IN_con.F_p*IN_con.D_c - (
-      IN_con.P_t - IN_con.D_c)*IN_con.delta_f)/(IN_con.F_p*IN_con.P_t))
+  Modelica.Units.SI.Area A_c=IN_con.A_fr*((IN_con.F_p*IN_con.P_t - IN_con.F_p*
+      IN_con.D_c - (IN_con.P_t - IN_con.D_c)*IN_con.delta_f)/(IN_con.F_p*IN_con.P_t))
     "Minimum flow cross-sectional area";
-  SI.Area A_tot=if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.PlainFin
-       or IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
-       or IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.SlitFin  then
-            IN_con.A_fr*((IN_con.N*PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f)
+  Modelica.Units.SI.Area A_tot=if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.PlainFin
+       or IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
+       or IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.SlitFin
+       then IN_con.A_fr*((IN_con.N*PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f)
        + 2*(IN_con.P_t*IN_con.L - IN_con.N*PI*IN_con.D_c^2/4))/(IN_con.P_t*
-      IN_con.F_p)) else if IN_con.geometry ==FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.WavyFin
-                                                                                               then IN_con.A_fr*((IN_con.N*PI*
-      IN_con.D_c*(IN_con.F_p - IN_con.delta_f) + 2*(IN_con.P_t*IN_con.L -
-      IN_con.N*PI*IN_con.D_c^2/4)*(sqrt(IN_con.X_f^2 + IN_con.P_d^2)/IN_con.X_f))
-      /(IN_con.P_t*IN_con.F_p)) else 0 "Total heat transfer area";
-  SI.Area A_tube=IN_con.A_fr*IN_con.N*PI*(IN_con.D_c - 2*IN_con.delta_f)*IN_con.F_p
-      /(IN_con.P_t*IN_con.F_p) "Tube surface area";
-  SI.Length D_h=4*A_c*IN_con.L/A_tot "Hydraulic diameter";
+      IN_con.F_p)) else if IN_con.geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.WavyFin
+       then IN_con.A_fr*((IN_con.N*PI*IN_con.D_c*(IN_con.F_p - IN_con.delta_f)
+       + 2*(IN_con.P_t*IN_con.L - IN_con.N*PI*IN_con.D_c^2/4)*(sqrt(IN_con.X_f^
+      2 + IN_con.P_d^2)/IN_con.X_f))/(IN_con.P_t*IN_con.F_p)) else 0
+    "Total heat transfer area";
+  Modelica.Units.SI.Area A_tube=IN_con.A_fr*IN_con.N*PI*(IN_con.D_c - 2*IN_con.delta_f)
+      *IN_con.F_p/(IN_con.P_t*IN_con.F_p) "Tube surface area";
+  Modelica.Units.SI.Length D_h=4*A_c*IN_con.L/A_tot "Hydraulic diameter";
 
   Real F1=0;
   Real F2=0;

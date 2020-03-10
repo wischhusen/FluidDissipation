@@ -12,15 +12,18 @@ function dp_idealGas_MFLOW
   input FluidDissipation.PressureLoss.General.dp_idealGas_IN_var IN_var
     "Input record for function dp_idealGas_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Output for function dp_idealGas_MFLOW";
+  output Modelica.Units.SI.MassFlowRate M_FLOW
+    "Output for function dp_idealGas_MFLOW";
 
 protected
   Real Km_internal=IN_con.Km "Coefficient for pressure loss";
 
-  SI.Density rho_internal=IN_var.p_m/(IN_con.R_s*IN_var.T_m) "Mean density";
+  Modelica.Units.SI.Density rho_internal=IN_var.p_m/(IN_con.R_s*IN_var.T_m)
+    "Mean density";
 
   //Documentation
 

@@ -13,22 +13,23 @@ function dp_volumeFlowRate_DP
   input FluidDissipation.PressureLoss.General.dp_volumeFlowRate_IN_var IN_var
     "Input record for function dp_volumeFlowRate_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_volumeFlowRate_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_volumeFlowRate_DP";
 
 protected
   Real a=abs(IN_con.a);
   Real b=abs(IN_con.b);
 
-  SI.VolumeFlowRate V_flow=m_flow/max(Modelica.Constants.eps, IN_var.rho)
-    "Volume flow rate";
-  SI.Pressure dp_min=IN_con.dp_min
+  Modelica.Units.SI.VolumeFlowRate V_flow=m_flow/max(Modelica.Constants.eps,
+      IN_var.rho) "Volume flow rate";
+  Modelica.Units.SI.Pressure dp_min=IN_con.dp_min
     "Start of approximation for decreasing pressure loss";
-  SI.VolumeFlowRate V_flow_smooth=if a > 0 then -b/(2*a) + ((b/(2*a))^
-    2 + dp_min/a)^0.5 else if a<=0 and b > 0 then dp_min/b else 0
+  Modelica.Units.SI.VolumeFlowRate V_flow_smooth=if a > 0 then -b/(2*a) + ((b/(
+      2*a))^2 + dp_min/a)^0.5 else if a <= 0 and b > 0 then dp_min/b else 0
     "Start of approximation for decreasing volume flow rate";
 
   //Documentation

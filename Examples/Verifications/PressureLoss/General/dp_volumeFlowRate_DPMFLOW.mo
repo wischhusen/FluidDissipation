@@ -4,7 +4,7 @@ model dp_volumeFlowRate_DPMFLOW
 
   parameter Integer n=size(a, 1) "number of different coefficients a";
 
-  SI.VolumeFlowRate V_flow[n]={input_mdot[i]/rho for i in 1:n}
+  Modelica.Units.SI.VolumeFlowRate V_flow[n]={input_mdot[i]/rho for i in 1:n}
     "Input volume flow rate";
 
   //general variables
@@ -13,18 +13,18 @@ model dp_volumeFlowRate_DPMFLOW
   parameter Real b(unit="(Pa.s)/m3") = 0 "Coefficient for linear term";
 
   //fluid property variables
-  SI.Density rho=1.2 "density of fluid";
+  Modelica.Units.SI.Density rho=1.2 "density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
   //intended output variables for records
-  SI.MassFlowRate M_FLOW[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
+  Modelica.Units.SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
     "(Output) pressure loss (for intended incompressible case)";
 
   //input record

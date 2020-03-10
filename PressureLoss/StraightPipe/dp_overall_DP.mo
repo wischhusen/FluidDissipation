@@ -12,29 +12,31 @@ function dp_overall_DP
   input FluidDissipation.PressureLoss.StraightPipe.dp_overall_IN_var IN_var
     "Input record for function dp_overall_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_overall_DP";
+  output Modelica.Units.SI.Pressure DP "Output for function dp_overall_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
   Real k=max(MIN, abs(IN_con.K)/IN_con.d_hyd) "Relative roughness";
-  SI.Length perimeter=PI*IN_con.d_hyd "Perimeter";
+  Modelica.Units.SI.Length perimeter=PI*IN_con.d_hyd "Perimeter";
 
   //SOURCE_1: p.81, fig. 2-3, sec 21-22: definition of flow regime boundaries
-  SI.ReynoldsNumber Re_lam_min=1e3 "Minimum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
+  Modelica.Units.SI.ReynoldsNumber Re_lam_min=1e3
+    "Minimum Reynolds number for laminar regime";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
     "Maximum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min, 754*
-      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min,
+      754*Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "Start of transition regime for increasing Reynolds number (leaving laminar regime)";
 
-  SI.ReynoldsNumber Re=
+  Modelica.Units.SI.ReynoldsNumber Re=
       FluidDissipation.Utilities.Functions.General.ReynoldsNumber(
       A_cross,
       perimeter,

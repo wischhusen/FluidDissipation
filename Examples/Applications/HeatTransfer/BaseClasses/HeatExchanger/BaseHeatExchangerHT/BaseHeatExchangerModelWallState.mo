@@ -8,11 +8,12 @@ partial model BaseHeatExchangerModelWallState
   extends BaseClasses.BaseHeatTransferModel;
 
     //fluid properties at wall
-  input SI.SpecificHeatCapacityAtConstantPressure cp_w
+  input Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp_w
     "Specific heat capacity of fluid at constant pressure at wall surface";
-  input SI.DynamicViscosity eta_w "Dynamic viscosity of fluid at wall surface";
-  input SI.ThermalConductivity lambda_w
+  input Modelica.Units.SI.DynamicViscosity eta_w
+    "Dynamic viscosity of fluid at wall surface";
+  input Modelica.Units.SI.ThermalConductivity lambda_w
     "Thermal conductivity of fluid at wall surface";
-  SI.Temp_K T_w "Temperature of fluid at wall surface";
+  Modelica.Units.SI.Temperature T_w "Temperature of fluid at wall surface";
 
 end BaseHeatExchangerModelWallState;

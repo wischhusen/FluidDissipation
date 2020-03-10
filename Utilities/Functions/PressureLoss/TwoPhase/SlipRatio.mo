@@ -9,9 +9,9 @@ function SlipRatio "Calculation of (analytical/empirical) slip ratio"
       FluidDissipation.Utilities.Types.VoidFractionApproach.Homogeneous
     "Choice of void fraction approach" annotation (Dialog(group="Choices"));
 
-  input SI.Density rho_g(min=Modelica.Constants.eps) = 1.1220
+  input Modelica.Units.SI.Density rho_g(min=Modelica.Constants.eps) = 1.1220
     "Density of gaseous phase" annotation (Dialog);
-  input SI.Density rho_l(min=Modelica.Constants.eps) = 943.11
+  input Modelica.Units.SI.Density rho_l(min=Modelica.Constants.eps) = 943.11
     "Density of liquid phase" annotation (Dialog);
   input Real x_flow=0 "Mass flow rate quality" annotation (Dialog);
 

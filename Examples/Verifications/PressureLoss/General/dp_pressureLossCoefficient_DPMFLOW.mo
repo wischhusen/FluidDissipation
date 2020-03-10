@@ -5,25 +5,25 @@ model dp_pressureLossCoefficient_DPMFLOW
   //general variables
   parameter Integer n=3 "Number of grid points";
 
-  parameter SI.Area A_cross=Modelica.Constants.pi*0.1^2/4
+  parameter Modelica.Units.SI.Area A_cross=Modelica.Constants.pi*0.1^2/4
     "Circular cross sectional area";
   parameter TYP.PressureLossCoefficient zeta_TOT[n]={0.01,0.1,1}
     "Pressure loss coefficient";
 
   //fluid property variables
-  SI.Density rho=1.2 "Density of fluid";
+  Modelica.Units.SI.Density rho=1.2 "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
 
   //intended output variables for records
-  SI.MassFlowRate M_FLOW[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
+  Modelica.Units.SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
     "(Output) pressure loss (for intended incompressible case)";
 
   //input record

@@ -1,6 +1,6 @@
 **************************************************************************************
 *                                                                                    *
-*          README for installation of FluidDissipation library 1.1.9                 *
+*          README for installation of FluidDissipation library 1.2.0                 *
 *                                                                                    *
 **************************************************************************************
 
@@ -8,7 +8,7 @@
 _______________________
 
 
- 	1. Unzip the file FluidDissipation 1.1.9.zip. If you have a Dymola license you
+ 	1. Unzip the file FluidDissipation 1.2.0.zip. If you have a Dymola license you
 	   should install the library in the subfolder $Dymola\Modelica\Library. It will
 	   be listed in the libraries menue of Dymola.
 	    
@@ -70,7 +70,7 @@ _____________________________
 
 Licensed by XRG Simulation GmbH under the 3-clause BSD license
 
-Copyright 2007-2019, XRG Simulation GmbH.
+Copyright 2007-2020, XRG Simulation GmbH.
 
 This Modelica package is free software and the use is completely at your own risk
 it can be redistributed and/or modified under the terms of the BSD license, 

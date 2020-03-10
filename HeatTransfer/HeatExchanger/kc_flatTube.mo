@@ -11,12 +11,13 @@ function kc_flatTube
     "Input record for function kc_flatTube_KC";
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Convective heat transfer coefficient"
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Convective heat transfer coefficient" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number"
     annotation (Dialog(group="Output"));
-  output SI.PrandtlNumber Pr "Prandtl number" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  output SI.NusseltNumber Nu "Nusselt number"
+  output Modelica.Units.SI.NusseltNumber Nu "Nusselt number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -25,19 +26,19 @@ function kc_flatTube
   import TYP = FluidDissipation.Utilities.Types.HTXGeometry_flatTubes;
 
 protected
-  SI.Area A_c=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr*((IN_con.F_l
-       - IN_con.delta_f)*(IN_con.F_p - IN_con.delta_f)/((IN_con.F_l + IN_con.D_m)
-      *IN_con.F_p)) else if IN_con.geometry == TYP.RectangularFin then IN_con.A_fr
-      *(h*s/((h + t + IN_con.D_m)*(s + t))) else 0
+  Modelica.Units.SI.Area A_c=if IN_con.geometry == TYP.LouverFin then IN_con.A_fr
+      *((IN_con.F_l - IN_con.delta_f)*(IN_con.F_p - IN_con.delta_f)/((IN_con.F_l
+       + IN_con.D_m)*IN_con.F_p)) else if IN_con.geometry == TYP.RectangularFin
+       then IN_con.A_fr*(h*s/((h + t + IN_con.D_m)*(s + t))) else 0
     "Minimum flow cross-sectional area";
-  SI.Length h=if IN_con.geometry == TYP.RectangularFin then IN_con.D_h*(1 +
-      IN_con.alpha)/(2*IN_con.alpha) else 0 "Free flow height";
-  SI.Length l=if IN_con.geometry == TYP.RectangularFin then t/IN_con.delta else
-            0 "Fin length";
-  SI.Length s=if IN_con.geometry == TYP.RectangularFin then h*IN_con.alpha else
-            0 "Lateral fin spacing (free flow width)";
-  SI.Length t=if IN_con.geometry == TYP.RectangularFin then s*IN_con.gamma else
-            0 "Fin thickness";
+  Modelica.Units.SI.Length h=if IN_con.geometry == TYP.RectangularFin then
+      IN_con.D_h*(1 + IN_con.alpha)/(2*IN_con.alpha) else 0 "Free flow height";
+  Modelica.Units.SI.Length l=if IN_con.geometry == TYP.RectangularFin then t/
+      IN_con.delta else 0 "Fin length";
+  Modelica.Units.SI.Length s=if IN_con.geometry == TYP.RectangularFin then h*
+      IN_con.alpha else 0 "Lateral fin spacing (free flow width)";
+  Modelica.Units.SI.Length t=if IN_con.geometry == TYP.RectangularFin then s*
+      IN_con.gamma else 0 "Fin thickness";
 algorithm
   kc := FluidDissipation.HeatTransfer.HeatExchanger.kc_flatTube_KC(IN_con,
     IN_var);

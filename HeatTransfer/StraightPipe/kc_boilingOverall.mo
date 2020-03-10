@@ -12,11 +12,11 @@ function kc_boilingOverall
     IN_var annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Local two phase heat transfer coefficient";
-  output SI.CoefficientOfHeatTransfer kc_FC
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc_FC
     "Local heat transfer coefficient due to forced convection";
-  output SI.CoefficientOfHeatTransfer kc_PB
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc_PB
     "Local heat transfer coefficient due to nucleate pool boiling";
   output Real E;
   output Real recXtt "1/X_tt";

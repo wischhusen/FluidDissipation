@@ -2,20 +2,20 @@ within FluidDissipation.Examples.Verifications.PressureLoss.Junction;
 model dp_Tjoin_symmetric "verification of function dp_Tjoin_symmetric"
 
   import minimum = Modelica.Constants.eps;
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
 
   //T-junction variables
   parameter Integer alpha=90;
-  parameter SI.Diameter d_hyd[3]={((4/PI*1e-3))^0.5,((4/PI*1e-3))^0.5,
-      (4/PI*1e-3)^0.5} "hydraulic diameter";
+  parameter Modelica.Units.SI.Diameter d_hyd[3]={((4/PI*1e-3))^0.5,((4/PI*1e-3))
+      ^0.5,(4/PI*1e-3)^0.5} "hydraulic diameter";
 
   //fluid property variables
-  parameter SI.Density rho=1e3 "density of fluid"
+  parameter Modelica.Units.SI.Density rho=1e3 "density of fluid"
     annotation (Dialog(group="FluidProperties"));
 
   //input variable (mass flow rate) for joint
-  SI.MassFlowRate m_flow[3]={sign(input_m_flow)*input_m_flow,1 - sign(
-      input_m_flow)*input_m_flow,-1} "mass flow rate"
+  Modelica.Units.SI.MassFlowRate m_flow[3]={sign(input_m_flow)*input_m_flow,1
+       - sign(input_m_flow)*input_m_flow,-1} "mass flow rate"
     annotation (Dialog(group="Input"));
 
   //input record
@@ -51,7 +51,7 @@ public
         transformation(extent={{-80,-80},{-60,-60}})));
   Modelica.Blocks.Sources.Sine input_mflow_1(
     amplitude=100,
-    freqHz=1/100,
+    f=1/100,
     phase=0,
     offset=0,
     startTime=0)

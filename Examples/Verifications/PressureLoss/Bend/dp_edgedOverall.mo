@@ -7,24 +7,24 @@ model dp_edgedOverall "Verification of function dp_edgedOverall"
     "Number of different angles of turning of bend";
 
   //bend variables
-  parameter SI.Area A_cross=PI*d_hyd^2/4
+  parameter Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4
     "Circular cross sectional area of bend";
-  parameter SI.Conversions.NonSIunits.Angle_deg delta[4]={30,45,90,180}
+  parameter Modelica.Units.NonSI.Angle_deg delta[4]={30,45,90,180}
     "Angle of turning";
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter";
-  parameter SI.Length K=2.5e-5
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter";
+  parameter Modelica.Units.SI.Length K=2.5e-5
     "Roughness (average height of surface asperities)";
-  parameter SI.Length L=d_hyd*10 "Length of bend along axis";
+  parameter Modelica.Units.SI.Length L=d_hyd*10 "Length of bend along axis";
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
-  SI.Density rho=1000 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1000 "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n]={DP[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp[n]={DP[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -50,11 +50,14 @@ model dp_edgedOverall "Verification of function dp_edgedOverall"
       eta=eta, each rho=rho)
     annotation (Placement(transformation(extent={{40,20},{60,40}})));
 
-  SI.Pressure DP[n] "pressure loss" annotation (Dialog(group="Output"));
-  SI.MassFlowRate M_FLOW[n] "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "pressure loss"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
   Utilities.Types.PressureLossCoefficient zeta_TOT[n], zeta_TOT2[n]
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  SI.ReynoldsNumber Re[n] "Reynolds number" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.ReynoldsNumber Re[n] "Reynolds number"
+    annotation (Dialog(group="Output"));
 
   FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget_DP[n](m_flow=
        input_mdot, each target=FluidDissipation.Utilities.Types.PressureLossTarget.PressureLoss)
@@ -73,7 +76,7 @@ model dp_edgedOverall "Verification of function dp_edgedOverall"
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=1e2)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

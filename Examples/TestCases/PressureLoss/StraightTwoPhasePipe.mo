@@ -7,7 +7,7 @@ model StraightTwoPhasePipe
 
 public
   Modelica.Blocks.Sources.Sine input_mflow(
-    freqHz=1,
+    f=1,
     offset=0,
     amplitude=1)
     annotation (Placement(transformation(extent={{-100,-50},{-80,-30}})));
@@ -20,7 +20,7 @@ public
     nPorts=1,
     p(displayUnit="Pa") = system.p_ambient,
     use_p_in=true,
-    redeclare package Medium = Modelica.Media.Water.WaterIF97_ph,
+    redeclare package Medium = Modelica.Media.R134a.R134a_ph,
     T(displayUnit="degC") = 373.15)
     annotation (Placement(transformation(extent={{-60,10},{-40,30}})));
 
@@ -28,8 +28,7 @@ public
     p=system.p_ambient,
     T=system.T_ambient,
     nPorts=1,
-    redeclare package Medium = Modelica.Media.Water.WaterIF97_ph)
-                                                              annotation (
+    redeclare package Medium = Modelica.Media.R134a.R134a_ph) annotation (
       Placement(transformation(
         extent={{-10,-10},{10,10}},
         rotation=180,
@@ -56,7 +55,7 @@ public
         origin={-50,-40})));
 
   FluidDissipation.Examples.Applications.PressureLoss.StraightPipeFlowModel from_dp(
-      redeclare package Medium = Modelica.Media.Water.WaterIF97_ph, redeclare
+      redeclare package Medium = Modelica.Media.R134a.R134a_ph,     redeclare
       model FlowModel =
         FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.StraightPipe.OverallTwoPhase.OverallTwoPhaseFlowModel)
     annotation (Placement(transformation(extent={{-24,-4},{24,44}})));

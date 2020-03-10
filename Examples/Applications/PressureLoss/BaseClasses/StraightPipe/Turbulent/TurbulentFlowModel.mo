@@ -10,10 +10,12 @@ model TurbulentFlowModel
   FluidDissipation.Utilities.Types.Roughness roughness=FluidDissipation.Utilities.Types.Roughness.Considered
     "Choice of considering surface roughness"
     annotation (Dialog(group="Straight pipe"));
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter"
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter"
     annotation (Dialog(group="Straight pipe"));
-  parameter SI.Length L=1 "Length" annotation (Dialog(group="Straight pipe"));
-  parameter SI.Length K=0 "Roughness (average height of surface asperities)"
+  parameter Modelica.Units.SI.Length L=1 "Length"
+    annotation (Dialog(group="Straight pipe"));
+  parameter Modelica.Units.SI.Length K=0
+    "Roughness (average height of surface asperities)"
     annotation (Dialog(group="Straight pipe"));
 
   FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.StraightPipe.Turbulent.PressureLossInput_con

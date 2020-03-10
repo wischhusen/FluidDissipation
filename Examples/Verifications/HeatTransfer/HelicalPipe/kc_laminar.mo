@@ -6,22 +6,24 @@ model kc_laminar "Verification of function kc_laminar"
   //helical pipe variables
   parameter Real n_nt[:]={1,5,10} "Total number of turns";
 
-  parameter SI.Diameter d_hyd=0.01;
-  parameter SI.Length L=10 "Total length of helical pipe";
-  parameter SI.Length h=1.5*d_hyd "Distance between turns";
+  parameter Modelica.Units.SI.Diameter d_hyd=0.01;
+  parameter Modelica.Units.SI.Length L=10 "Total length of helical pipe";
+  parameter Modelica.Units.SI.Length h=1.5*d_hyd "Distance between turns";
 
   //fluid property variables
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp[:]={1007,4189,3384.550}
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp[:]={
+      1007,4189,3384.550}
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
+  parameter Modelica.Units.SI.DynamicViscosity eta[:]={18.24e-6,1001.6e-6,0.114}
     "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,0.387}
-    "Thermal conductivity of fluid";
-  parameter SI.Density rho[:]={1.188,998.21,1037.799} "Density of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda[:]={25.69e-3,598.5e-3,
+      0.387} "Thermal conductivity of fluid";
+  parameter Modelica.Units.SI.Density rho[:]={1.188,998.21,1037.799}
+    "Density of fluid";
 
   //input VARIABLES
-  SI.MassFlowRate m_flow[n]={input_mflow_0.y*eta[1]/eta[3],input_mflow_0.y*eta[
-      2]/eta[3],input_mflow_0.y} "Mass flow rate"
+  Modelica.Units.SI.MassFlowRate m_flow[n]={input_mflow_0.y*eta[1]/eta[3],
+      input_mflow_0.y*eta[2]/eta[3],input_mflow_0.y} "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //input record
@@ -68,16 +70,19 @@ model kc_laminar "Verification of function kc_laminar"
     rho=rho) annotation (Placement(transformation(extent={{60,20},{80,40}})));
 
   //output variables
-  SI.ReynoldsNumber Re_1[n] "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re_1[n] "Reynolds number"
     annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_1[n] "Nussel number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_2[n] "Nussel number" annotation (Dialog(group="Output"));
-  SI.NusseltNumber Nu_3[n] "Nussel number" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_1[n] "Nussel number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_2[n] "Nussel number"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.NusseltNumber Nu_3[n] "Nussel number"
+    annotation (Dialog(group="Output"));
 
   Modelica.Blocks.Sources.Ramp input_mflow_0(duration=1, height=1e2)
     annotation (Placement(transformation(extent={{
             -80,-80},{-60,-60}})));
-  Modelica.Blocks.Sources.Sine input_mflow_1(amplitude=100, freqHz=1)
+  Modelica.Blocks.Sources.Sine input_mflow_1(amplitude=100, f=1)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
 
   Modelica.Blocks.Sources.Exponentials input_mflow_2(
@@ -89,8 +94,9 @@ model kc_laminar "Verification of function kc_laminar"
 protected
   parameter Real frac_dtoL=d_hyd/L;
 
-  SI.ReynoldsNumber Re=Re_1[1] "Reynolds number";
-  SI.PrandtlNumber Pr[n]={eta[i]*cp[i]/lambda[i] for i in 1:n} "Prandtl number";
+  Modelica.Units.SI.ReynoldsNumber Re=Re_1[1] "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr[n]={eta[i]*cp[i]/lambda[i] for i in 1:n}
+    "Prandtl number";
 
 equation
   //heat transfer calculation

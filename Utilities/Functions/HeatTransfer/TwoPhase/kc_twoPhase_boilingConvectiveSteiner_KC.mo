@@ -5,7 +5,8 @@ function kc_twoPhase_boilingConvectiveSteiner_KC
   input FluidDissipation.Utilities.Records.HeatTransfer.TwoPhaseFlowConvectiveBoiling_IN_con IN_con;
   input FluidDissipation.Utilities.Records.HeatTransfer.TwoPhaseFlowConvectiveBoiling_IN_var IN_var;
 
-  output Modelica.SIunits.CoefficientOfHeatTransfer kc "Local two phase heat transfer coefficient";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Local two phase heat transfer coefficient";
   output Real failure "digits: |density ratio failure|presusre failure|";
 
 protected
@@ -16,7 +17,8 @@ protected
   Real Phi "Normalized wetted radius";
   Real Psi "Factor psi";
   Real M "Fin number (Rippenkennzahl)";
-  Modelica.SIunits.CoefficientOfHeatTransfer kc_Lb "Heat transfer coefficient of wettet radius";
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_Lb
+    "Heat transfer coefficient of wettet radius";
   Real a "Ratio of heat transfer coefficients";
   Real f1 "Factor 1";
   Real f2 "Factor 2";

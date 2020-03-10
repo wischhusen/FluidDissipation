@@ -14,22 +14,25 @@ function kc_laminar_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Output for function kc_laminar_KC";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Output for function kc_laminar_KC";
 
 protected
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Length L=max(MIN, IN_con.L) "Plate length";
+  Modelica.Units.SI.Length L=max(MIN, IN_con.L) "Plate length";
 
-  SI.SpecificHeatCapacityAtConstantPressure cp=IN_var.cp
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=IN_var.cp
     "Specific heat capacity";
-  SI.DynamicViscosity eta=max(MIN, IN_var.eta) "Dynamic viscosity";
-  SI.ThermalConductivity lambda=max(MIN, IN_var.lambda) "Thermal conductivity";
-  SI.Density rho=IN_var.rho "Density";
+  Modelica.Units.SI.DynamicViscosity eta=max(MIN, IN_var.eta)
+    "Dynamic viscosity";
+  Modelica.Units.SI.ThermalConductivity lambda=max(MIN, IN_var.lambda)
+    "Thermal conductivity";
+  Modelica.Units.SI.Density rho=IN_var.rho "Density";
 
-  SI.Velocity velocity=abs(IN_var.velocity) "Mean velocity";
-  SI.ReynoldsNumber Re=abs(rho*velocity*L/eta) "Reynolds number";
-  SI.PrandtlNumber Pr=abs(eta*cp/lambda) "Prandtl number";
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.velocity) "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=abs(rho*velocity*L/eta) "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr=abs(eta*cp/lambda) "Prandtl number";
 
   //Documentation
 algorithm

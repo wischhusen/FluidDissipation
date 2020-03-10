@@ -13,7 +13,8 @@ package Overall "FluidDissipation: Overall regime of valve"
     input
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Valve.Overall.PressureLossInput_var
     IN_var annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-    input SI.Pressure dp "Pressure loss" annotation (Dialog(tab="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(tab="Input"));
 
   algorithm
   M_FLOW := FluidDissipation.PressureLoss.Valve.dp_severalGeometryOverall_MFLOW(
@@ -43,5 +44,4 @@ href=\"Modelica://FluidDissipation.Examples.TestCases.PressureLoss.Valve\"> Test
 </html>
 "));
   end massFlowRate_dp;
-
 end Overall;

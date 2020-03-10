@@ -13,10 +13,11 @@ function dp_severalGeometryOverall_MFLOW
   input FluidDissipation.PressureLoss.Valve.dp_severalGeometryOverall_IN_var IN_var
     "Input record for function dp_severalGeometryOverall_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Mass flow rate";
+  output Modelica.Units.SI.MassFlowRate M_FLOW "Mass flow rate";
 
   import TYP1 = FluidDissipation.Utilities.Types.ValveCoefficient;
   import TYP2 = FluidDissipation.Utilities.Types.ValveGeometry;
@@ -24,10 +25,10 @@ function dp_severalGeometryOverall_MFLOW
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area Av=if IN_con.valveCoefficient == TYP1.AV then IN_con.Av else if
-      IN_con.valveCoefficient == TYP1.KV then IN_con.Kv*27.7e-6 else if IN_con.valveCoefficient
-       == TYP1.CV then IN_con.Cv*24e-6 else if IN_con.valveCoefficient == TYP1.OP then
-            IN_con.m_flow_nominal*(IN_var.opening/max(MIN, IN_con.opening_nominal)
+  Modelica.Units.SI.Area Av=if IN_con.valveCoefficient == TYP1.AV then IN_con.Av
+       else if IN_con.valveCoefficient == TYP1.KV then IN_con.Kv*27.7e-6 else
+      if IN_con.valveCoefficient == TYP1.CV then IN_con.Cv*24e-6 else if IN_con.valveCoefficient
+       == TYP1.OP then IN_con.m_flow_nominal*(IN_var.opening/max(MIN, IN_con.opening_nominal)
       *(IN_con.rho_nominal*IN_con.dp_nominal)^0.5) else MIN
     "Av (metric) flow coefficient [Av]=m^2";
 

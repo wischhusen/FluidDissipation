@@ -11,38 +11,41 @@ model RoundTubeFlowModel
       FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
     "Choice of fin geometry" annotation (Dialog(group="HeatExchanger"));
 
-  parameter SI.Area A_fr=0.1 "Frontal area"
+  parameter Modelica.Units.SI.Area A_fr=0.1 "Frontal area"
     annotation (Dialog(group="HeatExchanger"));
-  parameter SI.Length D_c=0.01 "Fin collar diameter"
+  parameter Modelica.Units.SI.Length D_c=0.01 "Fin collar diameter"
     annotation (Dialog(group="HeatExchanger"));
-  parameter SI.Length F_p=0.002 "Fin pitch, fin spacing + fin thickness"
+  parameter Modelica.Units.SI.Length F_p=0.002
+    "Fin pitch, fin spacing + fin thickness"
     annotation (Dialog(group="HeatExchanger"));
-  parameter SI.Length L=N*P_l "Heat exchanger length"
+  parameter Modelica.Units.SI.Length L=N*P_l "Heat exchanger length"
     annotation (Dialog(group="HeatExchanger"));
-  parameter SI.Length L_h=0.0015 "Louver height" annotation (Dialog(group=
-          "HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin then
-                true else false));
-  parameter SI.Length L_p=0.0025 "Louver pitch" annotation (Dialog(group=
-          "HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin then
-                true else false));
+  parameter Modelica.Units.SI.Length L_h=0.0015 "Louver height" annotation (
+      Dialog(group="HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
+           then true else false));
+  parameter Modelica.Units.SI.Length L_p=0.0025 "Louver pitch" annotation (
+      Dialog(group="HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
+           then true else false));
   parameter Integer N=2 "Number of tube rows"
     annotation (Dialog(group="HeatExchanger"));
-  parameter SI.Length P_d=0.0015 "Pattern depth of wavy fin, wave height"
+  parameter Modelica.Units.SI.Length P_d=0.0015
+    "Pattern depth of wavy fin, wave height" annotation (Dialog(group=
+          "HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.WavyFin
+           then true else false));
+  parameter Modelica.Units.SI.Length P_l=0.02 "Longitudinal tube pitch"
+    annotation (Dialog(group="HeatExchanger", enable=if geometry ==
+          FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.PlainFin or
+          geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
+           or geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.SlitFin
+           then true else false));
+  parameter Modelica.Units.SI.Length P_t=0.025 "Transverse tube pitch"
+    annotation (Dialog(group="HeatExchanger"));
+  parameter Modelica.Units.SI.Length X_f=0.005 "Half wave length of wavy fin"
     annotation (Dialog(group="HeatExchanger", enable=if geometry ==
           FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.WavyFin then
-                true else false));
-  parameter SI.Length P_l=0.02 "Longitudinal tube pitch" annotation (Dialog(
-        group="HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.PlainFin
-           or geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.LouverFin
-           or geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.SlitFin then
-                true else false));
-  parameter SI.Length P_t=0.025 "Transverse tube pitch"
-    annotation (Dialog(group="HeatExchanger"));
-  parameter SI.Length X_f=0.005 "Half wave length of wavy fin" annotation (
-      Dialog(group="HeatExchanger", enable=if geometry == FluidDissipation.Utilities.Types.HTXGeometry_roundTubes.WavyFin then
-                true else false));
+          true else false));
 
-  parameter SI.Length delta_f=0.0001 "Fin thickness"
+  parameter Modelica.Units.SI.Length delta_f=0.0001 "Fin thickness"
     annotation (Dialog(group="HeatExchanger"));
 
   FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.HeatExchanger.RoundTube.PressureLossInput_con

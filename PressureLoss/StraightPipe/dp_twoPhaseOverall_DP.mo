@@ -15,19 +15,20 @@ function dp_twoPhaseOverall_DP
   input FluidDissipation.PressureLoss.StraightPipe.dp_twoPhaseOverall_IN_var IN_var
     "Input record for function dp_twoPhaseOverall_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Two phase pressure loss";
+  output Modelica.Units.SI.Pressure DP "Two phase pressure loss";
 
   import TYP = FluidDissipation.Utilities.Types.TwoPhaseFrictionalPressureLoss;
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, IN_con.A_cross) "Cross sectional area";
-  SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.A_cross)
+    "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
     "Hydraulic diameter";
 
   Real mdot_A=abs(m_flow)/A_cross "Mass flux";
@@ -48,53 +49,52 @@ protected
 
   //SOURCE_1: Considering frictional pressure loss w.r.t. to correlation of Friedel
   //SOURCE_2: Considering frictional pressure loss w.r.t. to correlation of Chisholm
-  SI.Pressure DP_fric=if IN_con.frictionalPressureLoss == TYP.Friedel then
+  Modelica.Units.SI.Pressure DP_fric=if IN_con.frictionalPressureLoss == TYP.Friedel
+       then
       FluidDissipation.Utilities.Functions.PressureLoss.TwoPhase.dp_twoPhaseFriedel_DP(
       FluidDissipation.Utilities.Records.General.TwoPhaseFlow_con(
-      A_cross=IN_con.A_cross,
-      perimeter=IN_con.perimeter,
-      length=IN_con.length),
+        A_cross=IN_con.A_cross,
+        perimeter=IN_con.perimeter,
+        length=IN_con.length),
       FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var(
-      rho_g=IN_var.rho_g,
-      rho_l=IN_var.rho_l,
-      eta_g=IN_var.eta_g,
-      eta_l=IN_var.eta_l,
-      sigma=IN_var.sigma,
-      x_flow=IN_var.x_flow),
-      m_flow)
-      else if IN_con.frictionalPressureLoss == TYP.Chisholm then
+        rho_g=IN_var.rho_g,
+        rho_l=IN_var.rho_l,
+        eta_g=IN_var.eta_g,
+        eta_l=IN_var.eta_l,
+        sigma=IN_var.sigma,
+        x_flow=IN_var.x_flow),
+      m_flow) else if IN_con.frictionalPressureLoss == TYP.Chisholm then
       FluidDissipation.Utilities.Functions.PressureLoss.TwoPhase.dp_twoPhaseChisholm_DP(
       FluidDissipation.Utilities.Records.General.TwoPhaseFlow_con(
-      A_cross=IN_con.A_cross,
-      perimeter=IN_con.perimeter,
-      length=IN_con.length),
+        A_cross=IN_con.A_cross,
+        perimeter=IN_con.perimeter,
+        length=IN_con.length),
       FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var(
-      rho_g=IN_var.rho_g,
-      rho_l=IN_var.rho_l,
-      eta_g=IN_var.eta_g,
-      eta_l=IN_var.eta_l,
-      sigma=IN_var.sigma,
-      x_flow=IN_var.x_flow),
-      m_flow)
-      else if IN_con.frictionalPressureLoss == TYP.MuellerSteinhagenHeck then
+        rho_g=IN_var.rho_g,
+        rho_l=IN_var.rho_l,
+        eta_g=IN_var.eta_g,
+        eta_l=IN_var.eta_l,
+        sigma=IN_var.sigma,
+        x_flow=IN_var.x_flow),
+      m_flow) else if IN_con.frictionalPressureLoss == TYP.MuellerSteinhagenHeck
+       then
       FluidDissipation.Utilities.Functions.PressureLoss.TwoPhase.dp_twoPhaseMSH_DP(
       FluidDissipation.Utilities.Records.General.TwoPhaseFlow_con(
-      A_cross=IN_con.A_cross,
-      perimeter=IN_con.perimeter,
-      length=IN_con.length),
+        A_cross=IN_con.A_cross,
+        perimeter=IN_con.perimeter,
+        length=IN_con.length),
       FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var(
-      rho_g=IN_var.rho_g,
-      rho_l=IN_var.rho_l,
-      eta_g=IN_var.eta_g,
-      eta_l=IN_var.eta_l,
-      sigma=IN_var.sigma,
-      x_flow=IN_var.x_flow),
-      m_flow)
-      else 0 "Frictional pressure loss";
+        rho_g=IN_var.rho_g,
+        rho_l=IN_var.rho_l,
+        eta_g=IN_var.eta_g,
+        eta_l=IN_var.eta_l,
+        sigma=IN_var.sigma,
+        x_flow=IN_var.x_flow),
+      m_flow) else 0 "Frictional pressure loss";
 
   //SOURCE_3: p.Lba 4, eq. 22: Considering momentum pressure loss assuming heterogeneous approach for two phase flow
   //Evaporation >> positive momentum pressure loss (assumed vice versa at condensation)
-  SI.Pressure DP_mom=if IN_con.momentumPressureLoss then
+  Modelica.Units.SI.Pressure DP_mom=if IN_con.momentumPressureLoss then
       FluidDissipation.Utilities.Functions.PressureLoss.TwoPhase.dp_twoPhaseMomentum_DP(
       IN_con.voidFractionApproach,
       IN_con.massFlowRateCorrection,
@@ -107,7 +107,7 @@ protected
       abs(m_flow)) else 0 "Momentum pressure loss";
 
   //SOURCE_3: p.Lbb 1, eq. 4: Considering geodetic pressure loss assuming constant void fraction for flow length
-  SI.Pressure DP_geo=if IN_con.geodeticPressureLoss then
+  Modelica.Units.SI.Pressure DP_geo=if IN_con.geodeticPressureLoss then
       FluidDissipation.Utilities.Functions.PressureLoss.TwoPhase.dp_twoPhaseGeodetic_DP(
       IN_con.voidFractionApproach,
       true,

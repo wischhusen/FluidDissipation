@@ -7,7 +7,7 @@ replaceable partial function massFlowRate_dp
   extends Modelica.Icons.Function;
 
   //mass flow rate as output
-  output SI.MassFlowRate M_FLOW;
+  output Modelica.Units.SI.MassFlowRate M_FLOW;
 
 end massFlowRate_dp;
 end BaseGeneralPL;

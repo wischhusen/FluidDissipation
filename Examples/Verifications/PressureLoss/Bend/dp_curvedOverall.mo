@@ -6,27 +6,29 @@ model dp_curvedOverall "Verification of function dp_curvedOverall"
     "Number of different angles of turning of bend";
 
   //bend variables
-  parameter SI.Area A_cross=PI*d_hyd^2/4
+  parameter Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4
     "Circular cross sectional area of bend";
-  parameter SI.Conversions.NonSIunits.Angle_deg delta[3]={30,45,90}
+  parameter Modelica.Units.NonSI.Angle_deg delta[3]={30,45,90}
     "Angle of turning";
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter";
-  parameter SI.Length K=0 "Roughness (average height of surface asperities)";
-  parameter SI.Radius R_0[2]={2.26,11.71}*d_hyd "Curvature radius";
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter";
+  parameter Modelica.Units.SI.Length K=0
+    "Roughness (average height of surface asperities)";
+  parameter Modelica.Units.SI.Radius R_0[2]={2.26,11.71}*d_hyd
+    "Curvature radius";
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
-  SI.Density rho=1000 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1000 "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot_1[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp_1[n]={DP_1[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot_1[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp_1[n]={DP_1[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
-  SI.MassFlowRate input_mdot_2[m](start=zeros(m)) = ones(m)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp_2[m]={DP_2[i] for i in 1:m}
+  Modelica.Units.SI.MassFlowRate input_mdot_2[m](start=zeros(m)) = ones(m)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp_2[m]={DP_2[i] for i in 1:m}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -95,19 +97,21 @@ model dp_curvedOverall "Verification of function dp_curvedOverall"
         input_dp_2, each target=FluidDissipation.Utilities.Types.PressureLossTarget.MassFlowRate)
     annotation (Placement(transformation(extent={{98,14},{118,34}})));
 
-  SI.Pressure DP_1[n] "pressure loss" annotation (Dialog(group="Output"));
-  SI.Pressure DP_2[m] "pressure loss" annotation (Dialog(group="Output"));
-  SI.MassFlowRate M_FLOW_1[n] "mass flow rate"
+  Modelica.Units.SI.Pressure DP_1[n] "pressure loss"
     annotation (Dialog(group="Output"));
-  SI.MassFlowRate M_FLOW_2[m] "mass flow rate"
+  Modelica.Units.SI.Pressure DP_2[m] "pressure loss"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW_1[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW_2[m] "mass flow rate"
     annotation (Dialog(group="Output"));
   Utilities.Types.PressureLossCoefficient zeta_TOT_1[n]
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
   Utilities.Types.PressureLossCoefficient zeta_TOT_2[m]
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  SI.ReynoldsNumber Re_1[n] "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re_1[n] "Reynolds number"
     annotation (Dialog(group="Output"));
-  SI.ReynoldsNumber Re_2[m] "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re_2[m] "Reynolds number"
     annotation (Dialog(group="Output"));
 
   Modelica.Blocks.Sources.Ramp input_mflow_0(
@@ -120,7 +124,7 @@ model dp_curvedOverall "Verification of function dp_curvedOverall"
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=100)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

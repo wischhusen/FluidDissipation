@@ -19,14 +19,15 @@ function dp_internalFlowOverall
     "Target variable of calculation" annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW "mass flow rate"
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
     annotation (Dialog(group="Output"));
   output Utilities.Types.PressureLossCoefficient zeta_TOT
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -37,22 +38,23 @@ function dp_internalFlowOverall
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, if IN_con.geometry == TYP.Annular then (PI/4)*((
-      IN_con.D_ann)^2 - (IN_con.d_ann)^2) else if IN_con.geometry == TYP.Circular then
-            PI/4*(IN_con.d_cir)^2 else if IN_con.geometry == TYP.Elliptical then
-            PI*IN_con.a_ell*IN_con.b_ell else if IN_con.geometry == TYP.Rectangular then
-            IN_con.a_rec*IN_con.b_rec else if IN_con.geometry == TYP.Isosceles then
-            0.5*(IN_con.a_tri*IN_con.h_tri) else 0) "Cross sectional area";
-  SI.Length perimeter=max(MIN, if IN_con.geometry == TYP.Annular then PI*(
-      IN_con.D_ann + IN_con.d_ann) else if IN_con.geometry == TYP.Circular then
-            PI*IN_con.d_cir else if IN_con.geometry == TYP.Elliptical then PI*(
-      IN_con.a_ell + IN_con.b_ell) else if IN_con.geometry == TYP.Rectangular then
-            2*(IN_con.a_rec + IN_con.b_rec) else if IN_con.geometry == TYP.Isosceles then
-            IN_con.a_tri + 2*((IN_con.h_tri)^2 + (IN_con.a_tri/2)^2)^0.5 else 0)
+  Modelica.Units.SI.Area A_cross=max(MIN, if IN_con.geometry == TYP.Annular
+       then (PI/4)*((IN_con.D_ann)^2 - (IN_con.d_ann)^2) else if IN_con.geometry
+       == TYP.Circular then PI/4*(IN_con.d_cir)^2 else if IN_con.geometry ==
+      TYP.Elliptical then PI*IN_con.a_ell*IN_con.b_ell else if IN_con.geometry
+       == TYP.Rectangular then IN_con.a_rec*IN_con.b_rec else if IN_con.geometry
+       == TYP.Isosceles then 0.5*(IN_con.a_tri*IN_con.h_tri) else 0)
+    "Cross sectional area";
+  Modelica.Units.SI.Length perimeter=max(MIN, if IN_con.geometry == TYP.Annular
+       then PI*(IN_con.D_ann + IN_con.d_ann) else if IN_con.geometry == TYP.Circular
+       then PI*IN_con.d_cir else if IN_con.geometry == TYP.Elliptical then PI*(
+      IN_con.a_ell + IN_con.b_ell) else if IN_con.geometry == TYP.Rectangular
+       then 2*(IN_con.a_rec + IN_con.b_rec) else if IN_con.geometry == TYP.Isosceles
+       then IN_con.a_tri + 2*((IN_con.h_tri)^2 + (IN_con.a_tri/2)^2)^0.5 else 0)
     "Perimeter";
-  SI.Diameter d_hyd=4*A_cross/perimeter "Hydraulic diameter";
+  Modelica.Units.SI.Diameter d_hyd=4*A_cross/perimeter "Hydraulic diameter";
 
-  SI.Velocity velocity "Mean velocity";
+  Modelica.Units.SI.Velocity velocity "Mean velocity";
 
   //failure status
   Real fstatus[1] "Check of expected boundary conditions";

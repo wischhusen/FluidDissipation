@@ -5,34 +5,34 @@ model dp_corrugatedPlate_1ph_DP
 
   parameter Integer channels(min = 1) = 1
     "number of parallel channels per fluid";
-  parameter Modelica.SIunits.Length Length(min=1e-2)=0.3
+  parameter Modelica.Units.SI.Length Length(min=1e-2) = 0.3
     "length of the heat exchanger plates in flow direction (header center to header center)";
-  parameter Modelica.SIunits.Length Width(min=1e-2)=0.1
+  parameter Modelica.Units.SI.Length Width(min=1e-2) = 0.1
     "width of the heat exchanger plates in flow direction";
-  parameter Modelica.SIunits.Length amp(min=1e-10)=2e-3
+  parameter Modelica.Units.SI.Length amp(min=1e-10) = 2e-3
     "amplitude of corrugated plate";
-  parameter Modelica.SIunits.Length Lambda(min=1e-10)=2*PI*
-    amp "wave length of corrugated plate";
-  parameter Modelica.SIunits.Conversions.NonSIunits.Angle_deg[n] phi={23,34,45,57,68}
-      *PI/180 "Corrugation angle";
+  parameter Modelica.Units.SI.Length Lambda(min=1e-10) = 2*PI*amp
+    "wave length of corrugated plate";
+  parameter Modelica.Units.NonSI.Angle_deg[n] phi={23,34,45,57,68}*PI/180
+    "Corrugation angle";
 
   Real a = 1.6 "Friction loss parameter (default value from literature)";
   Real b = 0.40 "Friction loss parameter (default value from literature)";
   Real c = 0.36 "Friction loss parameter (default value from literature)";
 
   //fluid property variables
-  Modelica.SIunits.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
-  Modelica.SIunits.Density rho=1000 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1000 "Density of fluid";
 
   //input VARIABLES
-  Modelica.SIunits.ReynoldsNumber Re=input_Re.y "Reynolds number"
+  Modelica.Units.SI.ReynoldsNumber Re=input_Re.y "Reynolds number"
     annotation (Dialog(group="Input"));
-  Modelica.SIunits.ReynoldsNumber m_flow=abs(Re)*eta*A_c/D_h "mass flow"
+  Modelica.Units.SI.ReynoldsNumber m_flow=abs(Re)*eta*A_c/D_h "mass flow"
     annotation (Dialog(group="Input"));
 
   //output variables
-  Modelica.SIunits.Pressure DP[n] "Pressure loss in [bar]"
-                                    annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "Pressure loss in [bar]"
+    annotation (Dialog(group="Output"));
   Real zeta_TOT[n]={2*abs(DP[i])/(max(rho*(w)^2, MIN)) for i in 1:n}
     "Pressure loss coefficients" annotation (Dialog(group="Output"));
   Real lambda_FRI[n]={zeta_TOT[i]*D_h/Length for i in 1:n}
@@ -44,9 +44,9 @@ model dp_corrugatedPlate_1ph_DP
 protected
   constant Real MIN=Modelica.Constants.eps;
 
-  Modelica.SIunits.Velocity w=abs(Re)*eta/(rho*D_h) "Velocity";
-  Modelica.SIunits.Area A_c=channels*2*amp*Width "Flow cross-sectional area";
-  Modelica.SIunits.Length D_h=4*amp/Phi "Hydraulic diameter";
+  Modelica.Units.SI.Velocity w=abs(Re)*eta/(rho*D_h) "Velocity";
+  Modelica.Units.SI.Area A_c=channels*2*amp*Width "Flow cross-sectional area";
+  Modelica.Units.SI.Length D_h=4*amp/Phi "Hydraulic diameter";
 
   Real X = 2*Modelica.Constants.pi*amp/Lambda "wave number";
   Real Phi = 1/6*(1+sqrt(1+X^2)+4*sqrt(1+0.5*X^2)) "area enhancement factor";

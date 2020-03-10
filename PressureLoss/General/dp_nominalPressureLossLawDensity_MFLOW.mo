@@ -14,19 +14,20 @@ function dp_nominalPressureLossLawDensity_MFLOW
     FluidDissipation.PressureLoss.General.dp_nominalPressureLossLawDensity_IN_var
     IN_var "Input record for function dp_nominalPressureLossLawDensity_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW
+  output Modelica.Units.SI.MassFlowRate M_FLOW
     "Output for function dp_nominalPressurelosslawDensity_MFLOW";
 
 protected
   Real exp_density=if IN_con.target ==FluidDissipation.Utilities.Types.MassOrVolumeFlowRate.MassFlowRate
                                                                                                then
             1 - IN_con.exp else 1 "Exponent of density fraction (rho/rho_nom)";
-  SI.MassFlowRate m_flow_nom=if IN_con.target ==FluidDissipation.Utilities.Types.MassOrVolumeFlowRate.MassFlowRate
-                                                                                               then
-            IN_con.m_flow_nom else IN_var.rho*IN_con.V_flow_nom
+  Modelica.Units.SI.MassFlowRate m_flow_nom=if IN_con.target ==
+      FluidDissipation.Utilities.Types.MassOrVolumeFlowRate.MassFlowRate then
+      IN_con.m_flow_nom else IN_var.rho*IN_con.V_flow_nom
     "Nominal mean flow velocity at operation point";
 
   //Documentation

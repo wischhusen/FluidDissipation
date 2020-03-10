@@ -17,35 +17,37 @@ function dp_curvedOverall_DP
   input FluidDissipation.PressureLoss.Bend.dp_curvedOverall_IN_var IN_var
     "Input record for function dp_curvedOverall_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_curvedOverall_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_curvedOverall_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
   Real frac_RD=max(MIN, IN_con.R_0/d_hyd) "Relative curvature radius";
   Real k=max(MIN, abs(IN_con.K)/d_hyd) "Relative roughness";
   Real delta=IN_con.delta*180/PI "Angle of turning";
-  SI.Length L=IN_con.delta*IN_con.R_0 "Length of flow path";
+  Modelica.Units.SI.Length L=IN_con.delta*IN_con.R_0 "Length of flow path";
 
   //SOURCE_1: p.336, sec.15: definition of flow regime boundaries
-  SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
-  SI.ReynoldsNumber Re_lam_max=6.5e3
+  Modelica.Units.SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=6.5e3
     "Maximum Reynolds number for laminar regime (6.5e3)";
-  SI.ReynoldsNumber Re_turb_min=4e4
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=4e4
     "Minimum Reynolds number for turbulent regime (4e4)";
-  SI.ReynoldsNumber Re_turb_max=3e5
+  Modelica.Units.SI.ReynoldsNumber Re_turb_max=3e5
     "Maximum Reynolds number for turbulent regime (3e5)";
-  SI.ReynoldsNumber Re_turb_const=1e6
+  Modelica.Units.SI.ReynoldsNumber Re_turb_const=1e6
     "Reynolds number for independence on pressure loss coefficient (1e6)";
 
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(1e2, 754*Modelica.Math.exp(
-      if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(1e2, 754*
+      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "Start of transition regime for increasing Reynolds number (leaving laminar regime)";
 
   //SOURCE_1: p.357, diag. 6-1: coefficients for local resistance coefficient [zeta_LOC]:
@@ -62,11 +64,12 @@ protected
   TYP.LocalResistanceCoefficient zeta_LOC_sharp_turb=max(MIN, A1*B1*C1)
     "Local resistance coefficient for turbulent regime (Re > Re_turb_max)";
 
-  SI.ReynoldsNumber Re=max(Re_min, 4*abs(m_flow)/(PI*IN_con.d_hyd*IN_var.eta))
-    "Reynolds number";
+  Modelica.Units.SI.ReynoldsNumber Re=max(Re_min, 4*abs(m_flow)/(PI*IN_con.d_hyd
+      *IN_var.eta)) "Reynolds number";
 
   //mass flow rate boundaries for w.r.t flow regimes
-  SI.MassFlowRate m_flow_smooth=Re_min*PI*IN_con.d_hyd*IN_var.eta/4;
+  Modelica.Units.SI.MassFlowRate m_flow_smooth=Re_min*PI*IN_con.d_hyd*IN_var.eta
+      /4;
 
   //SOURCE_1: p.357, diag. 6-1, sec. 2 / p.336, sec. 15 (turbulent regime + hydraulically rough):
   //IN_con.R_0/IN_con.d_hyd < 3

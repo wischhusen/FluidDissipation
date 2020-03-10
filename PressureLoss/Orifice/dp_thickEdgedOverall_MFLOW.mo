@@ -16,25 +16,28 @@ function dp_thickEdgedOverall_MFLOW
     "Input record for function dp_thickEdgedOverall_MFLOW"
     annotation (Dialog(group="Variable inputs"));
 
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW
+  output Modelica.Units.SI.MassFlowRate M_FLOW
     "Output for function dp_thickEdgedOverall_MFLOW";
 
 protected
   Real MIN=Modelica.Constants.eps;
   TYP.DarcyFrictionFactor lambda_FRI=0.02
     "Assumption for Darcy friction factor in vena contraction according to SOURCE_1";
-  SI.ReynoldsNumber Re_lim=1e3 "Limitation for laminar regime if dp is target";
+  Modelica.Units.SI.ReynoldsNumber Re_lim=1e3
+    "Limitation for laminar regime if dp is target";
 
-  SI.Area A_0=IN_con.A_0 "Cross sectional area of vena contraction";
-  SI.Area A_1=IN_con.A_1 "Large cross sectional area";
-  SI.Diameter d_hyd_0=max(MIN, 4*A_0/IN_con.C_0)
+  Modelica.Units.SI.Area A_0=IN_con.A_0
+    "Cross sectional area of vena contraction";
+  Modelica.Units.SI.Area A_1=IN_con.A_1 "Large cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd_0=max(MIN, 4*A_0/IN_con.C_0)
     "Hydraulic diameter of vena contraction";
-  SI.Diameter d_hyd_1=max(MIN, 4*A_1/IN_con.C_1)
+  Modelica.Units.SI.Diameter d_hyd_1=max(MIN, 4*A_1/IN_con.C_1)
     "Hydraulic diameter of large cross sectional area";
-  SI.Length l=IN_con.L "Length of vena contraction";
+  Modelica.Units.SI.Length l=IN_con.L "Length of vena contraction";
   Real l_bar=IN_con.L/d_hyd_0;
 
   //SOURCE_1, section 4, diagram 4-15, page 222:

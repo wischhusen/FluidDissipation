@@ -3,8 +3,8 @@ model kc_FilmCondensationTubeBundle_KC
   "Verification of function kc_FilmCondensationTubeBundle_KC"
 
   //heat exchanger variables
-  parameter Modelica.SIunits.Length d = 0.014 "Diameter of the bundle's tubes";
-  parameter Modelica.SIunits.Area A_front = Modelica.Constants.pi/4*0.092^2
+  parameter Modelica.Units.SI.Length d=0.014 "Diameter of the bundle's tubes";
+  parameter Modelica.Units.SI.Area A_front=Modelica.Constants.pi/4*0.092^2
     "Frontal area";
   parameter Real C = 1
     "Correction factor for tube arrangement: offset pattern=1| aligned pattern=0.8";
@@ -18,34 +18,35 @@ model kc_FilmCondensationTubeBundle_KC
   Medium.ThermodynamicState[3] liq = Medium.setState_px(p,0);
 
   //fluid property variables
-  SI.Pressure[3] p = Medium.saturationPressure(T_s) "Vapour pressure";
-  SI.SpecificHeatCapacityAtConstantPressure[3] cp_l = Medium.specificHeatCapacityCp(liq)
-    "Specific heat capacity of liquid";
-  SI.ThermalConductivity[3] lambda_l = Medium.thermalConductivity(liq)
-    "Thermal conductivity of liquid";
-  SI.Density[3] rho_g = Medium.density(vap) "Density of gas";
-  SI.Density[3] rho_l = Medium.density(liq) "Density of liquid";
-  SI.DynamicViscosity[3] eta_g = Medium.dynamicViscosity(vap)
+  Modelica.Units.SI.Pressure[3] p=Medium.saturationPressure(T_s)
+    "Vapour pressure";
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure[3] cp_l=
+      Medium.specificHeatCapacityCp(liq) "Specific heat capacity of liquid";
+  Modelica.Units.SI.ThermalConductivity[3] lambda_l=Medium.thermalConductivity(
+      liq) "Thermal conductivity of liquid";
+  Modelica.Units.SI.Density[3] rho_g=Medium.density(vap) "Density of gas";
+  Modelica.Units.SI.Density[3] rho_l=Medium.density(liq) "Density of liquid";
+  Modelica.Units.SI.DynamicViscosity[3] eta_g=Medium.dynamicViscosity(vap)
     "Dynamic viscosity of gas";
-  SI.DynamicViscosity[3] eta_l = Medium.dynamicViscosity(liq)
+  Modelica.Units.SI.DynamicViscosity[3] eta_l=Medium.dynamicViscosity(liq)
     "Dynamic viscosity of liquid";
 
-  SI.SpecificEnthalpy[3] dh_lg = Medium.specificEnthalpy(vap) - Medium.specificEnthalpy(liq)
-    "Evaporation enthalpy of fluid";
+  Modelica.Units.SI.SpecificEnthalpy[3] dh_lg=Medium.specificEnthalpy(vap) -
+      Medium.specificEnthalpy(liq) "Evaporation enthalpy of fluid";
 
   //parameter Modelica.SIunits.Temperature T_s = 273.15 + 22.41
-  parameter Modelica.SIunits.Temperature[3] T_s = {273.15 + 22.36, 273.15 + 23.1, 273.15 + 21.58}
-    "Saturation temperature";
+  parameter Modelica.Units.SI.Temperature[3] T_s={273.15 + 22.36,273.15 + 23.1,
+      273.15 + 21.58} "Saturation temperature";
   //parameter Modelica.SIunits.Temperature T_w = T_s - 1.31 "Wall temperature";
-  parameter Modelica.SIunits.Temperature[3] T_w = T_s - {1.05, 1.45, 1.96}
+  parameter Modelica.Units.SI.Temperature[3] T_w=T_s - {1.05,1.45,1.96}
     "Wall temperature";
 
   //here: Nusselt number as input for inverse calculation
-  SI.NusseltNumber Nu = input_Nu.y;
-  SI.MassFlowRate m_flow[3](start=ones(3)*1e-6);
+  Modelica.Units.SI.NusseltNumber Nu=input_Nu.y;
+  Modelica.Units.SI.MassFlowRate m_flow[3](start=ones(3)*1e-6);
 
   //SI.CoefficientOfHeatTransfer kc = Nu*lambda_l/L;
-  SI.CoefficientOfHeatTransfer[3] kc = Nu*lambda_l/d;
+  Modelica.Units.SI.CoefficientOfHeatTransfer[3] kc=Nu*lambda_l/d;
 
   //input records
 
@@ -92,9 +93,15 @@ model kc_FilmCondensationTubeBundle_KC
     T_w=T_w[3])
     annotation (Placement(transformation(extent={{0,-40},{20,-20}})));
 
-  SI.ReynoldsNumber Re_1=abs(m_flow_IN_var_1.m_flow)/m_flow_IN_con.A_front/m_flow_IN_var_1.rho_g*m_flow_IN_con.d/(m_flow_IN_var_1.eta_l/m_flow_IN_var_1.rho_l);
-  SI.ReynoldsNumber Re_2=abs(m_flow_IN_var_2.m_flow)/m_flow_IN_con.A_front/m_flow_IN_var_2.rho_g*m_flow_IN_con.d/(m_flow_IN_var_2.eta_l/m_flow_IN_var_2.rho_l);
-  SI.ReynoldsNumber Re_3=abs(m_flow_IN_var_3.m_flow)/m_flow_IN_con.A_front/m_flow_IN_var_3.rho_g*m_flow_IN_con.d/(m_flow_IN_var_3.eta_l/m_flow_IN_var_3.rho_l);
+  Modelica.Units.SI.ReynoldsNumber Re_1=abs(m_flow_IN_var_1.m_flow)/
+      m_flow_IN_con.A_front/m_flow_IN_var_1.rho_g*m_flow_IN_con.d/(
+      m_flow_IN_var_1.eta_l/m_flow_IN_var_1.rho_l);
+  Modelica.Units.SI.ReynoldsNumber Re_2=abs(m_flow_IN_var_2.m_flow)/
+      m_flow_IN_con.A_front/m_flow_IN_var_2.rho_g*m_flow_IN_con.d/(
+      m_flow_IN_var_2.eta_l/m_flow_IN_var_2.rho_l);
+  Modelica.Units.SI.ReynoldsNumber Re_3=abs(m_flow_IN_var_3.m_flow)/
+      m_flow_IN_con.A_front/m_flow_IN_var_3.rho_g*m_flow_IN_con.d/(
+      m_flow_IN_var_3.eta_l/m_flow_IN_var_3.rho_l);
   //Real L = ((m_flow_IN_var.eta_l/m_flow_IN_var.rho_l)^2/Modelica.Constants.g_n)^(1/3);
 
   //output variables

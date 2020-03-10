@@ -7,31 +7,34 @@ model dp_laminar_DPMFLOW
   parameter Integer n=size(K, 1);
 
   //straight pipe variables
-  SI.Area A_cross=PI*d_hyd^2/4 "Circular cross sectional area of straight pipe";
+  Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4
+    "Circular cross sectional area of straight pipe";
   FluidDissipation.Utilities.Types.Roughness roughness=FluidDissipation.Utilities.Types.Roughness.Considered
     "Choice of considering surface roughness"
     annotation (Dialog(group="Straight pipe"));
-  SI.Diameter d_hyd=0.1 "Hydraulic diameter"
+  Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter"
     annotation (Dialog(group="Straight pipe"));
-  SI.Length K[1]={0} "Roughness (average height of surface asperities)"
+  Modelica.Units.SI.Length K[1]={0}
+    "Roughness (average height of surface asperities)"
     annotation (Dialog(group="Straight pipe"));
-  SI.Length L=1 "Length" annotation (Dialog(group="Straight pipe"));
+  Modelica.Units.SI.Length L=1 "Length"
+    annotation (Dialog(group="Straight pipe"));
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
-  SI.Density rho=1000 "Density of fluid";
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid";
+  Modelica.Units.SI.Density rho=1000 "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
 
   //intended output variables for records
-  SI.MassFlowRate M_FLOW[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
+  Modelica.Units.SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
     "(Output) pressure loss (for intended incompressible case)";
 
   //input record
@@ -54,9 +57,10 @@ model dp_laminar_DPMFLOW
     annotation (Placement(transformation(extent={{50,20},{70,40}})));
 
   //plotting
-  SI.Velocity velocity[n]={M_FLOW[i]/(rho*A_cross) for i in 1:n}
+  Modelica.Units.SI.Velocity velocity[n]={M_FLOW[i]/(rho*A_cross) for i in 1:n}
     "Mean velocity";
-  SI.ReynoldsNumber Re[n]={rho*velocity[i]*d_hyd/eta for i in 1:n};
+  Modelica.Units.SI.ReynoldsNumber Re[n]={rho*velocity[i]*d_hyd/eta for i in 1:
+      n};
 
   Real DP_plot[n]={DP[i] for i in 1:n} "Pressure loss [Pa]";
   Real zeta_TOT[n]={2*abs(DP_plot[i])/max(MIN, rho*(velocity[i])^2) for i in 1:

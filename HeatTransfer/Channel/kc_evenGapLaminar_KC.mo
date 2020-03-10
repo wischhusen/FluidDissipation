@@ -12,7 +12,7 @@ function kc_evenGapLaminar_KC
     "Input record for function kc_evenGapLaminar_KC"
     annotation (Dialog(group="Variable inputs"));
   //output variables
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Output for function kc_evenGapLaminar_KC";
 
 protected
@@ -20,29 +20,30 @@ protected
 
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Area A_cross=max(MIN, IN_con.s*IN_con.h) "Cross sectional area of gap";
-  SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.s*IN_con.h)
+    "Cross sectional area of gap";
+  Modelica.Units.SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity in gap";
-  SI.ReynoldsNumber Re=(IN_var.rho*velocity*d_hyd/max(MIN, IN_var.eta))
-    "Reynolds number";
-  SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity in gap";
+  Modelica.Units.SI.ReynoldsNumber Re=(IN_var.rho*velocity*d_hyd/max(MIN,
+      IN_var.eta)) "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
     "Prandtl number";
 
   //variables for mean Nusselt number
   //SOURCE: p.Gb 7, eq. 36/37
-  SI.NusseltNumber Nu_1=if IN_con.target == TYP.DevOne or IN_con.target == TYP.UndevOne then
-            4.861 else if IN_con.target == TYP.DevBoth or IN_con.target == TYP.UndevBoth then
-            7.541 else 0 "First Nusselt number";
+  Modelica.Units.SI.NusseltNumber Nu_1=if IN_con.target == TYP.DevOne or IN_con.target
+       == TYP.UndevOne then 4.861 else if IN_con.target == TYP.DevBoth or
+      IN_con.target == TYP.UndevBoth then 7.541 else 0 "First Nusselt number";
   //SOURCE: p.Gb 7, eq. 38
-  SI.NusseltNumber Nu_2=1.841*(Re*Pr*d_hyd/(max(IN_con.L, MIN)))^(1/3)
-    "Second Nusselt number";
+  Modelica.Units.SI.NusseltNumber Nu_2=1.841*(Re*Pr*d_hyd/(max(IN_con.L, MIN)))
+      ^(1/3) "Second Nusselt number";
   //SOURCE: p.Gb 7, eq. 42
-  SI.NusseltNumber Nu_3=if IN_con.target == TYP.UndevOne or IN_con.target ==
-      TYP.UndevBoth then (2/(1 + 22*Pr))^(1/6)*(Re*Pr*d_hyd/(max(IN_con.L, MIN)))
-      ^(0.5) else 0 "Third mean Nusselt number";
-  SI.NusseltNumber Nu=((Nu_1)^3 + (Nu_2)^3 + (Nu_3)^3)^(1/3);
+  Modelica.Units.SI.NusseltNumber Nu_3=if IN_con.target == TYP.UndevOne or
+      IN_con.target == TYP.UndevBoth then (2/(1 + 22*Pr))^(1/6)*(Re*Pr*d_hyd/(
+      max(IN_con.L, MIN)))^(0.5) else 0 "Third mean Nusselt number";
+  Modelica.Units.SI.NusseltNumber Nu=((Nu_1)^3 + (Nu_2)^3 + (Nu_3)^3)^(1/3);
 
   //Documentation
 algorithm

@@ -12,11 +12,12 @@ function dp_pressureLossCoefficient_DP
   input FluidDissipation.PressureLoss.General.dp_pressureLossCoefficient_IN_var
     IN_var "Input record for dp_pressureLossCoefficient_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_pressureLossCoefficient_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_pressureLossCoefficient_DP";
 
   //Documentation
 

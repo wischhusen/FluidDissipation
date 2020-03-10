@@ -5,19 +5,19 @@ model dp_pressureLossCoefficient
   //general variables
   parameter Integer n=3 "number of grid points";
 
-  parameter SI.Area A_cross=Modelica.Constants.pi*0.1^2/4
+  parameter Modelica.Units.SI.Area A_cross=Modelica.Constants.pi*0.1^2/4
     "Circular cross sectional area";
   parameter TYP.PressureLossCoefficient zeta_TOT[n]={0.01,0.1,1}
     "Pressure loss coefficient";
 
   //fluid property variables
-  SI.Density rho=1.2 "Density of fluid";
+  Modelica.Units.SI.Density rho=1.2 "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n]={DP[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp[n]={DP[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -41,10 +41,12 @@ model dp_pressureLossCoefficient
 
   //output variables
   //target == DP (incompressible)
-  SI.Pressure DP[n] "pressure loss" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "pressure loss"
+    annotation (Dialog(group="Output"));
 
   //target == M_FLOW (compressible)
-  SI.MassFlowRate M_FLOW[n] "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
 
   Real ZETA_TOT_COMP[n] "darcy friction factor comp. flow" annotation (Dialog(group="Output"));
   Real ZETA_TOT_INCOMP[n] "darcy friction factor incomp. flow" annotation (Dialog(group="Output"));
@@ -66,7 +68,7 @@ model dp_pressureLossCoefficient
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=1)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

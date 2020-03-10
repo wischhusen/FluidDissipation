@@ -13,19 +13,20 @@ function kc_twoPhase_boilingHorizontal
   input FluidDissipation.Utilities.Records.HeatTransfer.TwoPhaseFlowHT_IN_var IN_var
     annotation (Dialog(group="Variable inputs"));
 
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Local two phase heat transfer coefficient";
-  output SI.CoefficientOfHeatTransfer kc_FC
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc_FC
     "Local heat transfer coefficient due to forced convection";
-  output SI.CoefficientOfHeatTransfer kc_PB
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc_PB
     "Local heat transfer coefficient due to nucleate pool boiling";
   output Real E;
   output Real recXtt "1/X_tt";
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, IN_con.A_cross) "Cross sectional area";
-  SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.A_cross)
+    "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
     "Hydraulic diameter";
 
   Real mdot_A=abs(IN_var.m_flow)/A_cross "Mass flux";
@@ -34,17 +35,19 @@ protected
     "Reduced pressure";
 
   //SOURCE_1: p.674, sec. 9.8.3: Considering nucleate and convective boiling w.r.t. equation of Gungor-Winterton
-  SI.MassFlowRate mdot_l=abs(IN_var.m_flow)*(1 - x_flow)
+  Modelica.Units.SI.MassFlowRate mdot_l=abs(IN_var.m_flow)*(1 - x_flow)
     "Mass flow rate of liquid only";
-  SI.Velocity velocity_l=mdot_l/max(MIN, IN_var.rho_l*A_cross)
+  Modelica.Units.SI.Velocity velocity_l=mdot_l/max(MIN, IN_var.rho_l*A_cross)
     "Mean velocity assuming liquid mass flow rate flows alone";
-  SI.ReynoldsNumber Re_l=max(1, IN_var.rho_l*velocity_l*d_hyd/max(MIN, IN_var.eta_l))
+  Modelica.Units.SI.ReynoldsNumber Re_l=max(1, IN_var.rho_l*velocity_l*d_hyd/
+      max(MIN, IN_var.eta_l))
     "Reynolds number assuming liquid mass flow rate flows alone";
-  SI.PrandtlNumber Pr_l=abs(IN_var.eta_l*IN_var.cp_l/max(MIN, IN_var.lambda_l))
+  Modelica.Units.SI.PrandtlNumber Pr_l=abs(IN_var.eta_l*IN_var.cp_l/max(MIN,
+      IN_var.lambda_l))
     "Prandtl number assuming liquid mass flow rate flows alone";
   //SOURCE_1: p.352, sec. Nomenclature: Considering effect of stratification w.r.t. Froude number
-  SI.FroudeNumber Fr_l=abs(mdot_A^2/max(MIN, IN_var.rho_l^2*9.81*d_hyd))
-    "Froude number assuming (total) mass flux flowing as liquid";
+  Modelica.Units.SI.FroudeNumber Fr_l=abs(mdot_A^2/max(MIN, IN_var.rho_l^2*9.81
+      *d_hyd)) "Froude number assuming (total) mass flux flowing as liquid";
 
   //SOURCE_1: p.674, eq. 9.98: Considering effect of heat flux on nucleate boiling with Boiling number
   //Boiling number (Bo) is defined as ratio of actual heat flux to maximum heat flux necessary for complete evaporation of liquid
@@ -80,13 +83,13 @@ protected
     "Correction of suppression factor for nucleate boiling in horizontal pipes";
 
   //SOURCE_1: p.672, eq. 9.91: Considering effect of forced convective boiling ew.r.t. equation of Dittus-Boelter
-  SI.CoefficientOfHeatTransfer kc_fc=0.023*Re_l^0.8*Pr_l^0.4*(IN_var.lambda_l
-      /d_hyd)
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_fc=0.023*Re_l^0.8*Pr_l^0.4*(
+      IN_var.lambda_l/d_hyd)
     "Convective heat transfer coefficient assuming liquid mass flow rate only";
   //SOURCE_1: p.675, eq. 9.107: Considering effect of nucleate boiling w.r.t. equation of Cooper
-  SI.CoefficientOfHeatTransfer kc_nb=55*p_red^0.12*(1/max(MIN,
-      Modelica.Math.log10(1/p_red))^0.55)*(1/max(MIN, IN_con.MM^0.5))*
-      IN_var.qdot_A^0.67 "Nucleate boiling heat transfer coefficient";
+  Modelica.Units.SI.CoefficientOfHeatTransfer kc_nb=55*p_red^0.12*(1/max(MIN,
+      Modelica.Math.log10(1/p_red))^0.55)*(1/max(MIN, IN_con.MM^0.5))*IN_var.qdot_A
+      ^0.67 "Nucleate boiling heat transfer coefficient";
 
   //SOURCE_2: p.354, sec. final equations: Calculation of two phase heat transfer coefficient for horizontal pipes w.r.t. equation of Gungor-Winterton
 algorithm

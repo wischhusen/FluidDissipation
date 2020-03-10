@@ -15,37 +15,41 @@ function dp_turbulent_DP
   input FluidDissipation.PressureLoss.StraightPipe.dp_turbulent_IN_var IN_var
     "Input record for function dp_turbulent_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_turbulent_DP";
+  output Modelica.Units.SI.Pressure DP "Output for function dp_turbulent_DP";
 
   import TYP1 = FluidDissipation.Utilities.Types.Roughness;
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.ReynoldsNumber Re_min=1;
-  SI.Velocity v_min=Re_min*IN_var.eta/(IN_var.rho*IN_con.d_hyd);
+  Modelica.Units.SI.ReynoldsNumber Re_min=1;
+  Modelica.Units.SI.Velocity v_min=Re_min*IN_var.eta/(IN_var.rho*IN_con.d_hyd);
 
-  SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
   Real k=max(MIN, abs(IN_con.K)/IN_con.d_hyd) "Relative roughness";
 
   //SOURCE_1: p.81, fig. 2-3, sec 21-22: definition of flow regime boundaries
-  SI.ReynoldsNumber Re_lam_min=1e3 "Minimum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
+  Modelica.Units.SI.ReynoldsNumber Re_lam_min=1e3
+    "Minimum Reynolds number for laminar regime";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
     "Maximum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_turb_min=4e3
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=4e3
     "Minimum Reynolds number for turbulent regime";
 
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min, 754*
-      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min,
+      754*Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "Start of transition regime for increasing Reynolds number (leaving laminar regime)";
 
-  SI.Velocity velocity=m_flow/(IN_var.rho*A_cross) "Mean velocity";
-  SI.ReynoldsNumber Re=max(Re_min, IN_var.rho*abs(velocity)*d_hyd/IN_var.eta);
+  Modelica.Units.SI.Velocity velocity=m_flow/(IN_var.rho*A_cross)
+    "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=max(Re_min, IN_var.rho*abs(velocity)*
+      d_hyd/IN_var.eta);
 
   //SOURCE_2: p.191, eq. 8.4: determining Darcy friction factor
   //assuming lambda_FRI == lambda_FRI_calc/Re^2

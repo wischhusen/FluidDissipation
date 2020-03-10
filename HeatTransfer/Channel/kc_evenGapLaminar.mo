@@ -13,12 +13,13 @@ function kc_evenGapLaminar
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Convective heat transfer coefficient"
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Convective heat transfer coefficient" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.PrandtlNumber Pr "Prandtl number"
     annotation (Dialog(group="Output"));
-  output SI.PrandtlNumber Pr "Prandtl number" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  output SI.NusseltNumber Nu "Nusselt number"
+  output Modelica.Units.SI.NusseltNumber Nu "Nusselt number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -31,16 +32,17 @@ protected
 
   Real laminar=2200 "Maximum Reynolds number of laminar flow regime";
 
-  SI.Area A_cross=IN_con.s*IN_con.h "Cross sectional area of gap";
-  SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=IN_con.s*IN_con.h
+    "Cross sectional area of gap";
+  Modelica.Units.SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
 
   Real prandtlMax=if IN_con.target == TYP.UndevOne then 10 else if IN_con.target
        == TYP.UndevBoth then 1000 else 0 "Maximum Prandtl number";
   Real prandtlMin=if IN_con.target == TYP.UndevOne or IN_con.target == TYP.UndevBoth then
             0.1 else 0 "Minimum Prandtl number";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity in gap";
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity in gap";
 
   //failure status
   Real fstatus[2] "Check of expected boundary conditions";

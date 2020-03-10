@@ -13,27 +13,29 @@ function dp_twoPhaseFriedel_DP
     annotation (Dialog(group="Constant inputs"));
   input FluidDissipation.Utilities.Records.General.TwoPhaseFlow_var IN_var
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
-  output SI.Pressure DP "Output for function dp_twoPhaseFriedel_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_twoPhaseFriedel_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, IN_con.A_cross) "Cross sectional area";
-  SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.A_cross)
+    "Cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, 4*A_cross/max(MIN, IN_con.perimeter))
     "Hydraulic diameter";
 
   Real mdot_A=abs(m_flow)/A_cross "Mass flux";
-  SI.ReynoldsNumber Re_liq=max(1, mdot_A*d_hyd/max(MIN, IN_var.eta_l))
+  Modelica.Units.SI.ReynoldsNumber Re_liq=max(1, mdot_A*d_hyd/max(MIN, IN_var.eta_l))
     "Reynolds number assuming (total) mass flux flowing as liquid";
-  SI.ReynoldsNumber Re_lam_leave=1055
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=1055
     "Maximum Reynolds number for laminar regime (1055)";
-  SI.ReynoldsNumber Re_turb=1100
+  Modelica.Units.SI.ReynoldsNumber Re_turb=1100
     "Minimum Reynolds number for turbulent regime (1100)";
-  SI.ReynoldsNumber Re_smooth=m_flow/A_cross*d_hyd/max(MIN, abs(IN_var.eta_l))
-    "Reynolds number for smoothing";
+  Modelica.Units.SI.ReynoldsNumber Re_smooth=m_flow/A_cross*d_hyd/max(MIN, abs(
+      IN_var.eta_l)) "Reynolds number for smoothing";
   TYP.DarcyFrictionFactor lambda_FRI_lam=64/Re_liq
     "Darcy friction factor for laminar regime";
   TYP.DarcyFrictionFactor lambda_FRI_turb=(0.86859*Modelica.Math.log(max(1, (
@@ -48,7 +50,7 @@ protected
       Re_liq);
   TYP.PressureLossCoefficient zeta_FRI=lambda_FRI*IN_con.length/d_hyd
     "Pressure loss coefficient";
-  SI.Pressure DP_liq=zeta_FRI*mdot_A^2/(2*max(MIN, IN_var.rho_l))
+  Modelica.Units.SI.Pressure DP_liq=zeta_FRI*mdot_A^2/(2*max(MIN, IN_var.rho_l))
     "Frictional pressure loss assuming (total) mass flux flowing as liquid";
 
 algorithm

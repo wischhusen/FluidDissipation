@@ -6,7 +6,7 @@ record kc_overall_IN_var
   extends FluidDissipation.Utilities.Records.General.FluidProperties;
 
   //input variable (mass flow rate)
-  SI.MassFlowRate m_flow annotation (Dialog(group="Input"));
+  Modelica.Units.SI.MassFlowRate m_flow annotation (Dialog(group="Input"));
 
   annotation (Documentation(info="<html>
 This record is used as <b> input record </b> for the heat transfer function <a href=\"Modelica://FluidDissipation.HeatTransfer.StraightPipe.kc_overall\"> kc_overall </a> and 

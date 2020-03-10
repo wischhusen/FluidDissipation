@@ -16,14 +16,15 @@ function dp_suddenChange
     "Target variable of calculation" annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW "mass flow rate"
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
     annotation (Dialog(group="Output"));
   output Utilities.Types.PressureLossCoefficient zeta_TOT
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
-  output SI.ReynoldsNumber Re "Reynolds number"
+  output Modelica.Units.SI.ReynoldsNumber Re "Reynolds number"
     annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"
@@ -33,18 +34,18 @@ function dp_suddenChange
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_1=max(MIN, min(IN_con.A_1, IN_con.A_2))
+  Modelica.Units.SI.Area A_1=max(MIN, min(IN_con.A_1, IN_con.A_2))
     "Small cross sectional area of orifice";
-  SI.Area A_2=max(MIN, max(IN_con.A_1, IN_con.A_2))
+  Modelica.Units.SI.Area A_2=max(MIN, max(IN_con.A_1, IN_con.A_2))
     "Large cross sectional area of orifice";
-  SI.Length C_1=max(MIN, min(IN_con.C_1, IN_con.C_2))
+  Modelica.Units.SI.Length C_1=max(MIN, min(IN_con.C_1, IN_con.C_2))
     "Perimeter of small cross sectional area of orifice";
-  SI.Length C_2=max(MIN, max(IN_con.C_1, IN_con.C_2))
+  Modelica.Units.SI.Length C_2=max(MIN, max(IN_con.C_1, IN_con.C_2))
     "perimeter of large cross sectional area of orifice";
-  SI.Diameter d_hyd_1=4*A_1/C_1
+  Modelica.Units.SI.Diameter d_hyd_1=4*A_1/C_1
     "Hydraulic diameter of small cross sectional area of orifice";
 
-  SI.Velocity velocity "Mean velocity";
+  Modelica.Units.SI.Velocity velocity "Mean velocity";
 
   //failure status
   Real fstatus[2] "Check of expected boundary conditions";

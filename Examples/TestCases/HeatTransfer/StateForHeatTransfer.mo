@@ -20,9 +20,10 @@ model StateForHeatTransfer
   Medium.AbsolutePressure p_state=1e5 "Pressure of state" annotation (Dialog(group="State",
         enable=if use_MediaState or Medium.ThermoStates == Modelica.Media.Interfaces.Choices.IndependentVariables.T
         or Modelica.Media.Interfaces.Choices.IndependentVariables.dTX then false else true));
-  SI.Temp_C t_state=20 "Temperature of state" annotation (Dialog(group="State",
-        enable=if use_MediaState or Medium.ThermoStates == Choices.IndependentVariables.ph
-        or Choices.IndependentVariables.phX then false else true));
+  Modelica.Units.NonSI.Temperature_degC t_state=20 "Temperature of state"
+    annotation (Dialog(group="State", enable=if use_MediaState or Medium.ThermoStates
+           == Choices.IndependentVariables.ph or Choices.IndependentVariables.phX
+           then false else true));
   Medium.SpecificEnthalpy h_state=Medium.h_default "Specific enthalpy of state"  annotation (Dialog(group="State",
         enable=if not use_MediaState and (Medium.ThermoStates==Modelica.Media.Interfaces.Choices.IndependentVariables.ph or
         Medium.ThermoStates==Modelica.Media.Interfaces.Choices.IndependentVariables.phX) then true else false));

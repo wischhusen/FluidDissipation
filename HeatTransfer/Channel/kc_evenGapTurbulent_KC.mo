@@ -13,20 +13,21 @@ function kc_evenGapTurbulent_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Output for function kc_evenGapTurbulentRoughness_KC";
 
 protected
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Area A_cross=max(MIN, IN_con.s*IN_con.h) "Cross sectional area of gap";
-  SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=max(MIN, IN_con.s*IN_con.h)
+    "Cross sectional area of gap";
+  Modelica.Units.SI.Diameter d_hyd=2*IN_con.s "Hydraulic diameter";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity in gap";
-  SI.ReynoldsNumber Re=max(MIN, (IN_var.rho*velocity*d_hyd/max(MIN, IN_var.eta)))
-    "Reynolds number";
-  SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity in gap";
+  Modelica.Units.SI.ReynoldsNumber Re=max(MIN, (IN_var.rho*velocity*d_hyd/max(
+      MIN, IN_var.eta))) "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
     "Prandtl number";
 
   //SOURCE: p.Ga 5, eq. 27
@@ -35,8 +36,8 @@ protected
 
   //SOURCE: p.Gb 5, eq. 26
   //assumption according to Gb 7, sec. 2.4
-  SI.NusseltNumber Nu=abs((zeta/8)*Re*Pr/(1 + 12.7*(zeta/8)^0.5*(Pr^(2/3) - 1))
-      *(1 + (d_hyd/max(MIN, IN_con.L))^(2/3)));
+  Modelica.Units.SI.NusseltNumber Nu=abs((zeta/8)*Re*Pr/(1 + 12.7*(zeta/8)^0.5*
+      (Pr^(2/3) - 1))*(1 + (d_hyd/max(MIN, IN_con.L))^(2/3)));
 
   //Documentation
 algorithm

@@ -17,31 +17,33 @@ function dp_internalFlowOverall_DP
   input FluidDissipation.PressureLoss.Channel.dp_internalFlowOverall_IN_var IN_var
     "Input record for function dp_internalFlowOverall_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_internalFlowOverall_DP";
+  output Modelica.Units.SI.Pressure DP
+    "Output for function dp_internalFlowOverall_DP";
 
   import TYP = FluidDissipation.Utilities.Types.GeometryOfInternalFlow;
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Area A_cross=max(MIN, if IN_con.geometry == TYP.Annular then (PI/4)*((
-      IN_con.D_ann)^2 - (IN_con.d_ann)^2) else if IN_con.geometry == TYP.Circular then
-            PI/4*(IN_con.d_cir)^2 else if IN_con.geometry == TYP.Elliptical then
-            PI*IN_con.a_ell*IN_con.b_ell else if IN_con.geometry == TYP.Rectangular then
-            IN_con.a_rec*IN_con.b_rec else if IN_con.geometry == TYP.Isosceles then
-            0.5*(IN_con.a_tri*IN_con.h_tri) else 0) "Cross sectional area";
-  SI.Length perimeter=max(MIN, if IN_con.geometry == TYP.Annular then PI*(
-      IN_con.D_ann + IN_con.d_ann) else if IN_con.geometry == TYP.Circular then
-            PI*IN_con.d_cir else if IN_con.geometry == TYP.Elliptical then PI*(
-      IN_con.a_ell + IN_con.b_ell) else if IN_con.geometry == TYP.Rectangular then
-            2*(IN_con.a_rec + IN_con.b_rec) else if IN_con.geometry == TYP.Isosceles then
-            IN_con.a_tri + 2*((IN_con.h_tri)^2 + (IN_con.a_tri/2)^2)^0.5 else 0)
+  Modelica.Units.SI.Area A_cross=max(MIN, if IN_con.geometry == TYP.Annular
+       then (PI/4)*((IN_con.D_ann)^2 - (IN_con.d_ann)^2) else if IN_con.geometry
+       == TYP.Circular then PI/4*(IN_con.d_cir)^2 else if IN_con.geometry ==
+      TYP.Elliptical then PI*IN_con.a_ell*IN_con.b_ell else if IN_con.geometry
+       == TYP.Rectangular then IN_con.a_rec*IN_con.b_rec else if IN_con.geometry
+       == TYP.Isosceles then 0.5*(IN_con.a_tri*IN_con.h_tri) else 0)
+    "Cross sectional area";
+  Modelica.Units.SI.Length perimeter=max(MIN, if IN_con.geometry == TYP.Annular
+       then PI*(IN_con.D_ann + IN_con.d_ann) else if IN_con.geometry == TYP.Circular
+       then PI*IN_con.d_cir else if IN_con.geometry == TYP.Elliptical then PI*(
+      IN_con.a_ell + IN_con.b_ell) else if IN_con.geometry == TYP.Rectangular
+       then 2*(IN_con.a_rec + IN_con.b_rec) else if IN_con.geometry == TYP.Isosceles
+       then IN_con.a_tri + 2*((IN_con.h_tri)^2 + (IN_con.a_tri/2)^2)^0.5 else 0)
     "Perimeter";
-  SI.Diameter d_hyd=4*A_cross/perimeter "Hydraulic diameter";
+  Modelica.Units.SI.Diameter d_hyd=4*A_cross/perimeter "Hydraulic diameter";
   Real beta=IN_con.beta*180/PI "Top angle";
 
   //SOURCE_2: p.138, sec 8.5
@@ -67,18 +69,20 @@ protected
 
   //SOURCE_1: p.81, fig. 2-3, sec 21-22: definition of flow regime boundaries
   Real k=max(MIN, abs(IN_con.K)/d_hyd) "Relative roughness";
-  SI.ReynoldsNumber Re_lam_min=1e3 "Minimum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
+  Modelica.Units.SI.ReynoldsNumber Re_lam_min=1e3
+    "Minimum Reynolds number for laminar regime";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=2090*(1/max(0.007, k))^0.0635
     "Maximum Reynolds number for laminar regime";
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min, 754*
-      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min,
+      754*Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "Start of transition regime for increasing Reynolds number (leaving laminar regime)";
 
   //Adapted mass flow rate for function dp_turbulent of a straight pipe
-  SI.MassFlowRate m_flow_turb=m_flow*(PI/4*d_hyd^2)/A_cross
+  Modelica.Units.SI.MassFlowRate m_flow_turb=m_flow*(PI/4*d_hyd^2)/A_cross
     "Mass flow rate for turbulent calculation";
-  SI.Velocity velocity=m_flow/(IN_var.rho*A_cross) "Velocity of internal flow";
-  SI.ReynoldsNumber Re=IN_var.rho*abs(velocity)*d_hyd/IN_var.eta;
+  Modelica.Units.SI.Velocity velocity=m_flow/(IN_var.rho*A_cross)
+    "Velocity of internal flow";
+  Modelica.Units.SI.ReynoldsNumber Re=IN_var.rho*abs(velocity)*d_hyd/IN_var.eta;
 
 protected
   FluidDissipation.PressureLoss.StraightPipe.dp_overall_IN_con IN_2_con(

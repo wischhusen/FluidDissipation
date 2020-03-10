@@ -11,19 +11,23 @@ function kc_turbulent_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Output for function kc_turbulent_KC";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Output for function kc_turbulent_KC";
 
 protected
   type TYP = Modelica.Fluid.Dissipation.Utilities.Types.Roughness;
 
   Real MIN=Modelica.Constants.eps "Limiter";
 
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/(IN_var.rho*A_cross) "Mean velocity";
-  SI.ReynoldsNumber Re=max(MIN, (IN_var.rho*velocity*IN_con.d_hyd/IN_var.eta))
-    "Reynolds number";
-  SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/IN_var.lambda) "Prandtl number";
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/(IN_var.rho*A_cross)
+    "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=max(MIN, (IN_var.rho*velocity*IN_con.d_hyd
+      /IN_var.eta)) "Reynolds number";
+  Modelica.Units.SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/IN_var.lambda)
+    "Prandtl number";
 
   Real zeta=abs(1/max(MIN, 1.8*Modelica.Math.log10(abs(Re)) - 1.5)^2)
     "Pressure loss coefficient";

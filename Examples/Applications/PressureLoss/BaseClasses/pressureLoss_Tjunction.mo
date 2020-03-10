@@ -2,15 +2,15 @@ within FluidDissipation.Examples.Applications.PressureLoss.BaseClasses;
 model pressureLoss_Tjunction
 
   import PI = Modelica.Constants.pi;
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import FD = FluidDissipation.PressureLoss.Junction;
 
   //icon
   extends FluidDissipation.Utilities.Icons.PressureLoss.FlowModel;
 
   extends Modelica.Fluid.Interfaces.PartialTwoPortTransport(redeclare
-      replaceable package
-      Medium = Modelica.Media.Air.DryAirNasa);
+      replaceable package Medium =
+               Modelica.Media.Air.DryAirNasa);
 
   //fluid flow situation
   FluidDissipation.Utilities.Types.JunctionFlowSituation flowSituation=
@@ -28,7 +28,7 @@ model pressureLoss_Tjunction
 
   Real alpha= 90 "angle of branching"
     annotation (Dialog(group="Geometry"));
-  parameter SI.Diameter d_hyd[3]={1.13e-2,1.13e-2,1.13e-2}
+  parameter Modelica.Units.SI.Diameter d_hyd[3]={1.13e-2,1.13e-2,1.13e-2}
     "hydraulic diameter of passages [port_1, port_2, port_3]"
     annotation (Dialog(group="Geometry"));
 
@@ -39,13 +39,13 @@ model pressureLoss_Tjunction
     annotation (Dialog(group="Pressure loss"));
 
   //restrictions
-  parameter SI.PressureDifference dp_min(min=1)=1
+  parameter Modelica.Units.SI.PressureDifference dp_min(min=1) = 1
     "restriction for smoothing while changing of fluid flow situation"
     annotation (Dialog(group="Restriction"));
   parameter Medium.MassFlowRate m_flow_min(min=Modelica.Constants.eps)=1e-3
     "restriction for smoothing at reverse fluid flow"
     annotation (Dialog(group="Restriction"));
-  parameter SI.Velocity v_max(max=343)=343
+  parameter Modelica.Units.SI.Velocity v_max(max=343) = 343
     "restriction for maximum fluid flow velocity"
     annotation (Dialog(group="Restriction"));
   parameter Real zeta_TOT_max=100
@@ -66,7 +66,7 @@ model pressureLoss_Tjunction
   FluidDissipation.PressureLoss.Junction.dp_Tjunction_IN_var m_flow_IN_var(final rho=
        rho) annotation (Placement(transformation(extent={{-80,20},{-60,40}})));
 
-  SI.PressureDifference DP[3]
+  Modelica.Units.SI.PressureDifference DP[3]
     "(thermodynamic) pressure loss [left-internal,internal-right,internal-bottom]";
 
   Medium.MassFlowRate M_FLOW[3] "mass flow rate [side,straight,total]";
@@ -81,10 +81,10 @@ model pressureLoss_Tjunction
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results";
 
 protected
-  parameter SI.Diameter d_hyd_intern=if dp_i == 1 then d_hyd[1] else if
-      dp_i == 2 then d_hyd[2] else if dp_i == 3 then d_hyd[3] else 0;
+  parameter Modelica.Units.SI.Diameter d_hyd_intern=if dp_i == 1 then d_hyd[1]
+       else if dp_i == 2 then d_hyd[2] else if dp_i == 3 then d_hyd[3] else 0;
 
-  SI.Pressure dp_intern(start=0)
+  Modelica.Units.SI.Pressure dp_intern(start=0)
     "total pressure loss at component dp_i | POS == port_a.p > port_b.p";
 
 equation

@@ -17,26 +17,29 @@ function dp_corrugatedPlate_1ph_DP
     FluidDissipation.PressureLoss.HeatExchanger.dp_corrugatedPlate_1ph_IN_var IN_var
     "Input record for function dp_corrugatedPlate_1ph_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  Modelica.SIunits.ReynoldsNumber Re = IN_var.rho*w*D_h/IN_var.eta
+  Modelica.Units.SI.ReynoldsNumber Re=IN_var.rho*w*D_h/IN_var.eta
     "Reynolds number based on hydraulic diameter";
 
   Real xi "pressure loss coefficient";
   Real xi_0 "pressure loss coefficient if phi=0 deg";
   Real xi_1 "pressure loss coefficient if phi=90 deg";
 
-  SI.Velocity w=max(MIN, abs(m_flow)/(IN_var.rho*A_c)) "Velocity";
+  Modelica.Units.SI.Velocity w=max(MIN, abs(m_flow)/(IN_var.rho*A_c))
+    "Velocity";
 
-  SI.Area A_c = IN_con.channels*2*IN_con.amp*IN_con.Width "Cross flow area";
-  SI.Length D_h = 4*IN_con.amp/Phi "Hydraulic diameter";
+  Modelica.Units.SI.Area A_c=IN_con.channels*2*IN_con.amp*IN_con.Width
+    "Cross flow area";
+  Modelica.Units.SI.Length D_h=4*IN_con.amp/Phi "Hydraulic diameter";
 
   Real X = 2*Modelica.Constants.pi*IN_con.amp/IN_con.Lambda "wave number";
   Real Phi = 1/6*(1+sqrt(1+X^2)+4*sqrt(1+0.5*X^2)) "area enhancement factor";

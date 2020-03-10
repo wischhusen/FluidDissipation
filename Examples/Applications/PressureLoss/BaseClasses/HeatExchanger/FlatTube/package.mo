@@ -13,8 +13,8 @@ package FlatTube "FluidDissipation: Flat tube heat exchanger with several fin ge
     input
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.HeatExchanger.FlatTube.PressureLossInput_var
     IN_var annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
-    input SI.MassFlowRate m_flow "Mass flow rate"
-      annotation (Dialog(tab="Input"));
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
+    annotation (Dialog(tab="Input"));
 
   algorithm
   DP := FluidDissipation.PressureLoss.HeatExchanger.dp_flatTube_DP(

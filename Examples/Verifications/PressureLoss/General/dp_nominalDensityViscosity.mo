@@ -3,36 +3,37 @@ model dp_nominalDensityViscosity
   "Verification of function dp_nominalDensityViscosity"
 
   parameter Integer n=size(rho, 1) "number of different fluid density values";
-  parameter SI.KinematicViscosity nue=1e-6 "kinetic viscosity of fluid";
+  parameter Modelica.Units.SI.KinematicViscosity nue=1e-6
+    "kinetic viscosity of fluid";
 
   //general variables
-  parameter SI.Pressure dp_nom=50
+  parameter Modelica.Units.SI.Pressure dp_nom=50
     "Nominal pressure loss (at nominal values of mass flow rate and density)"
     annotation (Dialog(group="Generic variables"));
   parameter Real exp=2 "Exponent of pressure loss law"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.MassFlowRate m_flow_nom=1
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nom=1
     "Nominal mass flow rate (at nominal values of pressure loss and density)"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.Density rho_nom=1e3
+  parameter Modelica.Units.SI.Density rho_nom=1e3
     "Nominal density (at nominal values of mass flow rate and pressure loss)"
     annotation (Dialog(group="Generic variables"));
   parameter Real exp_eta=1.5 "Exponent for dynamic viscosity dependence"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.DynamicViscosity eta_nom=1e-3
+  parameter Modelica.Units.SI.DynamicViscosity eta_nom=1e-3
     "Dynamic viscosity at nominal pressure loss"
     annotation (Dialog(group="Generic variables"));
 
   //fluid property variables
-  SI.DynamicViscosity eta[:]={rho[i]*nue for i in 1:n}
+  Modelica.Units.SI.DynamicViscosity eta[:]={rho[i]*nue for i in 1:n}
     "Dynamic viscosity of fluid";
-  SI.Density rho[:]={1e3,1.5e3,2e3} "Density of fluid";
+  Modelica.Units.SI.Density rho[:]={1e3,1.5e3,2e3} "Density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n]={DP[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp[n]={DP[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -66,10 +67,12 @@ model dp_nominalDensityViscosity
 
   //output record
   //compressible fluid flow
-  SI.MassFlowRate M_FLOW[n] "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
 
   //incompressible fluid flow
-  SI.Pressure DP[n] "pressure loss" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "pressure loss"
+    annotation (Dialog(group="Output"));
 
   FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget_DP[n](m_flow=
        input_mdot, each target=FluidDissipation.Utilities.Types.PressureLossTarget.PressureLoss)
@@ -88,7 +91,7 @@ model dp_nominalDensityViscosity
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=100)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

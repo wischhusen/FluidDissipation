@@ -13,19 +13,21 @@ function dp_laminar_DP
   input FluidDissipation.PressureLoss.StraightPipe.dp_laminar_IN_var IN_var
     "Input record for function dp_laminar_DP"
     annotation (Dialog(group="Variable inputs"));
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "Output for function dp_laminar_DP";
+  output Modelica.Units.SI.Pressure DP "Output for function dp_laminar_DP";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
 
-  SI.Velocity velocity=m_flow/max(MIN, IN_var.rho*A_cross) "Mean velocity";
+  Modelica.Units.SI.Velocity velocity=m_flow/max(MIN, IN_var.rho*A_cross)
+    "Mean velocity";
 
   //Documentation
 

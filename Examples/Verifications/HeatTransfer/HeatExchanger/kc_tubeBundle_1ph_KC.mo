@@ -4,13 +4,13 @@ model kc_tubeBundle_1ph_KC "Verification of function kc_tubeBundle_1ph_KC"
   parameter Integer n=2 "number of variants";
 
   //Heat exchanger variables
-  parameter Modelica.SIunits.Area A_front(min=1e-6)=1
+  parameter Modelica.Units.SI.Area A_front(min=1e-6) = 1
     "Cross sectional area in front of the tube row or bundle";
-  parameter Modelica.SIunits.Length d(min=1e-6) = 0.0164
+  parameter Modelica.Units.SI.Length d(min=1e-6) = 0.0164
     "Outer diameter of tubes";
 
 protected
-  parameter SI.Length s[n]={d*1.25, d*2.0};
+  parameter Modelica.Units.SI.Length s[n]={d*1.25,d*2.0};
 
 public
   parameter Boolean staggeredAlignment[n] = {true, false}
@@ -20,23 +20,24 @@ public
     "Number of pipe rows in flow direction";
 
 protected
-  parameter Modelica.SIunits.Length L = Modelica.Constants.pi/2*d;
+  parameter Modelica.Units.SI.Length L=Modelica.Constants.pi/2*d;
 
 public
-  SI.PrandtlNumber Pr=eta*cp/lambda;
+  Modelica.Units.SI.PrandtlNumber Pr=eta*cp/lambda;
 
   //fluid property variables
 
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp=1007
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=1007
     "Specific heat capacity at constant pressure of fluid";
-  parameter SI.DynamicViscosity eta=18.04e-6 "Dynamic viscosity of fluid";
-  parameter SI.ThermalConductivity lambda=25.3e-3
+  parameter Modelica.Units.SI.DynamicViscosity eta=18.04e-6
+    "Dynamic viscosity of fluid";
+  parameter Modelica.Units.SI.ThermalConductivity lambda=25.3e-3
     "Thermal conductivity of fluid";
-  parameter SI.Density rho=1.217 "Density of fluid";
+  parameter Modelica.Units.SI.Density rho=1.217 "Density of fluid";
 
   //here: Nusselt number as input for inverse calculation
-  SI.NusseltNumber Nu = input_Nu.y;
-  SI.MassFlowRate m_flow[n](start=ones(n)*1e-6);
+  Modelica.Units.SI.NusseltNumber Nu=input_Nu.y;
+  Modelica.Units.SI.MassFlowRate m_flow[n](start=ones(n)*1e-6);
 
   //input records
 
@@ -81,8 +82,12 @@ public
     m_flow=m_flow[2])
                   annotation (Placement(transformation(extent={{50,-8},{70,12}})));
 
-  SI.ReynoldsNumber Re_1=abs(m_flow_IN_var_1.m_flow)/m_flow_IN_con_1.A_front/m_flow_IN_var_1.rho*L/psi[1]/m_flow_IN_var_1.eta*m_flow_IN_var_1.rho;
-  SI.ReynoldsNumber Re_2=abs(m_flow_IN_var_2.m_flow)/m_flow_IN_con_2.A_front/m_flow_IN_var_2.rho*L/psi[2]/m_flow_IN_var_2.eta*m_flow_IN_var_2.rho;
+  Modelica.Units.SI.ReynoldsNumber Re_1=abs(m_flow_IN_var_1.m_flow)/
+      m_flow_IN_con_1.A_front/m_flow_IN_var_1.rho*L/psi[1]/m_flow_IN_var_1.eta*
+      m_flow_IN_var_1.rho;
+  Modelica.Units.SI.ReynoldsNumber Re_2=abs(m_flow_IN_var_2.m_flow)/
+      m_flow_IN_con_2.A_front/m_flow_IN_var_2.rho*L/psi[2]/m_flow_IN_var_2.eta*
+      m_flow_IN_var_2.rho;
 
   Real psi[n] = {if b[i] >= 1 or b[i] <= 0 then 1 - Modelica.Constants.pi/4/a[i] else 1 - Modelica.Constants.pi/4/a[i]/b[i] for i in 1:n};
 
@@ -90,7 +95,7 @@ public
   Real b[n] = {m_flow_IN_con_1.s_2/m_flow_IN_con_1.d, m_flow_IN_con_2.s_2/m_flow_IN_con_2.d};
 
   //output variables
-  SI.CoefficientOfHeatTransfer[n] kc = {Nu*lambda/L for i in 1:n}
+  Modelica.Units.SI.CoefficientOfHeatTransfer[n] kc={Nu*lambda/L for i in 1:n}
     "Heat transfer coefficient";
 
 public

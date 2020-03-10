@@ -2,7 +2,7 @@ within FluidDissipation.Examples.Applications.PressureLoss;
 model Tjunction "Tjunction model for different constant flow situations"
 
   import PI = Modelica.Constants.pi;
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
   import Modelica.Fluid.Types;
   import Modelica.Fluid.Types.PortFlowDirection;
 
@@ -19,30 +19,31 @@ model Tjunction "Tjunction model for different constant flow situations"
     "Fluid flow situation"
     annotation (Dialog(tab="General", group="FlowSituation"));
 
-  parameter Modelica.SIunits.Conversions.NonSIunits.Angle_deg alpha(min=0, max=90)=90
-    "branching angle"
+  parameter Modelica.Units.NonSI.Angle_deg alpha(
+    min=0,
+    max=90) = 90 "branching angle"
     annotation (Dialog(tab="General", group="Geometry"));
   parameter Boolean united_converging_cross_section=false
     "true == A_cross_conv = A_cross_straight + A_cross_side | false == A_cross_conv > A_cross_straight + A_cross_side"
     annotation (Dialog(tab="General", group="Geometry"));
-  parameter SI.Length d_hyd_1(min=Modelica.Constants.eps)=1e-1
+  parameter Modelica.Units.SI.Length d_hyd_1(min=Modelica.Constants.eps) = 1e-1
     "diameter of left passage (port_1)"
     annotation (Dialog(tab="General", group="Geometry"));
-  parameter SI.Diameter d_hyd_2(min=Modelica.Constants.eps)=1e-1
-    "diameter of right passage (port_2)"
+  parameter Modelica.Units.SI.Diameter d_hyd_2(min=Modelica.Constants.eps) =
+    1e-1 "diameter of right passage (port_2)"
     annotation (Dialog(tab="General", group="Geometry"));
-  parameter SI.Diameter d_hyd_3(min=Modelica.Constants.eps)=1e-1
-    "diameter of side branch (port_3)"
+  parameter Modelica.Units.SI.Diameter d_hyd_3(min=Modelica.Constants.eps) =
+    1e-1 "diameter of side branch (port_3)"
     annotation (Dialog(tab="General", group="Geometry"));
 
   //restriction
-  parameter SI.Pressure dp_min(min=Modelica.Constants.eps)=1
+  parameter Modelica.Units.SI.Pressure dp_min(min=Modelica.Constants.eps) = 1
     "restriction for smoothing while changing of fluid flow situation"
     annotation (Dialog(group="Restriction"));
-  parameter SI.MassFlowRate m_flow_min(min=Modelica.Constants.eps)=1e-3
-    "restriction for smoothing at reverse fluid flow"
+  parameter Modelica.Units.SI.MassFlowRate m_flow_min(min=Modelica.Constants.eps)
+     = 1e-3 "restriction for smoothing at reverse fluid flow"
     annotation (Dialog(group="Restriction"));
-  parameter SI.Velocity v_max(min=Modelica.Constants.eps)= 343
+  parameter Modelica.Units.SI.Velocity v_max(min=Modelica.Constants.eps) = 343
     "restriction of maximum fluid flow velocity for pressure loss calculation"
     annotation (Dialog(group="Restriction"));
   parameter Real zeta_TOT_max(min=Modelica.Constants.eps)=100
@@ -114,7 +115,7 @@ model Tjunction "Tjunction model for different constant flow situations"
           extent={{-40,-10},{-20,10}})));
 
 protected
-  parameter SI.Diameter d_hyd[3]={d_hyd_1,d_hyd_2,d_hyd_3};
+  parameter Modelica.Units.SI.Diameter d_hyd[3]={d_hyd_1,d_hyd_2,d_hyd_3};
 
 equation
   if flowSituation == FluidDissipation.Utilities.Types.JunctionFlowSituation.Tjoin_Symmetric

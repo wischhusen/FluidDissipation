@@ -7,7 +7,7 @@ model Valve "Test cases of pressure loss functions for valves"
 public
   Modelica.Blocks.Sources.Sine input_mflow(
     amplitude=0,
-    freqHz=0,
+    f=0,
     offset=1)
     annotation (Placement(transformation(extent={{-100,-50},{-80,-30}})));
 
@@ -68,8 +68,8 @@ public
         opening_nominal=1)) "Calculate mass flow rate from pressure loss"
     annotation (Placement(transformation(extent={{-24,-4},{24,44}})));
 
-  Applications.PressureLoss.ValveFlowModel from_mflow(redeclare package Medium =
-        Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
+  Applications.PressureLoss.ValveFlowModel from_mflow(redeclare package Medium
+      = Modelica.Media.Water.ConstantPropertyLiquidWater, redeclare model
       FlowModel =
         FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.Valve.Overall.OverallFlowModel
         (

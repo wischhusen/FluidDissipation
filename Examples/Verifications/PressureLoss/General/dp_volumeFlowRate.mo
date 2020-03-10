@@ -3,7 +3,7 @@ model dp_volumeFlowRate "Verification of function dp_volumeFlowRate"
 
   parameter Integer n=size(a, 1);
 
-  SI.VolumeFlowRate V_flow[n]={input_mdot[i]/rho for i in 1:n}
+  Modelica.Units.SI.VolumeFlowRate V_flow[n]={input_mdot[i]/rho for i in 1:n}
     "Input volume flow rate";
 
   //general variables
@@ -13,13 +13,13 @@ model dp_volumeFlowRate "Verification of function dp_volumeFlowRate"
     annotation (Dialog(group="Input"));
 
   //fluid property variables
-  SI.Density rho=1.2 "density of fluid";
+  Modelica.Units.SI.Density rho=1.2 "density of fluid";
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*input_mflow_0.y
-    "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n]={DP[i] for i in 1:n}
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n)) = ones(n)*
+    input_mflow_0.y "(Input) mass flow rate (for intended incompressible case)";
+  Modelica.Units.SI.Pressure input_dp[n]={DP[i] for i in 1:n}
     "(Input) pressure loss (for intended compressible case)";
 
   //input record
@@ -41,10 +41,12 @@ model dp_volumeFlowRate "Verification of function dp_volumeFlowRate"
 
   //output variables
   //compressible fluid flow
-  SI.MassFlowRate M_FLOW[n] "mass flow rate" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.MassFlowRate M_FLOW[n] "mass flow rate"
+    annotation (Dialog(group="Output"));
 
   //incompressible fluid flow
-  SI.Pressure DP[n] "pressure loss" annotation (Dialog(group="Output"));
+  Modelica.Units.SI.Pressure DP[n] "pressure loss"
+    annotation (Dialog(group="Output"));
 
   FluidDissipation.Utilities.Records.PressureLoss.PressureLossInput chosenTarget_DP[n](m_flow=
        input_mdot, each target=FluidDissipation.Utilities.Types.PressureLossTarget.PressureLoss)
@@ -63,7 +65,7 @@ model dp_volumeFlowRate "Verification of function dp_volumeFlowRate"
     offset=0,
     phase=0,
     startTime=0,
-    freqHz=1,
+    f=1,
     amplitude=1)
     annotation (Placement(transformation(extent={{-40,-80},{-20,-60}})));
   Modelica.Blocks.Sources.Exponentials input_mflow_2(

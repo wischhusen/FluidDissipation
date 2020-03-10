@@ -3,48 +3,49 @@ model dp_nominalDensityViscosity_DPMFLOW
   "Verification of function dp_nominalDensityViscosity_DP and dp_nominalDensityViscosity_MFLOW"
 
   parameter Integer n=size(rho, 1) "number of different fluid density values";
-  parameter SI.KinematicViscosity nue=1e-6 "kinetic viscosity of fluid";
+  parameter Modelica.Units.SI.KinematicViscosity nue=1e-6
+    "kinetic viscosity of fluid";
 
   //general variables
-  parameter SI.Pressure dp_nom=50
+  parameter Modelica.Units.SI.Pressure dp_nom=50
     "Nominal pressure loss (at nominal values of mass flow rate and density)"
     annotation (Dialog(group="Generic variables"));
   parameter Real exp=2 "Exponent of pressure loss law"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.MassFlowRate m_flow_nom=1
+  parameter Modelica.Units.SI.MassFlowRate m_flow_nom=1
     "Nominal mass flow rate (at nominal values of pressure loss and density)"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.Density rho_nom=1e3
+  parameter Modelica.Units.SI.Density rho_nom=1e3
     "Nominal density (at nominal values of mass flow rate and pressure loss)"
     annotation (Dialog(group="Generic variables"));
   parameter Real exp_eta=1.5 "Exponent for dynamic viscosity dependence"
     annotation (Dialog(group="Generic variables"));
-  parameter SI.DynamicViscosity eta_nom=1e-3
+  parameter Modelica.Units.SI.DynamicViscosity eta_nom=1e-3
     "Dynamic viscosity at nominal pressure loss"
     annotation (Dialog(group="Generic variables"));
 
   //fluid property PARAMETERS
-  parameter SI.SpecificHeatCapacityAtConstantPressure cp=4190
+  parameter Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp=4190
     "specific heat capacity at constant pressure of fluid"
     annotation (Dialog(group="FluidProperties"));
-  SI.DynamicViscosity eta[:]={rho[i]*nue for i in 1:n}
+  Modelica.Units.SI.DynamicViscosity eta[:]={rho[i]*nue for i in 1:n}
     "dynamic viscosity of fluid" annotation (Dialog(group="FluidProperties"));
-  parameter SI.ThermalConductivity lambda=0.6 "thermal conductivity of fluid"
-    annotation (Dialog(group="FluidProperties"));
-  SI.Density rho[:]={1e3,1.5e3,2e3} "density of fluid"
+  parameter Modelica.Units.SI.ThermalConductivity lambda=0.6
+    "thermal conductivity of fluid" annotation (Dialog(group="FluidProperties"));
+  Modelica.Units.SI.Density rho[:]={1e3,1.5e3,2e3} "density of fluid"
     annotation (Dialog(group="FluidProperties"));
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
 
   //intended output variables for records
-  SI.MassFlowRate M_FLOW[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n};
+  Modelica.Units.SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n};
 
   //input record
   //target == DP (incompressible)

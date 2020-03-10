@@ -17,7 +17,7 @@ function kc_tubeBundleFilmCondensation_lam_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output Modelica.SIunits.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Heat transfer coefficient";
 
 protected

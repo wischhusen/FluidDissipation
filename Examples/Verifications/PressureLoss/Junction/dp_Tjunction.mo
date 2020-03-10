@@ -1,61 +1,62 @@
 within FluidDissipation.Examples.Verifications.PressureLoss.Junction;
 model dp_Tjunction "verification of function dp_Tjunction"
 
-  import SI = Modelica.SIunits;
+  import      Modelica.Units.SI;
 
   parameter Integer alpha[1]={90} "angle of branching"
     annotation (Dialog(group="T-junction"));
 
-  parameter SI.Diameter d_hyd_conv[3]={((4/PI*1e-3)/2)^0.5,((4/PI*
-      1e-3)/2)^0.5,(4/PI*1e-3)^0.5}
+  parameter Modelica.Units.SI.Diameter d_hyd_conv[3]={((4/PI*1e-3)/2)^0.5,((4/
+      PI*1e-3)/2)^0.5,(4/PI*1e-3)^0.5}
     "hydraulic diameter united_converging_cross_section=true"
     annotation (Dialog(group="T-junction"));
   parameter Real d_hyd_noconv[3]={((4/PI*1e-3))^0.5,((4/PI*1e-3))^0.5,
       (4/PI*1e-3)^0.5} "hydraulic diameter united_converging_cross_section=false";
-  parameter SI.MassFlowRate m_flow_min=1e-6
+  parameter Modelica.Units.SI.MassFlowRate m_flow_min=1e-6
     "restriction for smoothing at reverse fluid flow"
     annotation (Dialog(group="restriction"));
-  parameter SI.Velocity v_max=343 "restriction for maximum fluid flow velocity"
+  parameter Modelica.Units.SI.Velocity v_max=343
+    "restriction for maximum fluid flow velocity"
     annotation (Dialog(group="restriction"));
   parameter TYP.PressureLossCoefficient zeta_TOT_max=1000
     "restriction for maximum value of pressure loss coefficient"
     annotation (Dialog(group="restriction"));
-  parameter SI.Pressure dp_min=1
+  parameter Modelica.Units.SI.Pressure dp_min=1
     "restriction for smoothing while changing of fluid flow situation"
     annotation (Dialog(group="restriction"));
-  parameter SI.Pressure p_junction[4]=zeros(4)
+  parameter Modelica.Units.SI.Pressure p_junction[4]=zeros(4)
     "pressures at ports of junction [left,right,bottom,internal]"
     annotation (Dialog(group="restriction"));
 
   //fluid property variables
-  SI.Density rho=1000 "density of fluid"
+  Modelica.Units.SI.Density rho=1000 "density of fluid"
     annotation (Dialog(group="Fluid properties"));
   Real eta=1e-3 "dynamic viscosity of fluid"
     annotation (Dialog(group="Fluid properties"));
 
   //split (incompressible)
   //input variable (mass flow rate) for split [left,right,bottom]
-  SI.MassFlowRate m_flow_split_1[3]={+1,-(1 - sign(input_m_flow)*
-      input_m_flow),-sign(input_m_flow)*input_m_flow} "mass flow rate"
-                     annotation (Dialog(group="Input"));
-  SI.MassFlowRate m_flow_split_3[3]={-(1 - sign(input_m_flow)*
+  Modelica.Units.SI.MassFlowRate m_flow_split_1[3]={+1,-(1 - sign(input_m_flow)
+      *input_m_flow),-sign(input_m_flow)*input_m_flow} "mass flow rate"
+    annotation (Dialog(group="Input"));
+  Modelica.Units.SI.MassFlowRate m_flow_split_3[3]={-(1 - sign(input_m_flow)*
       input_m_flow),+1,-sign(input_m_flow)*input_m_flow} "mass flow rate"
-                     annotation (Dialog(group="Input"));
-  SI.MassFlowRate m_flow_split_5[3]={-(1 - sign(input_m_flow)*
+    annotation (Dialog(group="Input"));
+  Modelica.Units.SI.MassFlowRate m_flow_split_5[3]={-(1 - sign(input_m_flow)*
       input_m_flow),-sign(input_m_flow)*input_m_flow,+1} "mass flow rate"
-                     annotation (Dialog(group="Input"));
+    annotation (Dialog(group="Input"));
 
   //joint (incompressible)
   //input variable (mass flow rate) for T-join
-  SI.MassFlowRate m_flow_joint_2[3]={-1,1 - sign(input_m_flow)*
+  Modelica.Units.SI.MassFlowRate m_flow_joint_2[3]={-1,1 - sign(input_m_flow)*
       input_m_flow,sign(input_m_flow)*input_m_flow} "mass flow rate"
     annotation (Dialog(group="Input"));
-  SI.MassFlowRate m_flow_joint_4[3]={1 - sign(input_m_flow)*
+  Modelica.Units.SI.MassFlowRate m_flow_joint_4[3]={1 - sign(input_m_flow)*
       input_m_flow,-1,sign(input_m_flow)*input_m_flow} "mass flow rate"
-                     annotation (Dialog(group="Input"));
-  SI.MassFlowRate m_flow_joint_6[3]={1 - sign(input_m_flow)*
+    annotation (Dialog(group="Input"));
+  Modelica.Units.SI.MassFlowRate m_flow_joint_6[3]={1 - sign(input_m_flow)*
       input_m_flow,sign(input_m_flow)*input_m_flow,-1} "mass flow rate"
-                     annotation (Dialog(group="Input"));
+    annotation (Dialog(group="Input"));
 
   //input record
   //A_side == A_straight == A_total
@@ -159,7 +160,7 @@ model dp_Tjunction "verification of function dp_Tjunction"
         transformation(extent={{-80,-100},{-60,-80}})));
   Modelica.Blocks.Sources.Sine input_mflow_1(
     amplitude=100,
-    freqHz=1/100,
+    f=1/100,
     phase=0,
     offset=0,
     startTime=0)

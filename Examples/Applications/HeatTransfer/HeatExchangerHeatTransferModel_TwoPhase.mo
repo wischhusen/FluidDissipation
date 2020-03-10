@@ -24,7 +24,7 @@ model HeatExchangerHeatTransferModel_TwoPhase
     annotation (Dialog(group="Heat transfer"), choicesAllMatching=true);
 
   //input
-  input SI.MassFlowRate m_flow "Mass flow rate"
+  input Modelica.Units.SI.MassFlowRate m_flow "Mass flow rate"
     annotation (Dialog(group="Input"));
 
   //instance of chosen heat transfer model
@@ -53,20 +53,23 @@ model HeatExchangerHeatTransferModel_TwoPhase
 
   //fluid properties
 protected
-  SI.Pressure pressure = stateForHeatTransfer.p_state;
-  SI.SpecificHeatCapacityAtConstantPressure cp_g = Medium.specificHeatCapacityCp(vap);
-  SI.SpecificHeatCapacityAtConstantPressure cp_l = Medium.specificHeatCapacityCp(liq);
-  SI.ThermalConductivity lambda_g = Medium.thermalConductivity(vap);
-  SI.ThermalConductivity lambda_l = Medium.thermalConductivity(liq);
-  SI.Density rho_g = Medium.density(vap);
-  SI.Density rho_l = Medium.density(liq);
-  SI.DynamicViscosity eta_g = Medium.dynamicViscosity(vap);
-  SI.DynamicViscosity eta_l = Medium.dynamicViscosity(liq);
+  Modelica.Units.SI.Pressure pressure=stateForHeatTransfer.p_state;
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp_g=
+      Medium.specificHeatCapacityCp(vap);
+  Modelica.Units.SI.SpecificHeatCapacityAtConstantPressure cp_l=
+      Medium.specificHeatCapacityCp(liq);
+  Modelica.Units.SI.ThermalConductivity lambda_g=Medium.thermalConductivity(vap);
+  Modelica.Units.SI.ThermalConductivity lambda_l=Medium.thermalConductivity(liq);
+  Modelica.Units.SI.Density rho_g=Medium.density(vap);
+  Modelica.Units.SI.Density rho_l=Medium.density(liq);
+  Modelica.Units.SI.DynamicViscosity eta_g=Medium.dynamicViscosity(vap);
+  Modelica.Units.SI.DynamicViscosity eta_l=Medium.dynamicViscosity(liq);
 
-  SI.SpecificEnthalpy dh_lg = Medium.specificEnthalpy(vap) - Medium.specificEnthalpy(liq);
+  Modelica.Units.SI.SpecificEnthalpy dh_lg=Medium.specificEnthalpy(vap) -
+      Medium.specificEnthalpy(liq);
   Real x_flow = max(0, min(1, (stateForHeatTransfer.medium.h - Medium.specificEnthalpy(liq))/dh_lg));
 
-  Modelica.SIunits.Temperature T_s = Medium.saturationTemperature(pressure);
+  Modelica.Units.SI.Temperature T_s=Medium.saturationTemperature(pressure);
 
 equation
   connect(heatTransferModel.thermalPort, thermalPort) annotation (Line(

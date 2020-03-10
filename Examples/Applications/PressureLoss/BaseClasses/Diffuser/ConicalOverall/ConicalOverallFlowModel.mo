@@ -9,27 +9,30 @@ model ConicalOverallFlowModel
   import SMOOTH = FluidDissipation.Utilities.Functions.General.Stepsmoother;
 
   //pressure loss parameter
-  parameter SI.Length L_d=L_1
+  parameter Modelica.Units.SI.Length L_d=L_1
     "Length of diffuser section (parallel to bulk fluid flow)"
     annotation (Dialog(group="Diffuser"));
-  parameter SI.Area A_1=PI*0.01^2/4
+  parameter Modelica.Units.SI.Area A_1=PI*0.01^2/4
     "Small constant cross sectional area at inlet of diffuser"
     annotation (Dialog(group="Diffuser"));
-  parameter SI.Area A_2=2*A_1
+  parameter Modelica.Units.SI.Area A_2=2*A_1
     "Large constant cross sectional area at outlet of diffuser"
     annotation (Dialog(group="Diffuser"));
-  parameter SI.Length C_1=PI*0.01 "Small perimeter at inlet of diffuser"
+  parameter Modelica.Units.SI.Length C_1=PI*0.01
+    "Small perimeter at inlet of diffuser" annotation (Dialog(group="Diffuser"));
+  parameter Modelica.Units.SI.Length C_2=2*C_1
+    "Large perimeter at outlet of diffuser"
     annotation (Dialog(group="Diffuser"));
-  parameter SI.Length C_2=2*C_1 "Large perimeter at outlet of diffuser"
-    annotation (Dialog(group="Diffuser"));
-  parameter SI.Length L_1=0.1 "Length of straight pipe before diffuser section"
+  parameter Modelica.Units.SI.Length L_1=0.1
+    "Length of straight pipe before diffuser section"
     annotation (Dialog(group="Straight pipe"));
-  parameter SI.Length L_2=L_1 "Length of straight pipe after diffuser section"
+  parameter Modelica.Units.SI.Length L_2=L_1
+    "Length of straight pipe after diffuser section"
     annotation (Dialog(group="Straight pipe"));
-  parameter SI.Length K=2.5e-5
+  parameter Modelica.Units.SI.Length K=2.5e-5
     "Roughness (average height of surface asperities)"
     annotation (Dialog(group="Straight pipe"));
-  parameter SI.Velocity velocity_small=1e-3
+  parameter Modelica.Units.SI.Velocity velocity_small=1e-3
     "Regularisation for a velocity smaller then velocity_small"
     annotation (Dialog(group="Numerical aspects"));
   parameter Utilities.Types.PressureLossCoefficient zeta_tot_min=1e-3
@@ -71,11 +74,11 @@ model ConicalOverallFlowModel
     IN_var(eta=eta, rho=rho)
     annotation (Placement(transformation(extent={{-50,20},{-30,40}})));
 
-  SI.Velocity velocity_a=abs(m_flow)/(rho_a*A_1)
+  Modelica.Units.SI.Velocity velocity_a=abs(m_flow)/(rho_a*A_1)
     "Velocity at inlet of diffuser section w.r.t. design flow direction";
-  SI.Velocity velocity_b=abs(m_flow)/(rho_b*A_2)
+  Modelica.Units.SI.Velocity velocity_b=abs(m_flow)/(rho_b*A_2)
     "Velocity at outlet of diffuser section w.r.t. design flow direction";
-  SI.Pressure dp_dyn=(rho_a/2)*SMOOTH(
+  Modelica.Units.SI.Pressure dp_dyn=(rho_a/2)*SMOOTH(
       m_flow_small,
       0,
       abs(m_flow))*velocity_a^2 - (rho_b/2)*SMOOTH(

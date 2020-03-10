@@ -7,7 +7,7 @@ partial package BaseHeatExchangerPL "Base package for all pressure loss function
     extends Modelica.Icons.Function;
 
     //pressure loss as output
-    output SI.Pressure DP;
+  output Modelica.Units.SI.Pressure DP;
 
   end pressureLoss_mflow;
 end BaseHeatExchangerPL;

@@ -13,26 +13,28 @@ model OverallFlowModel
   FluidDissipation.Utilities.Types.GeometryOfInternalFlow geometry=
       FluidDissipation.Utilities.Types.GeometryOfInternalFlow.Circular
     "Choice of geometry for internal flow" annotation (Dialog(group="Channel"));
-  parameter SI.Length K=0 "Roughness (average height of surface asperities)"
+  parameter Modelica.Units.SI.Length K=0
+    "Roughness (average height of surface asperities)"
     annotation (Dialog(group="Channel"));
-  parameter SI.Length L=1 "Length" annotation (Dialog(group="Channel"));
-  parameter SI.Diameter d_ann=d_cir "Small diameter"
+  parameter Modelica.Units.SI.Length L=1 "Length"
     annotation (Dialog(group="Channel"));
-  parameter SI.Diameter D_ann=2*d_ann "Large diameter"
+  parameter Modelica.Units.SI.Diameter d_ann=d_cir "Small diameter"
     annotation (Dialog(group="Channel"));
-  parameter SI.Diameter d_cir=0.1 "Internal diameter"
+  parameter Modelica.Units.SI.Diameter D_ann=2*d_ann "Large diameter"
     annotation (Dialog(group="Channel"));
-  parameter SI.Length a_ell=(3/4)*d_cir "Half length of long base line"
+  parameter Modelica.Units.SI.Diameter d_cir=0.1 "Internal diameter"
     annotation (Dialog(group="Channel"));
-  parameter SI.Length b_ell=0.5*a_ell "Half length of short base line"
+  parameter Modelica.Units.SI.Length a_ell=(3/4)*d_cir
+    "Half length of long base line" annotation (Dialog(group="Channel"));
+  parameter Modelica.Units.SI.Length b_ell=0.5*a_ell
+    "Half length of short base line" annotation (Dialog(group="Channel"));
+  parameter Modelica.Units.SI.Length a_rec=d_cir "Horizontal length"
     annotation (Dialog(group="Channel"));
-  parameter SI.Length a_rec=d_cir "Horizontal length"
+  parameter Modelica.Units.SI.Length b_rec=a_rec "Vertical length"
     annotation (Dialog(group="Channel"));
-  parameter SI.Length b_rec=a_rec "Vertical length"
-    annotation (Dialog(group="Channel"));
-  parameter SI.Length a_tri=d_cir*(1 + 2^0.5) "Length of base line"
-    annotation (Dialog(group="Channel"));
-  parameter SI.Length h_tri=0.5*a_tri
+  parameter Modelica.Units.SI.Length a_tri=d_cir*(1 + 2^0.5)
+    "Length of base line" annotation (Dialog(group="Channel"));
+  parameter Modelica.Units.SI.Length h_tri=0.5*a_tri
     "Height to top angle perpendicular to base line"
     annotation (Dialog(group="Channel"));
   parameter Real beta=90 "Top angle" annotation (Dialog(group="Channel"));

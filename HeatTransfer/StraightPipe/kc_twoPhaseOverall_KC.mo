@@ -12,7 +12,7 @@ function kc_twoPhaseOverall_KC
     IN_var annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Local two phase heat transfer coefficient";
 
 protected

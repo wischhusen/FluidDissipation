@@ -2,9 +2,9 @@ within FluidDissipation.Utilities.Functions.General;
 function CubicInterpolation_LAMBDA
   extends Modelica.Icons.Function;
   import Modelica.Math;
-  input SI.ReynoldsNumber Re;
-  input SI.ReynoldsNumber Re1;
-  input SI.ReynoldsNumber Re2;
+  input Modelica.Units.SI.ReynoldsNumber Re;
+  input Modelica.Units.SI.ReynoldsNumber Re1;
+  input Modelica.Units.SI.ReynoldsNumber Re2;
   input Real Delta;
   output Real lambda2;
   // point lg(lambda2(Re1)) with derivative at lg(Re1)

@@ -18,7 +18,8 @@ replaceable partial function coefficientOfHeatTransfer
     IN_var annotation (Placement(transformation(extent={{-60,20},{-40,40}})));
 
   //convective heat transfer coefficient as output
-  output SI.CoefficientOfHeatTransfer kc "convective heat transfer coefficient";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "convective heat transfer coefficient";
 
 end coefficientOfHeatTransfer;
 end BasePlateHT;

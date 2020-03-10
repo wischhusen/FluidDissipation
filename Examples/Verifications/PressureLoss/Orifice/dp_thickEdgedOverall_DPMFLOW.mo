@@ -8,35 +8,37 @@ model dp_thickEdgedOverall_DPMFLOW
     "Number of different ratios of cross sectional areas";
 
   //orifice variables
-  parameter SI.Area A_0=1e-3 "Cross sectional area of vena contraction";
-  parameter SI.Area A_1[n]={A_0/A0_2_A1[i] for i in 1:n}
+  parameter Modelica.Units.SI.Area A_0=1e-3
+    "Cross sectional area of vena contraction";
+  parameter Modelica.Units.SI.Area A_1[n]={A_0/A0_2_A1[i] for i in 1:n}
     "Large cross sectional area of orifice";
-  parameter SI.Length C_0=sqrt(4*A_0/PI)*PI "Perimeter of vena contraction";
-  parameter SI.Length C_1[n]=sqrt(4*A_1/PI)*PI
+  parameter Modelica.Units.SI.Length C_0=sqrt(4*A_0/PI)*PI
+    "Perimeter of vena contraction";
+  parameter Modelica.Units.SI.Length C_1[n]=sqrt(4*A_1/PI)*PI
     "Perimeter of large cross sectional area of orifice";
   parameter Real A0_2_A1[6]={0.02,0.08,0.20,0.40,0.70,0.90}
     "Ratio of cross sectional areas";
 
-  SI.Length L(start=0) "Length of thick edged orifice";
+  Modelica.Units.SI.Length L(start=0) "Length of thick edged orifice";
   Real l_bar=L/sqrt(4*A_0/PI) "Relative length of orifice";
 
   //fluid property variables
-  SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid"
+  Modelica.Units.SI.DynamicViscosity eta=1e-3 "Dynamic viscosity of fluid"
     annotation (Dialog(group="Fluid properties"));
-  SI.Density rho=1000 "Density of fluid"
+  Modelica.Units.SI.Density rho=1000 "Density of fluid"
     annotation (Dialog(group="Fluid properties"));
 
   //target variables (here: mass flow rate as input for inverse calculation)
   //intended input variables for records
-  SI.MassFlowRate input_mdot[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate input_mdot[n](start=zeros(n))
     "(Input) mass flow rate (for intended incompressible case)";
-  SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
+  Modelica.Units.SI.Pressure input_dp[n](start=zeros(n)) = ones(n)*input_DP.y
     "(Input) pressure loss (for intended compressible case)";
 
   //intended output variables for records
-  SI.MassFlowRate M_FLOW[n](start=zeros(n))
+  Modelica.Units.SI.MassFlowRate M_FLOW[n](start=zeros(n))
     "(Output) mass flow rate (for intended compressible case)";
-  SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
+  Modelica.Units.SI.Pressure DP[n](start=zeros(n)) = {input_dp[i] for i in 1:n}
     "(Output) pressure loss (for intended incompressible case)";
 
   //input record

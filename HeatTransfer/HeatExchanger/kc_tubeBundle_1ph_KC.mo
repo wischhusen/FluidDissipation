@@ -11,7 +11,7 @@ function kc_tubeBundle_1ph_KC
     "Input record for function kc_FilmCondensationTubeBundle"
     annotation (Dialog(group="Variable inputs"));
 
-  output Modelica.SIunits.CoefficientOfHeatTransfer kc
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
     "Output for function kc_tubeBundle_1ph_KC";
 
 protected
@@ -24,7 +24,7 @@ protected
   Real Pr "Prandtl number of fluid";
   Real Pr_w "Prandtl number of fluid near wall";
   Real fa "Alignment factor";
-  SI.Length L "Characteristic length";
+  Modelica.Units.SI.Length L "Characteristic length";
   Real a "Longitudinal alignment ratio";
   Real b "Perpendicular alignment ratio";
   Real psi "Void ratio";

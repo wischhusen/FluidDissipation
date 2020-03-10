@@ -10,11 +10,11 @@ model General "Test case for heat transfer of generic geometries"
     annotation (Placement(transformation(extent={{-100,60},{-80,80}})));
   Modelica.Blocks.Sources.Sine temperature(
     amplitude=2,
-    freqHz=1,
+    f=1,
     offset=20) "[degC]"
     annotation (Placement(transformation(extent={{-100,20},{-80,40}})));
   Modelica.Blocks.Sources.Sine massFlowRate(
-    freqHz=1,
+    f=1,
     offset=0,
     amplitude=0.1) "[kg/s]"
     annotation (Placement(transformation(extent={{-100,-20},{-80,0}})));

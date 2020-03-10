@@ -7,9 +7,10 @@ model LaminarFlowModel
     FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.StraightPipe.BaseStraightPipePL.BaseStraightPipeModel;
 
   //pressure loss calculation
-  parameter SI.Diameter d_hyd=0.1 "Hydraulic diameter"
+  parameter Modelica.Units.SI.Diameter d_hyd=0.1 "Hydraulic diameter"
     annotation (Dialog(group="Straight pipe"));
-  parameter SI.Length L=1 "Length" annotation (Dialog(group="Straight pipe"));
+  parameter Modelica.Units.SI.Length L=1 "Length"
+    annotation (Dialog(group="Straight pipe"));
 
   FluidDissipation.Examples.Applications.PressureLoss.BaseClasses.StraightPipe.Laminar.PressureLossInput_con
     IN_con(d_hyd=d_hyd, L=L)

@@ -13,16 +13,17 @@ function dp_idealGas "Generic pressure loss | ideal gas | mean density"
     "Target variable of calculation" annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.Pressure DP "pressure loss" annotation (Dialog(group="Output"));
-  output SI.MassFlowRate M_FLOW "mass flow rate"
+  output Modelica.Units.SI.Pressure DP "pressure loss"
+    annotation (Dialog(group="Output"));
+  output Modelica.Units.SI.MassFlowRate M_FLOW "mass flow rate"
     annotation (Dialog(group="Output"));
   // zeta_TOT has no meaning for this function
   final output Utilities.Types.PressureLossCoefficient zeta_TOT=0
     "Pressure loss coefficient" annotation (Dialog(group="Output"));
   // Re has no meaning for this function
-  final output SI.ReynoldsNumber Re=0 "Reynolds number"
+  final output Modelica.Units.SI.ReynoldsNumber Re=0 "Reynolds number"
     annotation (Dialog(group="Output"));
-  final output SI.PrandtlNumber Pr=0 "Prandtl number"
+  final output Modelica.Units.SI.PrandtlNumber Pr=0 "Prandtl number"
     annotation (Dialog(group="Output"));
   output Real failureStatus
     "0== boundary conditions fulfilled | 1== failure >> check if still meaningful results"

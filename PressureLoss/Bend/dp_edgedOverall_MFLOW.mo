@@ -17,35 +17,37 @@ function dp_edgedOverall_MFLOW
   input FluidDissipation.PressureLoss.Bend.dp_edgedOverall_IN_var IN_var
     "Input record for function dp_edgedOverall_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Output for function dp_edgedOverall_MFLOW";
+  output Modelica.Units.SI.MassFlowRate M_FLOW
+    "Output for function dp_edgedOverall_MFLOW";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
-  SI.Area A_cross=PI*d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=IN_con.d_hyd "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*d_hyd^2/4 "Circular cross sectional area";
   Real k=max(MIN, abs(IN_con.K)/IN_con.d_hyd) "Relative roughness";
   Real delta=IN_con.delta*180/PI "Angle of turning";
 
   //definition of flow regime boundaries
-  SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
-  SI.ReynoldsNumber Re_lam_min=500
+  Modelica.Units.SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_min=500
     "Start of transition regime for roughness contribution";
-  SI.ReynoldsNumber Re_lam_max=1e4
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=1e4
     "End of transition regime for roughness contribution";
-  SI.ReynoldsNumber Re_turb_min=1e5
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=1e5
     "Minimum Reynolds number for Reynolds-dependent transition regime";
-  SI.ReynoldsNumber Re_turb_max=2e5
+  Modelica.Units.SI.ReynoldsNumber Re_turb_max=2e5
     "Maximum Reynolds number for Reynolds-dependent transition regime (k_Re=1)";
-  SI.ReynoldsNumber Re_turb_const=1e6
+  Modelica.Units.SI.ReynoldsNumber Re_turb_const=1e6
     "Reynolds number for independence on pressure loss coefficient (1e6)";
 
   //SOURCE_1: p. 81, sec. 2-2-21: end of transition regime
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min, 754*
-      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(Re_lam_min,
+      754*Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "End of transition regime for roughness contribution";
 
   //SOURCE_1: p.366, diag. 6-7
@@ -64,20 +66,20 @@ protected
   Real pow=(2 - exp) "pressure loss = f(mass flow rate^pow)";
 //   Real k_Re = B/(max(MIN, velocity)*IN_con.d_hyd*IN_var.rho)^exp*IN_var.eta^exp;
 
-  SI.Velocity v_min = Re_min*IN_var.eta/(IN_var.rho*d_hyd)
+  Modelica.Units.SI.Velocity v_min=Re_min*IN_var.eta/(IN_var.rho*d_hyd)
     "Minimum mean velocity for regularization";
 
-  SI.Pressure dp_min=A*C1*zeta_LOC*(B/2)*(d_hyd/IN_var.eta)^(-exp)*IN_var.rho^(1 - exp)
-      *v_min^(pow)
+  Modelica.Units.SI.Pressure dp_min=A*C1*zeta_LOC*(B/2)*(d_hyd/IN_var.eta)^(-
+      exp)*IN_var.rho^(1 - exp)*v_min^(pow)
     "Linear smoothing of mass flow rate for decreasing pressure loss";
 
-  SI.Velocity v_lam_min = Re_lam_min*IN_var.eta/(IN_var.rho*d_hyd)
+  Modelica.Units.SI.Velocity v_lam_min=Re_lam_min*IN_var.eta/(IN_var.rho*d_hyd)
     "Mean velocity for starting of transition to roughness regime";
-  SI.Velocity v_lam_leave = Re_lam_leave*IN_var.eta/(IN_var.rho*d_hyd)
-    "Mean velocity for end of transition to roughness regime";
+  Modelica.Units.SI.Velocity v_lam_leave=Re_lam_leave*IN_var.eta/(IN_var.rho*
+      d_hyd) "Mean velocity for end of transition to roughness regime";
 
-  SI.Pressure dp_lam_min=A*C1*zeta_LOC*(B/2)*(d_hyd/IN_var.eta)^(-exp)*IN_var.rho^(1 - exp)
-      *v_lam_min^(pow)
+  Modelica.Units.SI.Pressure dp_lam_min=A*C1*zeta_LOC*(B/2)*(d_hyd/IN_var.eta)^
+      (-exp)*IN_var.rho^(1 - exp)*v_lam_min^(pow)
     "Pressure loss for starting of transition to roughness regime";
 
   TYP.DarcyFrictionFactor lambda_lam_leave_rough=0.25/(Modelica.Math.log10(k/(3.7*
@@ -86,9 +88,9 @@ protected
   TYP.DarcyFrictionFactor lambda_lam_leave_smooth=0.25/(Modelica.Math.log10(5.74/Re_lam_leave^0.9))^2
     "Darcy friction factor neglecting surface roughness at Re_lam_leave";
 
-  SI.Pressure dp_lam_leave=A*C1*zeta_LOC*(B/2)*max(1, min(1.4, (lambda_lam_leave_rough/
-      lambda_lam_leave_smooth)))*(d_hyd/IN_var.eta)^(-exp)*IN_var.rho^(1 - exp)
-      *v_lam_leave^(pow)
+  Modelica.Units.SI.Pressure dp_lam_leave=A*C1*zeta_LOC*(B/2)*max(1, min(1.4, (
+      lambda_lam_leave_rough/lambda_lam_leave_smooth)))*(d_hyd/IN_var.eta)^(-
+      exp)*IN_var.rho^(1 - exp)*v_lam_leave^(pow)
     "Pressure loss at end of transition to surface roughness regime";
 
   TYP.DarcyFrictionFactor lambda_turb_min_rough=0.25/(Modelica.Math.log10(k/(3.7*
@@ -103,37 +105,38 @@ protected
   TYP.DarcyFrictionFactor lambda_turb_max_smooth=0.25/(Modelica.Math.log10(5.74/Re_turb_max^0.9))^2
     "Darcy friction factor neglecting surface roughness at starting transition to constant turbulent regime";
 
-  SI.Velocity v_turb_min = Re_turb_min*IN_var.eta/(IN_var.rho*d_hyd)
+  Modelica.Units.SI.Velocity v_turb_min=Re_turb_min*IN_var.eta/(IN_var.rho*
+      d_hyd)
     "Mean velocity for starting of transition to constant turbulent regime";
 
-  SI.Velocity v_turb_max = Re_turb_max*IN_var.eta/(IN_var.rho*d_hyd)
-    "Mean velocity for end of transition to constant turbulent regime";
+  Modelica.Units.SI.Velocity v_turb_max=Re_turb_max*IN_var.eta/(IN_var.rho*
+      d_hyd) "Mean velocity for end of transition to constant turbulent regime";
 
-  SI.Pressure dp_turb_min=A*C1*zeta_LOC*(B/2)*max(1, min(1.4, (lambda_turb_min_rough/
-      lambda_turb_min_smooth)))*(d_hyd/IN_var.eta)^(-exp)*IN_var.rho^(1 - exp)
-      *v_turb_min^(pow)
+  Modelica.Units.SI.Pressure dp_turb_min=A*C1*zeta_LOC*(B/2)*max(1, min(1.4, (
+      lambda_turb_min_rough/lambda_turb_min_smooth)))*(d_hyd/IN_var.eta)^(-exp)
+      *IN_var.rho^(1 - exp)*v_turb_min^(pow)
     "Pressure loss at starting of transition to constant turbulent regime";
 
-  SI.Pressure dp_turb_max=A*C1*zeta_LOC*max(1, min(1.4, (lambda_turb_max_rough/
-      lambda_turb_max_smooth)))*IN_var.rho/2*v_turb_max^2
+  Modelica.Units.SI.Pressure dp_turb_max=A*C1*zeta_LOC*max(1, min(1.4, (
+      lambda_turb_max_rough/lambda_turb_max_smooth)))*IN_var.rho/2*v_turb_max^2
     "Pressure loss at end of transition to constant turbulent regime";
 
-  SI.Velocity v_turb=(A*C1*zeta_LOC*IN_var.rho/2)^(-0.5)*
+  Modelica.Units.SI.Velocity v_turb=(A*C1*zeta_LOC*IN_var.rho/2)^(-0.5)*
       FluidDissipation.Utilities.Functions.General.SmoothPower(
       abs(dp),
       dp_min,
       0.5) "Mean velocity under turbulent conditions";
 
-  SI.Velocity v_lam=(2*(d_hyd/IN_var.eta)^exp/(A*C1*zeta_LOC*B*(IN_var.rho)^(1 - exp)))^(1/pow)*
+  Modelica.Units.SI.Velocity v_lam=(2*(d_hyd/IN_var.eta)^exp/(A*C1*zeta_LOC*B*(
+      IN_var.rho)^(1 - exp)))^(1/pow)*
       FluidDissipation.Utilities.Functions.General.SmoothPower(
       abs(dp),
       dp_min,
       1/pow) "Mean velocity under laminar conditions";
 
   //mean velocity under smooth conditions w.r.t flow regime
-  SI.Velocity v_smooth=if abs(dp) > dp_turb_max then v_turb
-      else if abs(dp) < dp_turb_min then v_lam
-      else SMOOTH(
+  Modelica.Units.SI.Velocity v_smooth=if abs(dp) > dp_turb_max then v_turb
+       else if abs(dp) < dp_turb_min then v_lam else SMOOTH(
       dp_turb_max,
       dp_turb_min,
       abs(dp))*v_turb + SMOOTH(
@@ -141,8 +144,8 @@ protected
       dp_turb_max,
       abs(dp))*v_lam "Mean velocity under smooth conditions";
 
-  SI.ReynoldsNumber Re_smooth=max(Re_min, IN_var.rho*v_smooth*d_hyd/IN_var.eta)
-    "Reynolds number under smooth conditions";
+  Modelica.Units.SI.ReynoldsNumber Re_smooth=max(Re_min, IN_var.rho*v_smooth*
+      d_hyd/IN_var.eta) "Reynolds number under smooth conditions";
 
   //SOURCE_2: p.191, eq. 8.4: considering surface roughness
   TYP.DarcyFrictionFactor lambda_FRI_rough=0.25/(Modelica.Math.log10(k/(3.7*
@@ -156,7 +159,7 @@ protected
       lambda_FRI_smooth))) + SMOOTH(dp_lam_min, dp_lam_leave, abs(dp))
     "Correction factor for surface roughness";
 
-  SI.Velocity velocity=v_smooth/max(1, CF_fri)^(0.5)
+  Modelica.Units.SI.Velocity velocity=v_smooth/max(1, CF_fri)^(0.5)
     "Corrected velocity considering surface roughness";
 
 algorithm

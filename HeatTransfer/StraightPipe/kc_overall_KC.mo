@@ -13,20 +13,21 @@ function kc_overall_KC
     annotation (Dialog(group="Variable inputs"));
 
   //output variables
-  output SI.CoefficientOfHeatTransfer kc "Output for function kc_overall_KC";
+  output Modelica.Units.SI.CoefficientOfHeatTransfer kc
+    "Output for function kc_overall_KC";
 
 protected
   Real MIN=Modelica.Constants.eps "Limiter";
   Real laminar=2200 "Maximum Reynolds number for laminar regime";
   Real turbulent=1e4 "Minimum Reynolds number for turbulent regime";
 
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Cross sectional area";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Cross sectional area";
 
-  SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*A_cross)
-    "Mean velocity";
-  SI.ReynoldsNumber Re=(IN_var.rho*velocity*IN_con.d_hyd/max(MIN,
+  Modelica.Units.SI.Velocity velocity=abs(IN_var.m_flow)/max(MIN, IN_var.rho*
+      A_cross) "Mean velocity";
+  Modelica.Units.SI.ReynoldsNumber Re=(IN_var.rho*velocity*IN_con.d_hyd/max(MIN,
       IN_var.eta)) "Reynolds number";
-  SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
+  Modelica.Units.SI.PrandtlNumber Pr=abs(IN_var.eta*IN_var.cp/max(MIN, IN_var.lambda))
     "Prandtl number";
 
   kc_turbulent_IN_con IN_con_turb(d_hyd=IN_con.d_hyd, L= IN_con.L, roughness = IN_con.roughness, K=IN_con.K)

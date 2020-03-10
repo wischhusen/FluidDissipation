@@ -3,11 +3,11 @@ function CubicInterpolation_RE
   extends Modelica.Icons.Function;
   import Modelica.Math;
   input Real Re_turbulent;
-  input SI.ReynoldsNumber Re1;
-  input SI.ReynoldsNumber Re2;
+  input Modelica.Units.SI.ReynoldsNumber Re1;
+  input Modelica.Units.SI.ReynoldsNumber Re2;
   input Real Delta;
   input Real lambda2;
-  output SI.ReynoldsNumber Re;
+  output Modelica.Units.SI.ReynoldsNumber Re;
   // point lg(lambda2(Re1)) with derivative at lg(Re1)
 protected
   Real x1=Math.log10(64*Re1);

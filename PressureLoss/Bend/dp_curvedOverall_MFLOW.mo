@@ -17,34 +17,37 @@ function dp_curvedOverall_MFLOW
   input FluidDissipation.PressureLoss.Bend.dp_curvedOverall_IN_var IN_var
     "Input record for function dp_curvedOverall_MFLOW"
     annotation (Dialog(group="Variable inputs"));
-  input SI.Pressure dp "Pressure loss" annotation (Dialog(group="Input"));
+  input Modelica.Units.SI.Pressure dp "Pressure loss"
+    annotation (Dialog(group="Input"));
 
   //output variables
-  output SI.MassFlowRate M_FLOW "Output for function dp_curvedOverall_MFLOW";
+  output Modelica.Units.SI.MassFlowRate M_FLOW
+    "Output for function dp_curvedOverall_MFLOW";
 
 protected
   Real MIN=Modelica.Constants.eps;
 
-  SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
-  SI.Area A_cross=PI*IN_con.d_hyd^2/4 "Circular cross sectional area";
+  Modelica.Units.SI.Diameter d_hyd=max(MIN, IN_con.d_hyd) "Hydraulic diameter";
+  Modelica.Units.SI.Area A_cross=PI*IN_con.d_hyd^2/4
+    "Circular cross sectional area";
   Real frac_RD=max(MIN, IN_con.R_0/d_hyd) "Relative curvature radius";
   Real k=max(MIN, abs(IN_con.K)/d_hyd) "Relative roughness";
   Real delta=IN_con.delta*180/PI "Angle of turning";
-  SI.Length L=IN_con.delta*IN_con.R_0 "Length of flow path";
+  Modelica.Units.SI.Length L=IN_con.delta*IN_con.R_0 "Length of flow path";
 
   //SOURCE_1: p.336, sec.15: definition of flow regime boundaries
-  SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
-  SI.ReynoldsNumber Re_lam_max=6.5e3
+  Modelica.Units.SI.ReynoldsNumber Re_min=1 "Minimum Reynolds number";
+  Modelica.Units.SI.ReynoldsNumber Re_lam_max=6.5e3
     "Maximum Reynolds number for laminar regime (6.5e3)";
-  SI.ReynoldsNumber Re_turb_min=4e4
+  Modelica.Units.SI.ReynoldsNumber Re_turb_min=4e4
     "Minimum Reynolds number for turbulent regime (4e4)";
-  SI.ReynoldsNumber Re_turb_max=3e5
+  Modelica.Units.SI.ReynoldsNumber Re_turb_max=3e5
     "Maximum Reynolds number for turbulent regime (3e5)";
-  SI.ReynoldsNumber Re_turb_const=1e6
+  Modelica.Units.SI.ReynoldsNumber Re_turb_const=1e6
     "Reynolds number for independence on pressure loss coefficient (1e6)";
 
-  SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(1e2, 754*Modelica.Math.exp(
-      if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
+  Modelica.Units.SI.ReynoldsNumber Re_lam_leave=min(Re_lam_max, max(1e2, 754*
+      Modelica.Math.exp(if k <= 0.007 then 0.0065/0.007 else 0.0065/k)))
     "Start of transition regime for increasing Reynolds number (leaving laminar regime)";
 
   //SOURCE_1: p.357, diag. 6-1: coefficients for local resistance coefficient [zeta_LOC]:
@@ -63,51 +66,52 @@ protected
 
   //SOURCE_1: p.357, diag. 6-1: pressure loss boundaries for w.r.t flow regimes
   //IN_con.R_0/d_hyd <=3
-  SI.AbsolutePressure dp_lam_max=(zeta_LOC_sharp_turb + A2/Re_lam_leave)*IN_var.rho
-      /2*(Re_lam_leave*IN_var.eta/(IN_var.rho*d_hyd))^2
+  Modelica.Units.SI.AbsolutePressure dp_lam_max=(zeta_LOC_sharp_turb + A2/
+      Re_lam_leave)*IN_var.rho/2*(Re_lam_leave*IN_var.eta/(IN_var.rho*d_hyd))^2
     "Maximum pressure loss for laminar regime";
-  SI.AbsolutePressure dp_turb_min=zeta_LOC_sharp_turb*(if frac_RD > 0.7 then
-      11.5/Re_turb_min^0.19 else if frac_RD <= 0.7 and frac_RD >= 0.55 then
-      5.45/Re_turb_min^0.131 else 1 + 4400/Re_turb_min)*IN_var.rho/2*(
-      Re_turb_min*IN_var.eta/(IN_var.rho*d_hyd))^2
+  Modelica.Units.SI.AbsolutePressure dp_turb_min=zeta_LOC_sharp_turb*(if
+      frac_RD > 0.7 then 11.5/Re_turb_min^0.19 else if frac_RD <= 0.7 and
+      frac_RD >= 0.55 then 5.45/Re_turb_min^0.131 else 1 + 4400/Re_turb_min)*
+      IN_var.rho/2*(Re_turb_min*IN_var.eta/(IN_var.rho*d_hyd))^2
     "Minimum pressure loss for turbulent regime";
-  SI.AbsolutePressure dp_turb_max=zeta_LOC_sharp_turb*(if frac_RD > 0.7 then
-      11.5/Re_turb_max^0.19 else if frac_RD <= 0.7 and frac_RD >= 0.55 then
-      5.45/Re_turb_max^0.131 else 1 + 4400/Re_turb_max)*IN_var.rho/2*(
-      Re_turb_max*IN_var.eta/(IN_var.rho*d_hyd))^2
+  Modelica.Units.SI.AbsolutePressure dp_turb_max=zeta_LOC_sharp_turb*(if
+      frac_RD > 0.7 then 11.5/Re_turb_max^0.19 else if frac_RD <= 0.7 and
+      frac_RD >= 0.55 then 5.45/Re_turb_max^0.131 else 1 + 4400/Re_turb_max)*
+      IN_var.rho/2*(Re_turb_max*IN_var.eta/(IN_var.rho*d_hyd))^2
     "Maximum pressure loss for turbulent regime";
-  SI.AbsolutePressure dp_turb_const=zeta_LOC_sharp_turb*IN_var.rho/2*(
-      Re_turb_const*IN_var.eta/(IN_var.rho*d_hyd))^2
+  Modelica.Units.SI.AbsolutePressure dp_turb_const=zeta_LOC_sharp_turb*IN_var.rho
+      /2*(Re_turb_const*IN_var.eta/(IN_var.rho*d_hyd))^2
     "Pressure loss for independence of Reynolds number on pressure loss coefficient";
 
   //SOURCE_1: p.357, diag. 6-1: mean velocities for assumed flow regime
   //IN_con.R_0/d_hyd <=3
-  SI.Velocity v_lam=if 1e7*sqrt(abs(zeta_LOC_sharp_turb*abs(dp)*IN_var.rho*
-      d_hyd^2)) < abs(A2*IN_var.eta) then 2*abs(dp)*d_hyd/A2/IN_var.eta else (-
-      A2/2*IN_var.eta + 0.5*sqrt(max(MIN, (A2*IN_var.eta)^2 + 8*
+  Modelica.Units.SI.Velocity v_lam=if 1e7*sqrt(abs(zeta_LOC_sharp_turb*abs(dp)*
+      IN_var.rho*d_hyd^2)) < abs(A2*IN_var.eta) then 2*abs(dp)*d_hyd/A2/IN_var.eta
+       else (-A2/2*IN_var.eta + 0.5*sqrt(max(MIN, (A2*IN_var.eta)^2 + 8*
       zeta_LOC_sharp_turb*abs(dp)*IN_var.rho*d_hyd^2)))/zeta_LOC_sharp_turb/
       IN_var.rho/d_hyd "Mean velocity in laminar regime (Re < Re_lam_leave)";
-  SI.Velocity v_tra=if 1e7*sqrt(abs(zeta_LOC_sharp_turb*abs(dp_lam_max)*IN_var.rho
-      *d_hyd^2)) < abs(A2*IN_var.eta) then 2*abs(dp_lam_max)*d_hyd/A2/IN_var.eta
-       else (-A2/2*IN_var.eta + 0.5*sqrt(max(MIN, (A2*IN_var.eta)^2 + 8*
-      zeta_LOC_sharp_turb*abs(dp_lam_max)*IN_var.rho*d_hyd^2)))/
-      zeta_LOC_sharp_turb/IN_var.rho/d_hyd
+  Modelica.Units.SI.Velocity v_tra=if 1e7*sqrt(abs(zeta_LOC_sharp_turb*abs(
+      dp_lam_max)*IN_var.rho*d_hyd^2)) < abs(A2*IN_var.eta) then 2*abs(
+      dp_lam_max)*d_hyd/A2/IN_var.eta else (-A2/2*IN_var.eta + 0.5*sqrt(max(MIN,
+      (A2*IN_var.eta)^2 + 8*zeta_LOC_sharp_turb*abs(dp_lam_max)*IN_var.rho*
+      d_hyd^2)))/zeta_LOC_sharp_turb/IN_var.rho/d_hyd
     "Mean velocity in transition regime (Re_lam_leave < Re_turb_min)";
-  SI.Velocity v_turb=if frac_RD > 0.7 then (max(MIN, abs(dp))/(IN_var.rho/2*
-      11.5*zeta_LOC_sharp_turb)*(IN_var.rho*IN_con.d_hyd/max(MIN, IN_var.eta))^
-      0.19)^(1/(2 - 0.19)) else if frac_RD > 0.55 and frac_RD < 0.7 then (max(
-      MIN, abs(dp))/(IN_var.rho/2*5.45*zeta_LOC_sharp_turb)*(IN_var.rho*IN_con.d_hyd
-      /max(MIN, IN_var.eta))^0.131)^(1/(2 - 0.131)) else -2200/(IN_var.rho*
-      IN_con.d_hyd/IN_var.eta) + ((-2200/(IN_var.rho*IN_con.d_hyd/max(MIN,
-      IN_var.eta)))^2 + 2*abs(max(MIN, dp))/max(MIN, IN_var.rho))^0.5
+  Modelica.Units.SI.Velocity v_turb=if frac_RD > 0.7 then (max(MIN, abs(dp))/(
+      IN_var.rho/2*11.5*zeta_LOC_sharp_turb)*(IN_var.rho*IN_con.d_hyd/max(MIN,
+      IN_var.eta))^0.19)^(1/(2 - 0.19)) else if frac_RD > 0.55 and frac_RD <
+      0.7 then (max(MIN, abs(dp))/(IN_var.rho/2*5.45*zeta_LOC_sharp_turb)*(
+      IN_var.rho*IN_con.d_hyd/max(MIN, IN_var.eta))^0.131)^(1/(2 - 0.131))
+       else -2200/(IN_var.rho*IN_con.d_hyd/IN_var.eta) + ((-2200/(IN_var.rho*
+      IN_con.d_hyd/max(MIN, IN_var.eta)))^2 + 2*abs(max(MIN, dp))/max(MIN,
+      IN_var.rho))^0.5
     "Mean velocity in turbulent regime with dependence on pressure loss coefficient (Re_turb_min < Re < Re_turb_max)";
-  SI.Velocity v_turb_const=sqrt(max(MIN, 2*abs(dp)/(IN_var.rho*
+  Modelica.Units.SI.Velocity v_turb_const=sqrt(max(MIN, 2*abs(dp)/(IN_var.rho*
       zeta_LOC_sharp_turb)))
     "Mean velocity in turbulent regime with independence on pressure loss coefficient (Re > Re_turb_max)";
 
   //mean velocity under smooth conditions w.r.t flow regime
-  SI.Velocity v_smooth=if dp < dp_lam_max then v_lam else if dp < dp_turb_min then
-            SMOOTH(
+  Modelica.Units.SI.Velocity v_smooth=if dp < dp_lam_max then v_lam else if dp
+       < dp_turb_min then SMOOTH(
       dp_lam_max,
       dp_turb_min,
       dp)*v_lam + SMOOTH(
@@ -122,8 +126,8 @@ protected
       dp)*v_turb_const
     "Mean velocity under smooth conditions for R_0/d_hyd < 3";
 
-  SI.ReynoldsNumber Re_smooth=max(Re_min, IN_var.rho*v_smooth*d_hyd/IN_var.eta)
-    "Reynolds number under smooth conditions";
+  Modelica.Units.SI.ReynoldsNumber Re_smooth=max(Re_min, IN_var.rho*v_smooth*
+      d_hyd/IN_var.eta) "Reynolds number under smooth conditions";
 
   //SOURCE_2: p.191, eq. 8.4: considering surface roughness
   //restriction of lambda_FRI at maximum Reynolds number Re=1e6 (SOURCE_2: p.207, sec. 9.2.4)
@@ -143,7 +147,7 @@ protected
       6e3,
       Re_smooth) "Correction factor for surface roughness";
 
-  SI.Velocity velocity=v_smooth/max(1, CF_3)^(0.5)
+  Modelica.Units.SI.Velocity velocity=v_smooth/max(1, CF_3)^(0.5)
     "Corrected velocity considering surface roughness";
 
   //Documentation
