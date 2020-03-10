@@ -2,7 +2,7 @@ within ;
 package FluidDissipation
 import PI = Modelica.Constants.pi;
 import REC = FluidDissipation.Utilities.Records;
-import SI = Modelica.SIunits;
+import      Modelica.Units.SI;
 import TYP = FluidDissipation.Utilities.Types;
 
 
@@ -23,8 +23,8 @@ extends FluidDissipation.Utilities.Icons.Package;
 
 annotation (
   preferredView="info",
-  version="1.1.9",
-  uses(Modelica(version="3.2.3")),
+  version="1.2.0",
+  uses(Modelica(version="4.0.0")),
   conversion(
  from(version="1.0 Beta 8a", script="./Extras/Scripts/ConvertFluidDissipation_from_Beta8_to_Beta9.mos"),
   from(version="1.0 Beta 8b", script="./Extras/Scripts/ConvertFluidDissipation_from_Beta8_to_Beta9.mos"),
@@ -34,7 +34,8 @@ annotation (
     from(
       version="1.1.8",
       script="./Extras/Scripts/ConvertFluidDissipation_from_1.1.8_to1.1.9.mos",
-      version="1.0")),
+      version="1.0"),
+      from(version="1.1.9", script="ConvertFromFluidDissipation_1.1.9.mos")),
   Documentation(info="<html>
 <div align=\"center\">
  
@@ -84,7 +85,7 @@ For the following applications functions are provided:
 The library is a non-commercial product of XRG Simulation GmbH. It makes use of external, 
 non-commercial models supplied by Modelica Standard Library. In order to work correctly, 
 ensure that this library is always loaded with <b> Modelica Standard Library version 
-3.2.2</b>.<br>
+4.0.0</b>.<br>
  
 <h2> <font color=\"#EF9B13\"> Acknowledgements </font></h2>
 The following people contributed to the FluidDissipation library (alphabetical list):
@@ -104,7 +105,7 @@ German Federal Ministry for Economic Affairs and Energy (promotional references
 <h2> <font color=\"#EF9B13\"> License condition </font></h2>
 <p>
 <strong>Licensed by XRG Simulation GmbH under the 3-Clause BSD License</strong><br>
-Copyright &copy; 2007-2019, XRG Simulation GmbH.
+Copyright &copy; 2007-2020, XRG Simulation GmbH.
 </p>
  
 <p>
